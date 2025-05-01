@@ -71,7 +71,8 @@
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
-      <a class="btn-getstarted flex-md-shrink-0" href="index.html#about">Get Started</a>
+      <a class="btn-getstarted flex-md-shrink-0" href="{{ url('/login') }}">Get Started</a>
+
 
     </div>
   </header>
@@ -87,7 +88,8 @@
             <h1 data-aos="fade-up">We offer modern solutions for anjayyyy</h1>
             <p data-aos="fade-up" data-aos-delay="100">We are anjay team pbl</p>
             <div class="d-flex flex-column flex-md-row" data-aos="fade-up" data-aos-delay="200">
-              <a href="#about" class="btn-get-started">Get Started <i class="bi bi-arrow-right"></i></a>
+              <a href="{{ url('/login') }}" class="btn-get-started">Get Started <i class="bi bi-arrow-right"></i></a>
+
             </div>
           </div>
           <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out">
