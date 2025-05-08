@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('dosen', function (Blueprint $table) {
             $table->unsignedBigInteger('dosen_id')->primary(); // ganti dari $table->id()
             $table->string('nama');
+            $table->string('email')->unique();
+            $table->string('telepon')->nullable(); // pastikan baris ini ADA
             $table->string('nidn')->unique();
             $table->unsignedBigInteger('user_id')->unique();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
