@@ -15,10 +15,14 @@ return new class extends Migration
             $table->id('prodi_id');
             $table->string('prodi_kode', 10);
             $table->string('prodi_nama', 50);
-            $table->unsignedBigInteger('jurusan_id')->nullable();
-            $table->foreign('jurusan_id')->references('jurusan_id')->on('jurusan');
+            $table->unsignedBigInteger('jurusan_id');
+            // foreign key
+            // onDelete('cascade') -> if the jurusan is deleted, all related prodi will be deleted
+            // onUpdate('cascade') -> if the jurusan is updated, all related prodi will be updated
+            $table->foreign('jurusan_id')->references('jurusan_id')->on('jurusan')->onDelete('cascade')->onUpdate('cascade');
+            $table->timestamps(); // otomatis buat created_at dan updated_at
         });
-        
+
     }
 
     /**

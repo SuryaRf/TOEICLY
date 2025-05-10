@@ -15,7 +15,14 @@ return new class extends Migration
             $table->id('jurusan_id');
             $table->string('jurusan_kode', 10);
             $table->string('jurusan_nama', 20);
+            $table->unsignedBigInteger('kampus_id');
+            // foreign key
+            // onDelete('cascade') -> if the kampus is deleted, all related jurusan will be deleted
+            $table->foreign('kampus_id')->references('kampus_id')->on('kampus')->onDelete('cascade');
+            $table->timestamps(); // otomatis buat created_at dan updated_at
         });
+
+        
     }
 
     /**

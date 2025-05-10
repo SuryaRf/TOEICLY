@@ -13,16 +13,18 @@ class TendikSeeder extends Seeder
             [
                 'nip' => '198701012014031001',
                 'nama' => 'Budi Hartono',
-                'email' => 'budi.hartono@example.com',
-                'telepon' => '081234567893',
+                'no_telp' => '081234567893',
+                'jenis_kelamin' => 'Laki-laki',
+                'kampus_id' => 1, // pastikan kampus dengan ID 1 sudah ada
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'nip' => '198802022015041002',
                 'nama' => 'Yuli Andriani',
-                'email' => 'yuli.andriani@example.com',
-                'telepon' => '081234567894',
+                'no_telp' => '081234567894',
+                'jenis_kelamin' => 'Perempuan',
+                'kampus_id' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]

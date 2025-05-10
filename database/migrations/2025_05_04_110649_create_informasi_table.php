@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,10 +10,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('admin', function (Blueprint $table) {
-            $table->id('admin_id');
-            $table->string('admin_nama', 50);
-            $table->string('no_telp', 15)->nullable();
+        Schema::create('informasi', function (Blueprint $table) {
+            $table->id('informasi_id'); // Primary key auto increment
+            $table->string('judul', 100); // NOT NULL by default
+            $table->text('isi'); // NOT NULL
+            $table->timestamps(); // created_at dan updated_at
         });
     }
 
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('admin');
+        Schema::dropIfExists('informasi');
     }
 };

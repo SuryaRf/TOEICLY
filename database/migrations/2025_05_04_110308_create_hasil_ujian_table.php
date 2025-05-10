@@ -13,17 +13,23 @@ return new class extends Migration
     {
         Schema::create('hasil_ujian', function (Blueprint $table) {
             $table->id('hasil_id');
-            $table->decimal('nilai_total', 5, 2);
-            $table->decimal('nilai_listening', 5, 2);
-            $table->decimal('nilai_reading', 5, 2);
-            $table->enum('status_lulus', ['lulus', 'tidak lulus'])->nullable();
+            $table->integer('nilai_listening');
+            $table->integer('nilai_reading');
+            $table->integer('nilai_total'); 
+            $table->enum('status_lulus', ['lulus', 'tidak lulus']);
             $table->text('catatan')->nullable();
+        
+            // Foreign key ke jadwal (dengan primary key jadwal_id)
             $table->unsignedBigInteger('jadwal_id');
+            $table->foreign('jadwal_id')->references('jadwal_id')->on('jadwal')->onDelete('cascade');
+        
+            // Foreign key ke user (dengan primary key user_id)
             $table->unsignedBigInteger('user_id');
-
-            $table->foreign('jadwal_id')->references('jadwal_id')->on('jadwal');
-            $table->foreign('user_id')->references('user_id')->on('user');
+            $table->foreign('user_id')->references('user_id')->on('user')->onDelete('cascade');
+        
+            $table->timestamps();
         });
+        
     }
 
     /**

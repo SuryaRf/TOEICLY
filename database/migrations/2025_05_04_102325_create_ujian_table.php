@@ -13,14 +13,19 @@ return new class extends Migration
     {
         Schema::create('ujian', function (Blueprint $table) {
             $table->id('ujian_id');
-            $table->string('ujian_kode', 10);
+            $table->string('ujian_kode', 10)->unique();
+        
             $table->unsignedBigInteger('jadwal_id');
             $table->unsignedBigInteger('pendaftaran_id');
-
-            $table->foreign('jadwal_id')->references('jadwal_id')->on('jadwal');
-            $table->foreign('pendaftaran_id')->references('pendaftaran_id')->on('pendaftaran');
+        
+            $table->timestamps();
+        
+            // foreign key manual karena kolom PK-nya bukan 'id'
+            $table->foreign('jadwal_id')->references('jadwal_id')->on('jadwal')->onDelete('cascade');
+            $table->foreign('pendaftaran_id')->references('pendaftaran_id')->on('pendaftaran')->onDelete('cascade');
         });
-
+        
+        
     }
 
     /**

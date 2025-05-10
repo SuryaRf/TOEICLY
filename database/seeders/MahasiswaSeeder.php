@@ -12,7 +12,7 @@ class MahasiswaSeeder extends Seeder
         DB::table('mahasiswa')->insert([
             [
                 'nim' => '2241720001',
-                'mahasiswa_nama' => 'Budi Santoso',
+                'nama' => 'Budi Santoso',
                 'nik' => '3507120200010001',
                 'alamat_asal' => 'Jombang',
                 'alamat_sekarang' => 'Malang',
