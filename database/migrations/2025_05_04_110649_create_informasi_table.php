@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('judul', 100); // NOT NULL by default
             $table->text('isi'); // NOT NULL
             $table->unsignedBigInteger('admin_id')->nullable(); // Add the admin_id column
-            $table->foreign('admin_id')->references('id')->on('admin')->onDelete('set null'); // Create foreign key relationship
+            $table->foreign('admin_id')->references('admin_id')->on('admin')->onDelete('set null'); // Create foreign key relationship
             $table->timestamps(); // created_at dan updated_at
         });
     }

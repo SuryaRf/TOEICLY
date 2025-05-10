@@ -10,7 +10,14 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         DB::table('admin')->insert([
-            ['nama' => 'Admin Utama', 'no_telp' => '081234567890'],
+            [
+                'nama' => 'Admin Utama',
+                'no_telp' => '081234567890',
+                'created_at' => now(),
+                'updated_at' => now(),
+
+
+            ],
         ]);
     }
 }
