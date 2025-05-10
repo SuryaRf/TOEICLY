@@ -15,7 +15,7 @@ class CreateJadwalTable extends Migration
             $table->id('jadwal_id'); // Primary key dengan auto increment
             $table->dateTime('tanggal_pelaksanaan');
             $table->time('jam_mulai');
-            $table->time('jam_selesai');
+            $table->time('jam_selesai')->nullable(); // Add the jam_selesai column
             $table->text('keterangan')->nullable();
             $table->timestamps(); // created_at dan updated_at
         });

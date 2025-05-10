@@ -18,6 +18,9 @@ class UserSeeder extends Seeder
                 'profile' => null,
                 'role' => 'admin',
                 'admin_id' => 1,
+                'mahasiswa_id' => null,
+                'dosen_id' => null,
+                'tendik_id' => null,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -27,10 +30,13 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'profile' => null,
                 'role' => 'mahasiswa',
+                'admin_id' => null,
                 'mahasiswa_id' => 1,
+                'dosen_id' => null,
+                'tendik_id' => null,
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],
+            ]
         ]);
     }
 }
