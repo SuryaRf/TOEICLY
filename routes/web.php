@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\DosenController;
+use App\Http\Controllers\TendikController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +25,18 @@ Route::get('/', [WelcomeController::class, 'index']);
 Route::get('/login', [LoginController::class, 'index'])->name('login.index');
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::middleware(['auth'])->group(function () {
+
+    // Admin dashboard route
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+
+    // Mahasiswa dashboard route
+    Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
+
+    // Dosen dashboard route
+    Route::get('/dosen/dashboard', [DosenController::class, 'index'])->name('dosen.dashboard');
+
+    // Tendik dashboard route
+    Route::get('/tendik/dashboard', [TendikController::class, 'index'])->name('tendik.dashboard');
+});
