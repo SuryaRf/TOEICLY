@@ -10,7 +10,7 @@ class UserModel extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $table = 'user';
+    protected $table = 'user'; // Menambahkan nama tabel yang benar
     protected $primaryKey = 'user_id';
     public $timestamps = true;
 
@@ -26,7 +26,7 @@ class UserModel extends Authenticatable
         'tendik_id'
     ];
 
-    // Relasi 
+    // Relasi
     public function admin()
     {
         return $this->belongsTo(AdminModel::class, 'admin_id');
@@ -46,11 +46,13 @@ class UserModel extends Authenticatable
     {
         return $this->belongsTo(TendikModel::class, 'tendik_id');
     }
+
     public function getAuthPassword()
     {
         return $this->password;
     }
-    // 🔥 Ini untuk fix login pakai kolom username
+
+    // Fix login menggunakan username
     public function getAuthIdentifierName()
     {
         return 'username';

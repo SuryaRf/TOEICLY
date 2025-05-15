@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\UserModel;
 
 class LoginController extends Controller
 {
@@ -21,7 +22,7 @@ class LoginController extends Controller
         ]);
 
         // Mencari user berdasarkan username atau email
-        $user = User::where('username', $request->username)
+        $user = UserModel::where('username', $request->username)
                     ->orWhere('email', $request->username)
                     ->first();
 
