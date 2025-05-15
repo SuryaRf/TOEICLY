@@ -63,6 +63,12 @@
             "pestphp/pest-plugin": true
         }
     },
-    "minimum-stability": "stable",
-    "prefer-stable": true
+"minimum-stability": "dev",
+"prefer-stable": true,
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "http://repo.packagist.org"
+        }
+    }
 }
