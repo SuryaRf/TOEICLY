@@ -16,4 +16,8 @@ use App\Http\Controllers\LoginController;
 */
 
 Route::get('/', [WelcomeController::class, 'index']);
-Route::get('login', [LoginController::class, 'index']);
+// Route::get('login', [LoginController::class, 'index']);
+
+Route::get('/login', [LoginController::class, 'index'])->name('login.index');
+Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
