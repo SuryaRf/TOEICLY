@@ -23,8 +23,8 @@ class LoginController extends Controller
 
         // Mencari user berdasarkan username atau email
         $user = UserModel::where('username', $request->username)
-                    ->orWhere('email', $request->username)
-                    ->first();
+            ->orWhere('email', $request->username)
+            ->first();
 
         if ($user && password_verify($request->password, $user->password)) {
             // Jika password valid, lakukan login
@@ -48,7 +48,6 @@ class LoginController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('login.index');
+        return redirect()->route('login'); // Pastikan ini menggunakan nama route yang benar
     }
 }
-
