@@ -225,7 +225,9 @@
         <a href="{{ route('admin.manage') }}" class="sidebar-link {{ request()->routeIs('admin.manage') ? 'active' : '' }}">
             <i class="fas fa-users"></i> Manajemen Pengguna
         </a>
-
+  <a href="#" class="sidebar-link">
+                <i class="fas fa-calendar-alt"></i> Kelola Jadwal Sertifikat
+            </a>
         <a href="{{ route('profile') }}" class="sidebar-link">
             <i class="fas fa-user"></i> Profile
         </a>

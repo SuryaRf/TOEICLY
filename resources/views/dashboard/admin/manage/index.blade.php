@@ -140,6 +140,9 @@
             <a href="#" class="sidebar-link">
                 <i class="fas fa-calendar-alt"></i> Kelola Jadwal Sertifikat
             </a>
+            <a href="{{ route('profile') }}" class="sidebar-link">
+                <i class="fas fa-user"></i> Profile
+            </a>
             <div class="mt-auto px-2">
                 <a href="{{ route('logout') }}"
                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
