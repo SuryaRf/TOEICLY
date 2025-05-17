@@ -15,6 +15,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        /* Sidebar styling */
         .sidebar {
             background: linear-gradient(180deg, #5b21b6 0%, #7c3aed 100%);
             color: white;
@@ -58,9 +59,10 @@
             color: #ddd;
         }
 
+        /* Main content styling */
         main {
             margin-left: 16rem;
-            padding: 2.5rem;
+            padding: 3rem 2rem;
             min-height: 100vh;
             overflow-y: auto;
         }
@@ -68,7 +70,7 @@
         h1 {
             color: #4c1d95;
             font-weight: 800;
-            font-size: 2.25rem;
+            font-size: 2.5rem;
             margin-bottom: 1.5rem;
         }
 
@@ -76,12 +78,13 @@
             background-color: #fff;
             border-radius: 1rem;
             box-shadow: 0 6px 15px rgb(0 0 0 / 0.08);
-            padding: 1.5rem;
+            padding: 2rem;
             transition: transform 0.35s ease, box-shadow 0.35s ease;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             max-width: 600px;
+            margin: auto;
         }
 
         .card:hover {
@@ -99,7 +102,7 @@
         input,
         textarea {
             width: 100%;
-            padding: 0.5rem;
+            padding: 0.75rem;
             margin-top: 0.25rem;
             border: 1px solid #a78bfa;
             border-radius: 0.5rem;
@@ -119,13 +122,15 @@
             background: linear-gradient(90deg, #7c3aed, #a78bfa);
             border: none;
             font-weight: 600;
-            padding: 0.5rem 1.5rem;
+            padding: 0.75rem 1.5rem;
             border-radius: 0.75rem;
             color: white;
             box-shadow: 0 4px 12px rgb(124 58 237 / 0.4);
             transition: all 0.3s ease;
             cursor: pointer;
-            max-width: 150px;
+            max-width: 200px;
+            margin-left: auto;
+            display: block;
         }
 
         button.btn-modern:hover {
@@ -152,11 +157,7 @@
                 class="sidebar-link {{ request()->routeIs('admin.manage') ? 'active' : '' }}">
                 <i class="fas fa-users"></i> Manajemen Pengguna
             </a>
-                <a href="#" class="sidebar-link">
-                <i class="fas fa-calendar-alt"></i> Kelola Jadwal Sertifikat
-            </a>
-            <a href="{{ route('profile') }}"
-                class="sidebar-link {{ request()->routeIs('profile') ? 'active' : '' }}">
+            <a href="{{ route('profile') }}" class="sidebar-link {{ request()->routeIs('profile') ? 'active' : '' }}">
                 <i class="fas fa-user"></i> Profile
             </a>
             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
@@ -178,13 +179,15 @@
                 @method('PUT')
 
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" value="{{ old('username', auth()->user()->username) }}" readonly>
+                <input type="text" id="username" name="username" value="{{ old('username', auth()->user()->username) }}"
+                    readonly>
 
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" value="{{ old('email', auth()->user()->email) }}" required>
 
                 <label for="name">Nama Lengkap</label>
-                <input type="text" id="name" name="name" value="{{ old('name', auth()->user()->admin->nama ?? '') }}" required>
+                <input type="text" id="name" name="name" value="{{ old('name', auth()->user()->admin->nama ?? '') }}"
+                    required>
 
                 <label for="role">Role</label>
                 <input type="text" id="role" name="role" value="{{ old('role', auth()->user()->role) }}" readonly>
