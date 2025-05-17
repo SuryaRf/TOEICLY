@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AdminModel;  // Pastikan model AdminModel sudah ada
 use Illuminate\Http\Request;
+use App\Models\UserModel;
 
 class AdminController extends Controller
 {
@@ -21,5 +22,12 @@ class AdminController extends Controller
 
         // Mengirim data ke view
         return view('dashboard.admin.index', compact('data'));
+    }
+    public function manage()
+    {
+        // Ambil semua user dengan relasi masing-masing role
+        $users = UserModel::with(['admin', 'mahasiswa', 'dosen', 'tendik'])->get();
+
+        return view('dashboard.admin.manage.index', compact('users'));
     }
 }

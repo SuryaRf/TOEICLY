@@ -14,7 +14,14 @@ class AdminModel extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'admin_nama', 'no_telp'
+        'admin_nama',
+        'no_telp'
     ];
 
+
+    // Di App\Models\AdminModel.php
+    public function user()
+    {
+        return $this->hasOne(UserModel::class, 'admin_id', 'admin_id');
+    }
 }

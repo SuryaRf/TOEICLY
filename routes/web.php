@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\TendikController;
+use App\Http\Controllers\UserController; // Add this line
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,12 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
 
     // Admin dashboard route
+    // Admin dashboard route
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+
+    // User management routes
+    Route::get('/admin/users/admin', [AdminController::class, 'manage'])->name('admin.manage'); // Add this line
+    
 
     // Mahasiswa dashboard route
     Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
