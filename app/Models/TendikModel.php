@@ -14,7 +14,7 @@ class TendikModel extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'nip', 'nik', 'tendik_nama',
+        'nip', 'nik', 'nama',
         'no_telp', 'alamat_asal', 'alamat_sekarang',
         'jenis_kelamin', 'kampus_id'
     ];

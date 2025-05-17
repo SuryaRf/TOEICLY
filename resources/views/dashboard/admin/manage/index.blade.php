@@ -158,7 +158,7 @@
         <h1>Manajemen Pengguna</h1>
 
         <section class="card">
-            <p class="text-gray-600 mb-4">Daftar Admin Terdaftar</p>
+            <p class="text-gray-600 mb-4">Daftar User Terdaftar</p>
 
             <table>
     <thead>
@@ -179,18 +179,19 @@
             <td>{{ $user->email }}</td>
             <td class="capitalize">{{ $user->role }}</td>
             <td>
-                @if ($user->role === 'admin' && $user->admin)
-                    {{ $user->admin->admin_nama }}
-                @elseif ($user->role === 'mahasiswa' && $user->mahasiswa)
-                    {{ $user->mahasiswa->mahasiswa_nama }}
-                @elseif ($user->role === 'dosen' && $user->dosen)
-                    {{ $user->dosen->dosen_nama }}
-                @elseif ($user->role === 'tendik' && $user->tendik)
-                    {{ $user->tendik->tendik_nama }}
-                @else
-                    -
-                @endif
-            </td>
+    @if ($user->role === 'admin' && $user->admin)
+        {{ $user->admin->nama }}
+    @elseif ($user->role === 'mahasiswa' && $user->mahasiswa)
+        {{ $user->mahasiswa->nama }}
+    @elseif ($user->role === 'dosen' && $user->dosen)
+        {{ $user->dosen->nama }}
+    @elseif ($user->role === 'tendik' && $user->tendik)
+        {{ $user->tendik->nama }}
+    @else
+        -
+    @endif
+</td>
+
             <td>
                 <button class="btn-action">Edit</button>
                 <button class="btn-action ml-2 bg-red-500 hover:bg-red-600">Hapus</button>

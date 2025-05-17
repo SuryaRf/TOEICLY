@@ -14,7 +14,7 @@ class MahasiswaModel extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'nim', 'nik', 'mahasiswa_nama', 'angkatan',
+        'nim', 'nik', 'nama', 'angkatan',
         'no_telp', 'alamat_asal', 'alamat_sekarang',
         'jenis_kelamin', 'status', 'keterangan', 'prodi_id'
     ];

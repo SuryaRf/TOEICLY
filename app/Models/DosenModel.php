@@ -14,7 +14,7 @@ class DosenModel extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'nidn', 'nik', 'dosen_nama',
+        'nidn', 'nik', 'nama',
         'no_telp', 'alamat_asal', 'alamat_sekarang',
         'jenis_kelamin', 'jurusan_id'
     ];
