@@ -159,51 +159,63 @@
 
         <section class="card">
             <p class="text-gray-600 mb-4">Daftar User Terdaftar</p>
+            @if(session('success'))
+                <div class="mb-4 p-3 bg-green-100 text-green-700 rounded">
+                    {{ session('success') }}
+                </div>
+            @endif
 
             <table>
-    <thead>
-        <tr>
-            <th>ID User</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Nama Lengkap</th>
-            <th>Aksi</th>
-        </tr>
-    </thead>
-    <tbody>
-        @forelse ($users as $user)
-        <tr>
-            <td>{{ $user->user_id }}</td>
-            <td>{{ $user->username }}</td>
-            <td>{{ $user->email }}</td>
-            <td class="capitalize">{{ $user->role }}</td>
-            <td>
-    @if ($user->role === 'admin' && $user->admin)
-        {{ $user->admin->nama }}
-    @elseif ($user->role === 'mahasiswa' && $user->mahasiswa)
-        {{ $user->mahasiswa->nama }}
-    @elseif ($user->role === 'dosen' && $user->dosen)
-        {{ $user->dosen->nama }}
-    @elseif ($user->role === 'tendik' && $user->tendik)
-        {{ $user->tendik->nama }}
-    @else
-        -
-    @endif
-</td>
+                <thead>
+                    <tr>
+                        <th>ID User</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Nama Lengkap</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($users as $user)
+                        <tr>
+                            <td>{{ $user->user_id }}</td>
+                            <td>{{ $user->username }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td class="capitalize">{{ $user->role }}</td>
+                            <td>
+                                @if ($user->role === 'admin' && $user->admin)
+                                    {{ $user->admin->nama }}
+                                @elseif ($user->role === 'mahasiswa' && $user->mahasiswa)
+                                    {{ $user->mahasiswa->nama }}
+                                @elseif ($user->role === 'dosen' && $user->dosen)
+                                    {{ $user->dosen->nama }}
+                                @elseif ($user->role === 'tendik' && $user->tendik)
+                                    {{ $user->tendik->nama }}
+                                @else
+                                    -
+                                @endif
+                            </td>
 
-            <td>
-                <button class="btn-action">Edit</button>
-                <button class="btn-action ml-2 bg-red-500 hover:bg-red-600">Hapus</button>
-            </td>
-        </tr>
-        @empty
-        <tr>
-            <td colspan="6" class="text-center text-gray-500 py-4">Data pengguna tidak tersedia.</td>
-        </tr>
-        @endforelse
-    </tbody>
-</table>
+                            <td>
+                                <a href="{{ route('admin.manage.edit', $user->user_id) }}" class="btn-action">Edit</a>
+
+                                <form action="{{ route('admin.manage.destroy', $user->user_id) }}" method="POST"
+                                    class="inline-block" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn-action ml-2 bg-red-500 hover:bg-red-600">Hapus</button>
+                                </form>
+                            </td>
+
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="text-center text-gray-500 py-4">Data pengguna tidak tersedia.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
 
         </section>
     </main>

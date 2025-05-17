@@ -22,8 +22,7 @@ use App\Http\Controllers\UserController; // Add this line
 
 Route::get('/', [WelcomeController::class, 'index']);
 // Route::get('login', [LoginController::class, 'index']);
-
-Route::get('/login', [LoginController::class, 'index'])->name('login.index');
+Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
@@ -34,7 +33,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 
     // User management routes
-    Route::get('/admin/users/admin', [AdminController::class, 'manage'])->name('admin.manage'); // Add this line
+    Route::get('/admin/manage', [AdminController::class, 'manage'])->name('admin.manage'); // Add this line
+
+       // Edit user
+    Route::get('/admin/manage/{user}/edit', [UserController::class, 'edit'])->name('admin.manage.edit');
+    Route::put('/admin/manage/{user}', [UserController::class, 'update'])->name('admin.manage.update');
+
+    // Hapus user
+    Route::delete('/admin/manage/{user}', [UserController::class, 'destroy'])->name('admin.manage.destroy');
+
     
 
     // Mahasiswa dashboard route
