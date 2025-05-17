@@ -14,7 +14,7 @@ class AdminModel extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'admin_nama',
+        'nama',
         'no_telp'
     ];
 

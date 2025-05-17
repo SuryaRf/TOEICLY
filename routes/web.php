@@ -8,6 +8,7 @@ use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\TendikController;
 use App\Http\Controllers\UserController; // Add this line
+use App\Http\Controllers\ProfileController; // Add this line
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,10 @@ Route::middleware(['auth'])->group(function () {
 
     // Hapus user
     Route::delete('/admin/manage/{user}', [UserController::class, 'destroy'])->name('admin.manage.destroy');
+
+    Route::get('admin/profile', [ProfileController::class, 'index'])->name('profile')->middleware('auth');
+     // Proses update profile
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
     
 

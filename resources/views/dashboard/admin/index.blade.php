@@ -215,34 +215,32 @@
 <body>
     <!-- Sidebar -->
     <aside class="sidebar flex flex-col">
-        <div class="p-6">
-            <h2 class="text-4xl font-extrabold tracking-tight select-none">TOEICLY Admin</h2>
-        </div>
-        <nav class="mt-8 flex flex-col gap-2 px-2">
-            <a href="{{ route('admin.dashboard') }}"
-                class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                <i class="fas fa-home"></i> Dashboard
-            </a>
-            <a href="{{ route('admin.manage') }}"
-                class="sidebar-link {{ request()->routeIs('admin.manage') ? 'active' : '' }}">
-                <i class="fas fa-users"></i> Manajemen Pengguna
-            </a>
+    <div class="p-6">
+        <h2 class="text-4xl font-extrabold tracking-tight select-none">TOEICLY Admin</h2>
+    </div>
+    <nav class="mt-8 flex flex-col gap-2 px-2">
+        <a href="{{ route('admin.dashboard') }}" class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+            <i class="fas fa-home"></i> Dashboard
+        </a>
+        <a href="{{ route('admin.manage') }}" class="sidebar-link {{ request()->routeIs('admin.manage') ? 'active' : '' }}">
+            <i class="fas fa-users"></i> Manajemen Pengguna
+        </a>
 
-            <a href="#" class="sidebar-link">
-                <i class="fas fa-calendar-alt"></i> Kelola Jadwal Sertifikat
-            </a>
-            <div class="mt-auto px-2">
-                <a href="{{ route('logout') }}"
-                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                    class="sidebar-link">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
-            </div>
-        </nav>
-    </aside>
+        <a href="{{ route('profile') }}" class="sidebar-link">
+            <i class="fas fa-user"></i> Profile
+        </a>
+
+        <a href="{{ route('logout') }}"
+            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+            class="sidebar-link">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+    </nav>
+</aside>
+
 
     <!-- Main content -->
     <main>
@@ -255,16 +253,23 @@
                         45 <i class="fas fa-star"></i>
                     </span>
                 </div>
-                <div class="user-profile relative" tabindex="0" aria-label="User profile dropdown">
-                    <img src="https://via.placeholder.com/40" alt="User" class="w-12 h-12 rounded-full"
+                {{-- <div class="user-profile relative" tabindex="0" aria-label="User profile dropdown">
+                    <img src="https://via.placeholder.com/40" alt="User" class="w-12 h-12 rounded-full cursor-pointer"
                         id="userAvatar" />
-                    <div class="dropdown-menu" id="userDropdown">
-                        <a href="#">Profile</a>
-                        <a href="#">Settings</a>
-                        <a href="{{ route('logout') }}"
-                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                    <div class="dropdown-menu" id="userDropdown" role="menu" aria-hidden="true">
+                        <a href="#" role="menuitem"
+                            class="block px-4 py-2 hover:bg-purple-100 hover:text-purple-700">Profile</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="m-0">
+                            @csrf
+                            <button type="submit" role="menuitem"
+                                class="w-full text-left px-4 py-2 hover:bg-purple-100 hover:text-purple-700 bg-transparent border-0 cursor-pointer">
+                                Logout
+                            </button>
+                        </form>
                     </div>
-                </div>
+                </div> --}}
+
+
             </div>
         </header>
 
@@ -392,16 +397,21 @@
         const userProfile = document.querySelector('.user-profile');
         const dropdownMenu = document.getElementById('userDropdown');
 
-        userProfile.addEventListener('click', () => {
+        userProfile.addEventListener('click', (e) => {
+            e.stopPropagation(); // cegah event bubble ke document
             dropdownMenu.classList.toggle('active');
+            // Update aria-hidden
+            const isActive = dropdownMenu.classList.contains('active');
+            dropdownMenu.setAttribute('aria-hidden', !isActive);
         });
 
-        // Close dropdown if clicked outside
-        document.addEventListener('click', (e) => {
-            if (!userProfile.contains(e.target)) {
+        document.addEventListener('click', () => {
+            if (dropdownMenu.classList.contains('active')) {
                 dropdownMenu.classList.remove('active');
+                dropdownMenu.setAttribute('aria-hidden', 'true');
             }
         });
+
     </script>
 </body>
 
