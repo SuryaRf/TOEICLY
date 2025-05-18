@@ -9,6 +9,7 @@ use App\Http\Controllers\DosenController;
 use App\Http\Controllers\TendikController;
 use App\Http\Controllers\UserController; // Add this line
 use App\Http\Controllers\ProfileController; // Add this line
+use App\Http\Controllers\PendaftaranController; // Add this line
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +37,7 @@ Route::middleware(['auth'])->group(function () {
     // User management routes
     Route::get('/admin/manage', [AdminController::class, 'manage'])->name('admin.manage'); // Add this line
 
-       // Edit user
+    // Edit user
     Route::get('/admin/manage/{user}/edit', [UserController::class, 'edit'])->name('admin.manage.edit');
     Route::put('/admin/manage/{user}', [UserController::class, 'update'])->name('admin.manage.update');
 
@@ -44,13 +45,25 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/admin/manage/{user}', [UserController::class, 'destroy'])->name('admin.manage.destroy');
 
     Route::get('admin/profile', [ProfileController::class, 'index'])->name('profile')->middleware('auth');
-     // Proses update profile
+
+    Route::get('/pendaftaran/create', [PendaftaranController::class, 'create'])->name('pendaftaran.create');
+    Route::post('/pendaftaran', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
+
+
+    // Proses update profile
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
-    
 
-    // Mahasiswa dashboard route
-    Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
+    // TOEIC dashboard for Mahasiswa
+    Route::prefix('mahasiswa')->group(function () {
+        Route::get('/', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
+        Route::get('/profile', [MahasiswaController::class, 'profile'])->name('mahasiswa.profile'); // Profil
+        Route::get('/daftar-tes', [MahasiswaController::class, 'daftarTes'])->name('mahasiswa.daftar-tes');
+        Route::get('/riwayat-ujian', [MahasiswaController::class, 'riwayatUjian'])->name('mahasiswa.riwayat-ujian');
+        Route::post('/logout', [LoginController::class, 'logout'])->name('mahasiswa.logout');
+    });
+
+    // Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
 
     // Dosen dashboard route
     Route::get('/dosen/dashboard', [DosenController::class, 'index'])->name('dosen.dashboard');

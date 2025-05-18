@@ -1,15 +1,49 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\MahasiswaModel;
 
+use App\Models\MahasiswaModel;
+use App\Models\DetailPendaftaranModel;
+use App\Models\KampusModel;
+use App\Models\JurusanModel;
+use App\Models\ProdiModel;
+use App\Models\JadwalModel;
 use Illuminate\Http\Request;
+
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class MahasiswaController extends Controller
 {
+
+
+    // Halaman utama (overview)
     public function index()
     {
-        $data = MahasiswaModel::all(); // ambil semua data dari tabel mahasiswa
-        return view('mahasiswa.index', compact('data')); // kirim ke view
+        return view('dashboard.mahasiswa.overview');
+    }
+
+
+    public function daftarTes()
+    {
+        $kampus = KampusModel::all();
+        $jurusan = JurusanModel::all();
+        $prodi = ProdiModel::all();    // <-- ini harus ada
+        $jadwal = JadwalModel::all();
+
+        $mahasiswa = Auth::user()->mahasiswa;
+
+        return view('pendaftaran.create', compact('kampus', 'jurusan', 'prodi', 'jadwal', 'mahasiswa'));
+    }
+
+    public function riwayatUjian()
+    {
+        return view('dashboard.mahasiswa.riwayat-ujian');
+    }
+
+    public function profile()
+    {
+        return view('dashboard.mahasiswa.profile');
     }
 }
