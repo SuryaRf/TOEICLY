@@ -28,6 +28,7 @@ Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+// Dashboard routes with authentication middleware
 Route::middleware(['auth'])->group(function () {
 
     // Admin dashboard route
@@ -68,6 +69,6 @@ Route::middleware(['auth'])->group(function () {
     // Dosen dashboard route
     Route::get('/dosen/dashboard', [DosenController::class, 'index'])->name('dosen.dashboard');
 
-    // Tendik dashboard route
+    // Tendik dashboard
     Route::get('/tendik/dashboard', [TendikController::class, 'index'])->name('tendik.dashboard');
 });

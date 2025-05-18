@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Riwayat Ujian - TOEICLY</title>
+    <title>Daftar Tes - TOEICLY</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .flip-in {
+        .fade-in {
             opacity: 0;
-            transform: rotateX(-90deg);
+            transform: translateY(20px);
             transition: opacity 0.8s ease, transform 0.8s ease;
         }
-        .flip-in.show {
+        .fade-in.show {
             opacity: 1;
-            transform: rotateX(0);
+            transform: translateY(0);
         }
-        .hover-glow {
-            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        .zoom-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .hover-glow:hover {
-            box-shadow: 0 20px 40px rgba(58, 88, 237, 0.3);
-            transform: translateY(-5px);
+        .zoom-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.3);
         }
     </style>
 </head>
@@ -31,22 +31,26 @@
     @include('dashboard.mahasiswa.sidebar')
 
     <!-- Main Content -->
-    <main id="riwayat-ujian" class="flex-1 p-10 overflow-auto flip-in">
-        <h1 class="text-4xl font-bold text-purple-800 mb-6">Riwayat Ujian</h1>
-        <div class="bg-white p-8 rounded-xl shadow-lg hover-glow">
+    <main id="daftar-tes" class="flex-1 p-10 overflow-auto fade-in">
+        <h1 class="text-4xl font-bold text-purple-800 mb-6">Daftar Tes</h1>
+        <div class="bg-white p-8 rounded-xl shadow-lg zoom-card">
             <table class="w-full text-left text-gray-700">
                 <thead>
                     <tr>
                         <th class="py-4 px-6 bg-purple-600 text-white">Test Name</th>
                         <th class="py-4 px-6 bg-purple-600 text-white">Date</th>
-                        <th class="py-4 px-6 bg-purple-600 text-white">Score</th>
+                        <th class="py-4 px-6 bg-purple-600 text-white">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="bg-gray-100 hover:bg-purple-50 transition-colors">
                         <td class="py-4 px-6">TOEIC Practice Test 1</td>
                         <td class="py-4 px-6">20 May 2025</td>
-                        <td class="py-4 px-6">945</td>
+                        <td class="py-4 px-6">
+                            <button class="bg-purple-600 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-purple-700 transition-colors bounce-on-hover">
+                                Register
+                            </button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -55,18 +59,14 @@
 </div>
 
 <script>
-    // Add flip-in effect on page load
+    // Add fade-in effect on page load
     window.addEventListener('load', () => {
-        const riwayatUjian = document.getElementById('riwayat-ujian');
+        const daftarTes = document.getElementById('daftar-tes');
         setTimeout(() => {
-            riwayatUjian.classList.add('show');
+            daftarTes.classList.add('show');
         }, 100);
     });
 </script>
 
 </body>
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> e66727d1e9ccd1ec5dba2160ca0f4708b6904d96
