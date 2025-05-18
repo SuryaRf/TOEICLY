@@ -225,13 +225,24 @@
         <a href="{{ route('admin.manage') }}" class="sidebar-link {{ request()->routeIs('admin.manage') ? 'active' : '' }}">
             <i class="fas fa-users"></i> Manajemen Pengguna
         </a>
-  <a href="#" class="sidebar-link">
-                <i class="fas fa-calendar-alt"></i> Kelola Jadwal Sertifikat
-            </a>
-        <a href="{{ route('profile') }}" class="sidebar-link">
-            <i class="fas fa-user"></i> Profile
+        <a href="#" class="sidebar-link">
+            <i class="fas fa-calendar-alt"></i> Kelola Jadwal Sertifikat
         </a>
 
+        <!-- Tambahan menu data kampus, jurusan, prodi -->
+        <a href="{{ route('kampus.index') }}" class="sidebar-link {{ request()->routeIs('kampus.*') ? 'active' : '' }}">
+            <i class="fas fa-building"></i> Data Kampus
+        </a>
+        <a href="{{ route('jurusan.index') }}" class="sidebar-link {{ request()->routeIs('jurusan.*') ? 'active' : '' }}">
+            <i class="fas fa-book"></i> Data Jurusan
+        </a>
+        <a href="{{ route('prodi.index') }}" class="sidebar-link {{ request()->routeIs('prodi.*') ? 'active' : '' }}">
+            <i class="fas fa-graduation-cap"></i> Data Prodi
+        </a>
+
+        <a href="{{ route('profile') }}" class="sidebar-link {{ request()->routeIs('profile') ? 'active' : '' }}">
+            <i class="fas fa-user"></i> Profile
+        </a>
         <a href="{{ route('logout') }}"
             onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
             class="sidebar-link">
@@ -242,6 +253,7 @@
         </form>
     </nav>
 </aside>
+
 
 
     <!-- Main content -->

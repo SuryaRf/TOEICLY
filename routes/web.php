@@ -10,6 +10,9 @@ use App\Http\Controllers\TendikController;
 use App\Http\Controllers\UserController; // Add this line
 use App\Http\Controllers\ProfileController; // Add this line
 use App\Http\Controllers\PendaftaranController; // Add this line
+use App\Http\Controllers\KampusController;
+use App\Http\Controllers\JurusanController;
+use App\Http\Controllers\ProdiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +49,15 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/admin/manage/{user}', [UserController::class, 'destroy'])->name('admin.manage.destroy');
 
     Route::get('admin/profile', [ProfileController::class, 'index'])->name('profile')->middleware('auth');
+    Route::get('kampus/list', [KampusController::class, 'list'])->name('kampus.list');
+    Route::get('jurusan/list', [JurusanController::class, 'list'])->name('jurusan.list');
+    Route::get('prodi/list', [ProdiController::class, 'list'])->name('prodi.list');
+
+    Route::resource('kampus', KampusController::class);
+    Route::resource('jurusan', JurusanController::class);
+    Route::resource('prodi', ProdiController::class);
+
+
 
     Route::get('/pendaftaran/create', [PendaftaranController::class, 'create'])->name('pendaftaran.create');
     Route::post('/pendaftaran', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
