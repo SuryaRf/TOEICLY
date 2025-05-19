@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('username', 20)->unique();
             $table->string('password', 255);
             $table->string('profile', 255)->nullable();
-            $table->enum('role', ['admin', 'mahasiswa', 'dosen', 'tendik']);
+            $table->enum('role', ['admin', 'mahasiswa', 'dosen', 'tendik', 'itc']);
             
             // Relasi ke admin
             $table->unsignedBigInteger('admin_id')->nullable();
@@ -34,6 +34,9 @@ return new class extends Migration
             // Relasi ke tendik
             $table->unsignedBigInteger('tendik_id')->nullable();
             $table->foreign('tendik_id')->references('tendik_id')->on('tendik')->onDelete('set null');
+            // Relasi ke itc
+            $table->unsignedBigInteger('itc_id')->nullable();
+            $table->foreign('itc_id')->references('itc_id')->on('itc')->onDelete('set null');
         
             $table->timestamps();
         });

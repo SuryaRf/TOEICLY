@@ -223,6 +223,8 @@
             </div>
         @endif
 
+        <br>
+        <br>
         <div class="card">
             <table>
                 <thead>

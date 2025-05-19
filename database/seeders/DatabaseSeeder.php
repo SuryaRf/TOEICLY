@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             DosenSeeder::class,
             MahasiswaSeeder::class,
             TendikSeeder::class,
-            // ItcSeeder::class,
+            ItcSeeder::class,
             UserSeeder::class,
             JadwalSeeder::class,
             PendaftaranSeeder::class,

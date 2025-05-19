@@ -12,15 +12,15 @@ class ItcSeeder extends Seeder
         DB::table('itc')->insert([
             [
                 'nama' => 'Pak Slamet',
-                'email' => 'slamet.itc@example.com',
-                'telepon' => '081234567895',
+                // 'email' => 'slamet.itc@example.com',
+                'no_telp' => '081234567895',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'nama' => 'Bu Rina',
-                'email' => 'rina.itc@example.com',
-                'telepon' => '081234567896',
+                // 'email' => 'rina.itc@example.com',
+                'no_telp' => '081234567896',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]

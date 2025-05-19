@@ -220,6 +220,9 @@
             </div>
         @endif
 
+        <br>
+        <br>
+  <div class="card">
         <table>
             <thead>
                 <tr>
@@ -254,6 +257,7 @@
                 @endforelse
             </tbody>
         </table>
+           </div>
     </main>
 </body>
 
