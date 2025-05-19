@@ -12,37 +12,37 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
     <style>
+        /* Gradient background */
         body {
             background: linear-gradient(135deg, #eef2ff 0%, #dbeafe 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
         }
 
+        /* Sidebar */
         .sidebar {
             background: linear-gradient(180deg, #5b21b6 0%, #7c3aed 100%);
             color: white;
             min-height: 100vh;
             position: fixed;
             width: 16rem;
+            /* 64 */
             transition: all 0.3s ease;
             box-shadow: 4px 0 12px rgb(123 97 255 / 0.4);
             z-index: 50;
-            padding: 1.5rem 1rem;
-            display: flex;
-            flex-direction: column;
         }
 
         .sidebar a {
             display: flex;
             align-items: center;
             padding: 0.75rem 1rem;
+            /* py-3 px-4 */
             font-weight: 600;
             border-radius: 0.5rem;
             transition: background-color 0.3s ease, transform 0.3s ease;
             color: inherit;
             text-decoration: none;
             cursor: pointer;
-            margin-bottom: 0.5rem;
         }
 
         .sidebar a:hover,
@@ -53,8 +53,9 @@
             color: white !important;
         }
 
-        .sidebar a i {
+        .sidebar i {
             min-width: 1.25rem;
+            /* 20px */
             font-size: 1.1rem;
             margin-right: 0.75rem;
             transition: transform 0.3s ease;
@@ -65,6 +66,7 @@
             color: #ddd;
         }
 
+        /* Main content */
         main {
             margin-left: 16rem;
             padding: 2.5rem;
@@ -72,6 +74,7 @@
             overflow-y: auto;
         }
 
+        /* Card style */
         .card {
             background-color: #fff;
             border-radius: 1rem;
@@ -90,6 +93,29 @@
             box-shadow: 0 15px 30px rgb(124 58 237 / 0.25);
         }
 
+        /* Buttons */
+        .btn-modern {
+            background: linear-gradient(90deg, #7c3aed, #a78bfa);
+            border: none;
+            font-weight: 600;
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.75rem;
+            color: white;
+            box-shadow: 0 4px 12px rgb(124 58 237 / 0.4);
+            transition: all 0.3s ease;
+            align-self: flex-start;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-modern:hover {
+            background: linear-gradient(90deg, #a78bfa, #7c3aed);
+            transform: scale(1.08);
+            box-shadow: 0 8px 20px rgb(124 58 237 / 0.7);
+            color: white;
+        }
+
+        /* Table */
         table {
             border-collapse: collapse;
             width: 100%;
@@ -113,28 +139,7 @@
             background-color: #ede9fe;
         }
 
-        .btn-modern {
-            background: linear-gradient(90deg, #7c3aed, #a78bfa);
-            border: none;
-            font-weight: 600;
-            padding: 0.5rem 1.5rem;
-            border-radius: 0.75rem;
-            color: white;
-            box-shadow: 0 4px 12px rgb(124 58 237 / 0.4);
-            transition: all 0.3s ease;
-            align-self: flex-start;
-            text-decoration: none;
-            display: inline-block;
-            margin-bottom: 1rem;
-        }
-
-        .btn-modern:hover {
-            background: linear-gradient(90deg, #a78bfa, #7c3aed);
-            transform: scale(1.08);
-            box-shadow: 0 8px 20px rgb(124 58 237 / 0.7);
-            color: white;
-        }
-
+        /* Action buttons */
         .btn-action {
             padding: 0.375rem 0.75rem;
             border-radius: 0.375rem;
@@ -167,37 +172,45 @@
 </head>
 
 <body>
-    <aside class="sidebar">
-        <h2 class="text-4xl font-extrabold tracking-tight select-none mb-6">TOEICLY Admin</h2>
-        <nav>
-            <a href="{{ route('admin.dashboard') }}" class="sidebar-link">
-                <i class="fas fa-home"></i> Dashboard
-            </a>
-            <a href="{{ route('admin.manage') }}" class="sidebar-link">
-                <i class="fas fa-users"></i> Manajemen Pengguna
-            </a>
-            <a href="{{ route('kampus.index') }}" class="sidebar-link">
-                <i class="fas fa-building"></i> Data Kampus
-            </a>
-            <a href="{{ route('jurusan.index') }}" class="sidebar-link active">
-                <i class="fas fa-book"></i> Data Jurusan
-            </a>
-            <a href="{{ route('prodi.index') }}" class="sidebar-link">
-                <i class="fas fa-graduation-cap"></i> Data Prodi
-            </a>
-            <a href="{{ route('profile') }}" class="sidebar-link">
-                <i class="fas fa-user"></i> Profile
-            </a>
-            <a href="{{ route('logout') }}"
-                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                class="sidebar-link">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
-                @csrf
-            </form>
-        </nav>
-    </aside>
+    <aside class="sidebar flex flex-col">
+    <div class="p-6">
+        <h2 class="text-4xl font-extrabold tracking-tight select-none">TOEICLY Admin</h2>
+    </div>
+    <nav class="mt-8 flex flex-col gap-2 px-2">
+        <a href="{{ route('admin.dashboard') }}" class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+            <i class="fas fa-home"></i> Dashboard
+        </a>
+        <a href="{{ route('admin.manage') }}" class="sidebar-link {{ request()->routeIs('admin.manage') ? 'active' : '' }}">
+            <i class="fas fa-users"></i> Manajemen Pengguna
+        </a>
+        <a href="#" class="sidebar-link">
+            <i class="fas fa-calendar-alt"></i> Kelola Jadwal Sertifikat
+        </a>
+
+        <!-- Tambahan menu data kampus, jurusan, prodi -->
+        <a href="{{ route('kampus.index') }}" class="sidebar-link {{ request()->routeIs('kampus.*') ? 'active' : '' }}">
+            <i class="fas fa-building"></i> Data Kampus
+        </a>
+        <a href="{{ route('jurusan.index') }}" class="sidebar-link {{ request()->routeIs('jurusan.*') ? 'active' : '' }}">
+            <i class="fas fa-book"></i> Data Jurusan
+        </a>
+        <a href="{{ route('prodi.index') }}" class="sidebar-link {{ request()->routeIs('prodi.*') ? 'active' : '' }}">
+            <i class="fas fa-graduation-cap"></i> Data Prodi
+        </a>
+
+        <a href="{{ route('profile') }}" class="sidebar-link {{ request()->routeIs('profile') ? 'active' : '' }}">
+            <i class="fas fa-user"></i> Profile
+        </a>
+        <a href="{{ route('logout') }}"
+            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+            class="sidebar-link">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+    </nav>
+</aside>
 
     <main>
         <h1 class="text-5xl font-extrabold text-gray-900 tracking-tight mb-8">Daftar Jurusan</h1>
