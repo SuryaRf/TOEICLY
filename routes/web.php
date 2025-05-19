@@ -53,7 +53,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('jurusan/list', [JurusanController::class, 'list'])->name('jurusan.list');
     Route::get('prodi/list', [ProdiController::class, 'list'])->name('prodi.list');
 
-    Route::resource('kampus', KampusController::class);
+   Route::resource('kampus', KampusController::class);
+
     Route::resource('jurusan', JurusanController::class);
     Route::resource('prodi', ProdiController::class);
 

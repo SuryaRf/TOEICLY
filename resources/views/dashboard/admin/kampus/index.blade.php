@@ -5,70 +5,66 @@
     <h1 class="text-3xl font-bold mb-6 text-purple-700">Daftar Kampus</h1>
 
     <div class="mb-4">
-        <button id="btnTambah" class="btn btn-primary">Tambah Kampus</button>
+        <a href="{{ route('kampus.create') }}" class="btn btn-primary">Tambah Kampus</a>
     </div>
 
-    <table id="kampusTable" class="table table-striped table-bordered" style="width:100%">
+    @if(session('success'))
+        <div class="mb-4 p-3 bg-green-100 text-green-700 rounded">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    <table class="min-w-full border-collapse border border-gray-300">
         <thead>
-            <tr>
-                <th>No.</th>
-                <th>Kode Kampus</th>
-                <th>Nama Kampus</th>
-                <th>Aksi</th>
+            <tr class="bg-purple-100 text-purple-800 font-semibold">
+                <th class="border border-gray-300 px-4 py-2">No.</th>
+                <th class="border border-gray-300 px-4 py-2">Kode Kampus</th>
+                <th class="border border-gray-300 px-4 py-2">Nama Kampus</th>
+                <th class="border border-gray-300 px-4 py-2">Aksi</th>
             </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+            @forelse ($kampus as $index => $k)
+                <tr class="hover:bg-purple-50">
+                    <td class="border border-gray-300 px-4 py-2">{{ $index + 1 }}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{ $k->kampus_kode }}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{ $k->kampus_nama }}</td>
+                    <td class="border border-gray-300 px-4 py-2">
+                        <a href="{{ route('kampus.edit', $k->kampus_id) }}" 
+                           class="btn-action bg-yellow-400 hover:bg-yellow-500 mr-2">Edit</a>
+                        <form action="{{ route('kampus.destroy', $k->kampus_id) }}" method="POST" class="inline"
+                            onsubmit="return confirm('Yakin ingin menghapus kampus ini?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn-action bg-red-500 hover:bg-red-600">Hapus</button>
+                        </form>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="4" class="text-center p-4">Tidak ada data kampus tersedia.</td>
+                </tr>
+            @endforelse
+        </tbody>
     </table>
 </div>
-
-<!-- Modal kosong, bisa Anda isi dengan konten AJAX -->
-<div class="modal fade" id="modalAction" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content" id="modalContent">
-      <!-- Konten AJAX akan dimuat di sini -->
-    </div>
-  </div>
-</div>
-
 @endsection
 
-@section('scripts')
-<script>
-    $(document).ready(function() {
-        // Inisialisasi DataTables
-        var table = $('#kampusTable').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: '{{ route("kampus.list") }}',
-            columns: [
-                { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
-                { data: 'kampus_kode', name: 'kampus_kode' },
-                { data: 'kampus_nama', name: 'kampus_nama' },
-                { data: 'aksi', name: 'aksi', orderable: false, searchable: false },
-            ]
-        });
-
-        // Fungsi untuk load modal dengan konten AJAX
-        window.modalAction = function(url) {
-            $('#modalContent').html('<div class="p-5 text-center">Loading...</div>');
-            $('#modalAction').modal('show');
-
-            $.ajax({
-                url: url,
-                method: 'GET',
-                success: function(response) {
-                    $('#modalContent').html(response);
-                },
-                error: function() {
-                    $('#modalContent').html('<div class="p-5 text-center text-danger">Gagal memuat data.</div>');
-                }
-            });
-        };
-
-        // Tombol tambah kampus
-        $('#btnTambah').click(function() {
-            modalAction('{{ url("kampus/create_ajax") }}');
-        });
-    });
-</script>
+@section('styles')
+<style>
+    .btn-action {
+        padding: 0.25rem 0.75rem;
+        border-radius: 0.375rem;
+        font-weight: 600;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+    .btn-action.bg-yellow-400 { background-color: #fbbf24; }
+    .btn-action.bg-yellow-400:hover { background-color: #f59e0b; }
+    .btn-action.bg-red-500 { background-color: #ef4444; }
+    .btn-action.bg-red-500:hover { background-color: #dc2626; }
+</style>
 @endsection
