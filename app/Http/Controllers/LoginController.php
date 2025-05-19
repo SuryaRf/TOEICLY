@@ -37,6 +37,8 @@ class LoginController extends Controller
                 return redirect()->route('mahasiswa.dashboard');
             } elseif ($user->role == 'dosen') {
                 return redirect()->route('dosen.dashboard');
+            } elseif ($user->role == 'itc') {
+                return redirect()->route('itc.dashboard');
             } else {
                 return redirect()->route('tendik.dashboard');
             }

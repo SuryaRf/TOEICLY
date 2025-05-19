@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ItcController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\LoginController;
@@ -34,7 +35,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 // Dashboard routes with authentication middleware
 Route::middleware(['auth'])->group(function () {
 
-    // Admin dashboard route
+
     // Admin dashboard route
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 
@@ -78,6 +79,9 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
+
+
+    Route::get('/itc/dashboard', [ItcController::class, 'index'])->name('itc.dashboard');
 
     // Dosen dashboard route
     Route::get('/dosen/dashboard', [DosenController::class, 'index'])->name('dosen.dashboard');
