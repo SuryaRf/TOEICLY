@@ -14,6 +14,7 @@ use App\Http\Controllers\PendaftaranController; // Add this line
 use App\Http\Controllers\KampusController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\ProdiController;
+use App\Http\Controllers\JadwalSertifikatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,7 +59,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('jurusan', JurusanController::class);
     Route::resource('prodi', ProdiController::class);
+    Route::middleware(['auth'])->group(function () {
+    Route::get('/jadwal-sertifikat', [JadwalSertifikatController::class, 'index'])->name('jadwal_sertifikat.index');
+    Route::get('/jadwal-sertifikat/create', [JadwalSertifikatController::class, 'create'])->name('jadwal_sertifikat.create');
+    Route::post('/jadwal-sertifikat', [JadwalSertifikatController::class, 'store'])->name('jadwal_sertifikat.store');
 
+    Route::get('/jadwal-sertifikat/{jadwal_id}/peserta', [JadwalSertifikatController::class, 'peserta'])->name('jadwal_sertifikat.peserta');
 
 
     Route::get('/pendaftaran/create', [PendaftaranController::class, 'create'])->name('pendaftaran.create');
@@ -78,7 +84,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/logout', [LoginController::class, 'logout'])->name('mahasiswa.logout');
     });
 
-    // Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
 
 
     Route::get('/itc/dashboard', [ItcController::class, 'index'])->name('itc.dashboard');
@@ -88,4 +93,5 @@ Route::middleware(['auth'])->group(function () {
 
     // Tendik dashboard
     Route::get('/tendik/dashboard', [TendikController::class, 'index'])->name('tendik.dashboard');
+});
 });

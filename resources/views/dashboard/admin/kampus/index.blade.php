@@ -184,7 +184,7 @@
         <a href="{{ route('admin.manage') }}" class="sidebar-link {{ request()->routeIs('admin.manage') ? 'active' : '' }}">
             <i class="fas fa-users"></i> Manajemen Pengguna
         </a>
-        <a href="#" class="sidebar-link">
+        <a href="{{ route('jadwal_sertifikat.index') }}" class="sidebar-link {{ request()->routeIs('jadwal_sertifikat.*') ? 'active' : '' }}">
             <i class="fas fa-calendar-alt"></i> Kelola Jadwal Sertifikat
         </a>
 
@@ -203,8 +203,8 @@
             <i class="fas fa-user"></i> Profile
         </a>
         <a href="{{ route('logout') }}"
-            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-            class="sidebar-link">
+           onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+           class="sidebar-link">
             <i class="fas fa-sign-out-alt"></i> Logout
         </a>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -212,6 +212,7 @@
         </form>
     </nav>
 </aside>
+
 
     <main>
         <h1 class="text-5xl font-extrabold text-gray-900 tracking-tight mb-8">Daftar Kampus</h1>
