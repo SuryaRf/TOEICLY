@@ -28,6 +28,10 @@ class PendaftaranModel extends Model
         'created_at',
         'updated_at',
     ];
+      // Tambahkan ini untuk otomatis cast ke Carbon
+    protected $casts = [
+        'tanggal_pendaftaran' => 'datetime',
+    ];
 
     // Relasi ke Mahasiswa
     public function mahasiswa()

@@ -23,7 +23,8 @@ class UserModel extends Authenticatable
         'admin_id',
         'mahasiswa_id',
         'dosen_id',
-        'tendik_id'
+        'tendik_id',
+        'itc_id',
     ];
 
     // Relasi
@@ -46,6 +47,10 @@ class UserModel extends Authenticatable
     {
         return $this->belongsTo(TendikModel::class, 'tendik_id');
     }
+    public function itc()
+{
+    return $this->belongsTo(ItcModel::class, 'itc_id');
+}
 
     public function getAuthPassword()
     {

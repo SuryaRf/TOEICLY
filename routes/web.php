@@ -55,43 +55,54 @@ Route::middleware(['auth'])->group(function () {
     Route::get('jurusan/list', [JurusanController::class, 'list'])->name('jurusan.list');
     Route::get('prodi/list', [ProdiController::class, 'list'])->name('prodi.list');
 
-   Route::resource('kampus', KampusController::class);
+    Route::resource('kampus', KampusController::class);
 
     Route::resource('jurusan', JurusanController::class);
     Route::resource('prodi', ProdiController::class);
     Route::middleware(['auth'])->group(function () {
-    Route::get('/jadwal-sertifikat', [JadwalSertifikatController::class, 'index'])->name('jadwal_sertifikat.index');
-    Route::get('/jadwal-sertifikat/create', [JadwalSertifikatController::class, 'create'])->name('jadwal_sertifikat.create');
-    Route::post('/jadwal-sertifikat', [JadwalSertifikatController::class, 'store'])->name('jadwal_sertifikat.store');
+        Route::get('/jadwal-sertifikat', [JadwalSertifikatController::class, 'index'])->name('jadwal_sertifikat.index');
+        Route::get('/jadwal-sertifikat/create', [JadwalSertifikatController::class, 'create'])->name('jadwal_sertifikat.create');
+        Route::post('/jadwal-sertifikat', [JadwalSertifikatController::class, 'store'])->name('jadwal_sertifikat.store');
 
-    Route::get('/jadwal-sertifikat/{jadwal_id}/peserta', [JadwalSertifikatController::class, 'peserta'])->name('jadwal_sertifikat.peserta');
-
-
-    Route::get('/pendaftaran/create', [PendaftaranController::class, 'create'])->name('pendaftaran.create');
-    Route::post('/pendaftaran', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
+        Route::get('/jadwal-sertifikat/{jadwal_id}/peserta', [JadwalSertifikatController::class, 'peserta'])->name('jadwal_sertifikat.peserta');
 
 
-    // Proses update profile
-    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::get('/pendaftaran/create', [PendaftaranController::class, 'create'])->name('pendaftaran.create');
+        Route::post('/pendaftaran', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
 
 
-    // TOEIC dashboard for Mahasiswa
-    Route::prefix('mahasiswa')->group(function () {
-        Route::get('/', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
-        Route::get('/profile', [MahasiswaController::class, 'profile'])->name('mahasiswa.profile'); // Profil
-        Route::get('/daftar-tes', [MahasiswaController::class, 'daftarTes'])->name('mahasiswa.daftar-tes');
-        Route::get('/riwayat-ujian', [MahasiswaController::class, 'riwayatUjian'])->name('mahasiswa.riwayat-ujian');
-        Route::post('/logout', [LoginController::class, 'logout'])->name('mahasiswa.logout');
+        // Proses update profile
+        Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        // Menampilkan profil - GET
+        Route::get('/profile', [ProfileController::class, 'showProfile'])->name('profile');
+
+        // Update profil - PUT atau POST
+        // Route::put('/profile', [ProfileController::class, 'updateProfile'])->name('profile.update');
+
+
+
+        // TOEIC dashboard for Mahasiswa
+        Route::prefix('mahasiswa')->group(function () {
+            Route::get('/', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
+            Route::get('/profile', [MahasiswaController::class, 'profile'])->name('mahasiswa.profile'); // Profil
+            Route::get('/daftar-tes', [MahasiswaController::class, 'daftarTes'])->name('mahasiswa.daftar-tes');
+            Route::get('/riwayat-ujian', [MahasiswaController::class, 'riwayatUjian'])->name('mahasiswa.riwayat-ujian');
+            Route::post('/logout', [LoginController::class, 'logout'])->name('mahasiswa.logout');
+        });
+
+
+
+        Route::get('/itc/dashboard', [ItcController::class, 'index'])->name('itc.dashboard');
+        // ITC Profile Routes
+        Route::get('/itc/profile', [ItcController::class, 'showProfile'])->name('itc.profile');
+        Route::put('/itc/profile', [ItcController::class, 'updateProfile'])->name('itc.profile.update');
+
+        Route::get('/itc/pendaftar', [ItcController::class, 'daftarPendaftar'])->name('itc.pendaftar');
+
+        // Dosen dashboard route
+        Route::get('/dosen/dashboard', [DosenController::class, 'index'])->name('dosen.dashboard');
+
+        // Tendik dashboard
+        Route::get('/tendik/dashboard', [TendikController::class, 'index'])->name('tendik.dashboard');
     });
-
-
-
-    Route::get('/itc/dashboard', [ItcController::class, 'index'])->name('itc.dashboard');
-
-    // Dosen dashboard route
-    Route::get('/dosen/dashboard', [DosenController::class, 'index'])->name('dosen.dashboard');
-
-    // Tendik dashboard
-    Route::get('/tendik/dashboard', [TendikController::class, 'index'])->name('tendik.dashboard');
-});
 });

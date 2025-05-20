@@ -215,31 +215,33 @@
 <body>
     <!-- Sidebar -->
     <aside class="sidebar flex flex-col">
-    <div class="p-6">
-        <h2 class="text-4xl font-extrabold tracking-tight select-none">TOEICLY ITC</h2>
-    </div>
-    <nav class="mt-8 flex flex-col gap-2 px-2">
-        <a href="{{ route('itc.dashboard') }}" class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-            <i class="fas fa-home"></i> Dashboard
-        </a>
-   
-  <a href="#" class="sidebar-link">
-                <i class="fas fa-calendar-alt"></i> Kelola Jadwal Sertifikat
+        <div class="p-6">
+            <h2 class="text-4xl font-extrabold tracking-tight select-none">TOEICLY ITC</h2>
+        </div>
+        <nav class="mt-8 flex flex-col gap-2 px-2">
+            <a href="{{ route('itc.dashboard') }}"
+                class="sidebar-link {{ request()->routeIs('itc.dashboard') ? 'active' : '' }}">
+                <i class="fas fa-home"></i> Dashboard
             </a>
-        <a href="{{ route('profile') }}" class="sidebar-link">
-            <i class="fas fa-user"></i> Profile
-        </a>
 
-        <a href="{{ route('logout') }}"
-            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-            class="sidebar-link">
-            <i class="fas fa-sign-out-alt"></i> Logout
-        </a>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>
-    </nav>
-</aside>
+            <a href="{{ route('itc.pendaftar') }}"
+                class="sidebar-link {{ request()->routeIs('itc.pendaftar') ? 'active' : '' }}">
+                <i class="fas fa-calendar-alt"></i> Data Pendaftar Tes
+            </a>
+            <a href="{{ route('itc.profile') }}"
+                class="sidebar-link {{ request()->routeIs('itc.profile') ? 'active' : '' }}">
+                <i class="fas fa-home"></i> Profile
+            </a>
+
+            <a href="{{ route('logout') }}"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="sidebar-link">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+        </nav>
+    </aside>
 
 
     <!-- Main content -->

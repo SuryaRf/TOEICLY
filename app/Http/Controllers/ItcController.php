@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\ItcModel;
 use Illuminate\Http\Request;
 use App\Models\UserModel;
+use Illuminate\Support\Facades\Auth;
+use App\Models\PendaftaranModel;
 
 class ItcController extends Controller
 {
@@ -13,17 +15,76 @@ class ItcController extends Controller
         $this->middleware('auth');
     }
 
-    // Menampilkan halaman dashboard ITC
     public function index()
     {
         $data = ItcModel::all();
         return view('dashboard.itc.index', compact('data'));
     }
 
-    // Halaman manajemen user ITC (opsional, jika mirip AdminController)
-    public function manage()
+    public function daftarPendaftar()
     {
-        $users = UserModel::with(['admin', 'mahasiswa', 'dosen', 'tendik', 'itc'])->get();
-        return view('dashboard.itc.manage.index', compact('users'));
+        $pendaftarans = PendaftaranModel::with(['mahasiswa', 'jadwal', 'detail'])->get();
+        return view('daftar_pendaftar.daftar_pendaftar', compact('pendaftarans'));
+    }
+
+    // Tampilkan halaman profil (GET)
+    public function showProfile()
+    {
+        $user = Auth::user();
+        return view('dashboard.itc.profile.index', compact('user'));
+    }
+
+    // Update profil (POST/PUT)
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+
+        if (!$user instanceof UserModel) {
+            abort(500, "User model tidak sesuai.");
+        }
+
+        $request->validate([
+            'email' => 'required|email|unique:user,email,' . $user->user_id . ',user_id',
+            'name' => 'required|string|max:255',
+        ]);
+
+        $user->email = $request->email;
+
+        switch ($user->role) {
+            case 'admin':
+                if ($admin = $user->admin) {
+                    $admin->nama = $request->name;
+                    $admin->save();
+                }
+                break;
+            case 'mahasiswa':
+                if ($mahasiswa = $user->mahasiswa) {
+                    $mahasiswa->nama = $request->name;
+                    $mahasiswa->save();
+                }
+                break;
+            case 'dosen':
+                if ($dosen = $user->dosen) {
+                    $dosen->nama = $request->name;
+                    $dosen->save();
+                }
+                break;
+            case 'tendik':
+                if ($tendik = $user->tendik) {
+                    $tendik->nama = $request->name;
+                    $tendik->save();
+                }
+                break;
+            case 'itc':
+                if ($itc = $user->itc) {
+                    $itc->nama = $request->name;
+                    $itc->save();
+                }
+                break;
+        }
+
+        $user->save();
+
+        return redirect()->route('itc.profile')->with('success', 'Profile berhasil diperbarui!');
     }
 }
