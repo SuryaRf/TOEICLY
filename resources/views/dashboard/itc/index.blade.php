@@ -230,7 +230,7 @@
             </a>
             <a href="{{ route('itc.profile') }}"
                 class="sidebar-link {{ request()->routeIs('itc.profile') ? 'active' : '' }}">
-                <i class="fas fa-home"></i> Profile
+                <i class="fas fa-user"></i> Profile
             </a>
 
             <a href="{{ route('logout') }}"

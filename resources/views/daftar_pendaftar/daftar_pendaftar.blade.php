@@ -180,7 +180,7 @@
             </a>
             <a href="{{ route('itc.profile') }}"
                 class="sidebar-link {{ request()->routeIs('itc.profile') ? 'active' : '' }}">
-                <i class="fas fa-home"></i> Profile
+                <i class="fas fa-user"></i> Profile
             </a>
 
             <a href="{{ route('logout') }}"
@@ -206,7 +206,7 @@
                 <th>No.</th>
                 <th>Kode Pendaftaran</th>
                 <th>Nama Mahasiswa</th>
-                <th>Jadwal Tes</th>
+                <th>Nomor Telepon</th>
                 <th>Status Pendaftaran</th>
                 <th>Tanggal Daftar</th>
                 <th>Scan KTP</th>
@@ -220,7 +220,7 @@
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $pendaftaran->pendaftaran_kode }}</td>
                     <td>{{ $pendaftaran->mahasiswa->nama ?? '-' }}</td>
-                    <td>{{ $pendaftaran->jadwal->judul ?? '-' }}</td>
+                      <td>{{ $pendaftaran->mahasiswa->no_telp ?? '-' }}</td>
                     <td>{{ ucfirst($pendaftaran->detail->status ?? 'belum ada') }}</td>
                     <td>{{ $pendaftaran->tanggal_pendaftaran->format('d-m-Y') }}</td>
                     <td>
