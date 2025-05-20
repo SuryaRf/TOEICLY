@@ -25,6 +25,7 @@ class JadwalSertifikatController extends Controller
     {
         $request->validate([
             'judul' => 'required|string|max:100',
+            'tanggal' => 'required|date', // validasi input tanggal
             'file_pdf' => 'required|file|mimes:pdf|max:5120', // max 5MB
         ]);
 
@@ -32,6 +33,7 @@ class JadwalSertifikatController extends Controller
 
         JadwalSertifikatModel::create([
             'judul' => $request->judul,
+             'tanggal' => $request->tanggal,  // simpan tanggal jadwal
             'file_pdf' => $filePath,
         ]);
 

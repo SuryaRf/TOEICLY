@@ -11,6 +11,7 @@ class JadwalSertifikatModel extends Model
 
     protected $table = 'jadwal_sertifikat';
     protected $primaryKey = 'jadwal_id';
-    protected $fillable = ['judul', 'file_pdf'];
+protected $fillable = ['judul', 'file_pdf', 'tanggal'];
+
     public $timestamps = true;
 }

@@ -224,7 +224,8 @@
                                 Tidak ada file
                             @endif
                         </td>
-                        <td>{{ $jadwal->created_at->format('d-m-Y') }}</td>
+                      <td>{{ \Carbon\Carbon::parse($jadwal->tanggal)->format('d-m-Y') }}</td>
+
                     </tr>
                 @empty
                     <tr>
