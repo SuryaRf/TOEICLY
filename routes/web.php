@@ -99,6 +99,11 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/itc/pendaftar', [ItcController::class, 'daftarPendaftar'])->name('itc.pendaftar');
 
+        // Halaman form upload nilai TOEIC
+        Route::get('/itc/upload-nilai', [ItcController::class, 'showUploadNilaiForm'])->name('itc.upload_nilai');
+
+        // Proses upload file PDF nilai TOEIC
+        Route::post('/itc/upload-nilai', [ItcController::class, 'uploadNilai'])->name('itc.upload_nilai.store');
         // Dosen dashboard route
         Route::get('/dosen/dashboard', [DosenController::class, 'index'])->name('dosen.dashboard');
 

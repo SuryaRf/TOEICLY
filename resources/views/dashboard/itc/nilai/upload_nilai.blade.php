@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Data Pendaftar Tes - TOEICLY ITC</title>
+    <title>Upload PDF Nilai TOEIC - TOEICLY ITC</title>
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
     <!-- Bootstrap CSS -->
@@ -11,14 +11,13 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
     <style>
-        /* Background and font */
         body {
             background: linear-gradient(135deg, #eef2ff 0%, #dbeafe 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
         }
 
-        /* Sidebar styles */
+        /* Sidebar styling */
         .sidebar {
             background: linear-gradient(180deg, #5b21b6 0%, #7c3aed 100%);
             color: white;
@@ -88,60 +87,76 @@
             overflow-y: auto;
         }
 
-        /* Button styles */
+        h1 {
+            color: #4c1d95;
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 6px 15px rgb(0 0 0 / 0.08);
+            padding: 2rem;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgb(124 58 237 / 0.25);
+            cursor: pointer;
+        }
+
+        label {
+            font-weight: 600;
+            color: #5b21b6;
+            margin-top: 1rem;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            margin-top: 0.25rem;
+            padding: 0.5rem;
+            border: 1px solid #a78bfa;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        input[type="file"]:focus {
+            outline: none;
+            border-color: #7c3aed;
+            box-shadow: 0 0 5px #7c3aed;
+        }
+
         .btn-modern {
+            margin-top: 1.5rem;
             background: linear-gradient(90deg, #7c3aed, #a78bfa);
             border: none;
             font-weight: 600;
-            padding: 0.5rem 1.5rem;
+            padding: 0.75rem 1.5rem;
             border-radius: 0.75rem;
             color: white;
             box-shadow: 0 4px 12px rgb(124 58 237 / 0.4);
             transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            margin-bottom: 1.5rem;
+            cursor: pointer;
+            max-width: 200px;
+            margin-left: auto;
+            display: block;
         }
 
         .btn-modern:hover {
             background: linear-gradient(90deg, #a78bfa, #7c3aed);
             transform: scale(1.08);
             box-shadow: 0 8px 20px rgb(124 58 237 / 0.7);
+            text-decoration: none;
             color: white;
-        }
-
-        /* Table styling */
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            font-size: 1rem;
-            background: white;
-            border-radius: 1rem;
-            box-shadow: 0 6px 15px rgb(0 0 0 / 0.08);
-            overflow: hidden;
-        }
-
-        th, td {
-            text-align: left;
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        thead th {
-            background-color: #f3e8ff;
-            color: #7c3aed;
-            font-weight: 700;
-        }
-
-        tbody tr:hover {
-            background-color: #ede9fe;
-        }
-
-        .no-data {
-            text-align: center;
-            padding: 2rem;
-            color: #9ca3af;
-            font-style: italic;
         }
 
         .alert-success {
@@ -152,13 +167,16 @@
             margin-bottom: 1.5rem;
             font-weight: 600;
             box-shadow: 0 2px 8px rgb(34 197 94 / 0.3);
+            max-width: 600px;
+            margin-left: auto;
         }
 
-        /* Bootstrap table buttons */
-        .btn-outline-primary {
+        .error-message {
+            color: #dc2626;
             font-weight: 600;
-            padding: 0.25rem 0.5rem;
-            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            max-width: 600px;
+            margin-left: auto;
         }
     </style>
 </head>
@@ -191,73 +209,24 @@
 </aside>
 
 <main>
-    <h1 class="text-4xl font-bold mb-6 text-purple-700">Daftar Pendaftar Tes TOEIC</h1>
+    <h1>Upload PDF Nilai TOEIC</h1>
 
     @if(session('success'))
         <div class="alert-success">{{ session('success') }}</div>
     @endif
 
-    <table class="table table-bordered table-striped">
-        <thead class="table-primary">
-            <tr>
-                <th>No.</th>
-                <th>Kode Pendaftaran</th>
-                <th>Nama Mahasiswa</th>
-                <th>Nomor Telepon</th>
-                <th>Status Pendaftaran</th>
-                <th>Tanggal Daftar</th>
-                <th>Scan KTP</th>
-                <th>Scan KTM</th>
-                <th>Pas Foto</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse ($pendaftarans as $index => $pendaftaran)
-                <tr>
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{ $pendaftaran->pendaftaran_kode }}</td>
-                    <td>{{ $pendaftaran->mahasiswa->nama ?? '-' }}</td>
-                       <td>
-                    @if($pendaftaran->mahasiswa->no_telp)
-                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $pendaftaran->mahasiswa->no_telp) }}" 
-                           target="_blank" class="btn btn-sm btn-outline-success">
-                            {{ $pendaftaran->mahasiswa->no_telp }}
-                        </a>
-                    @else
-                        -
-                    @endif
-                </td>
-                    <td>{{ ucfirst($pendaftaran->detail->status ?? 'belum ada') }}</td>
-                    <td>{{ $pendaftaran->tanggal_pendaftaran->format('d-m-Y') }}</td>
-                    <td>
-                        @if($pendaftaran->scan_ktp)
-                            <a href="{{ asset('storage/'.$pendaftaran->scan_ktp) }}" target="_blank" class="btn btn-sm btn-outline-primary">KTP</a>
-                        @else
-                            -
-                        @endif
-                    </td>
-                    <td>
-                        @if($pendaftaran->scan_ktm)
-                            <a href="{{ asset('storage/'.$pendaftaran->scan_ktm) }}" target="_blank" class="btn btn-sm btn-outline-primary">KTM</a>
-                        @else
-                            -
-                        @endif
-                    </td>
-                    <td>
-                        @if($pendaftaran->pas_foto)
-                            <a href="{{ asset('storage/'.$pendaftaran->pas_foto) }}" target="_blank" class="btn btn-sm btn-outline-primary">Foto</a>
-                        @else
-                            -
-                        @endif
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="9" class="text-center">Belum ada pendaftar.</td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
+    <form action="{{ route('itc.upload_nilai.store') }}" method="POST" enctype="multipart/form-data" class="card">
+        @csrf
+
+        <label for="nilai_pdf">Pilih File PDF Nilai TOEIC</label>
+        <input type="file" name="nilai_pdf" id="nilai_pdf" accept="application/pdf" required>
+
+        @error('nilai_pdf')
+            <div class="error-message">{{ $message }}</div>
+        @enderror
+
+        <button type="submit" class="btn-modern">Upload</button>
+    </form>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

@@ -87,4 +87,24 @@ class ItcController extends Controller
 
         return redirect()->route('itc.profile')->with('success', 'Profile berhasil diperbarui!');
     }
+    public function showUploadNilaiForm()
+    {
+        return view('dashboard.itc.nilai.upload_nilai'); // Buat view di resources/views/itc/upload_nilai.blade.php
+    }
+
+    public function uploadNilai(Request $request)
+    {
+        $request->validate([
+            'nilai_pdf' => 'required|file|mimes:pdf|max:5120', // max 5MB
+        ]);
+
+        // Simpan file PDF ke storage public/nilai_toeic
+        $path = $request->file('nilai_pdf')->store('nilai_toeic', 'public');
+
+        // Simpan info file ke database sesuai kebutuhan (opsional)
+        // Contoh:
+        // NilaiToeicModel::create(['file_path' => $path, 'uploaded_by' => Auth::id()]);
+
+        return redirect()->route('itc.upload_nilai')->with('success', 'File PDF nilai TOEIC berhasil diupload.');
+    }
 }

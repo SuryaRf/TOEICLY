@@ -158,6 +158,10 @@
                 class="sidebar-link {{ request()->routeIs('itc.pendaftar') ? 'active' : '' }}">
                 <i class="fas fa-calendar-alt"></i> Data Pendaftar Tes
             </a>
+            <a href="{{ route('itc.upload_nilai') }}"
+                class="sidebar-link {{ request()->routeIs('itc.upload_nilai') ? 'active' : '' }}">
+                <i class="fas fa-file-pdf"></i> Upload Nilai TOEIC
+            </a>
             <a href="{{ route('itc.profile') }}"
                 class="sidebar-link {{ request()->routeIs('itc.profile') ? 'active' : '' }}">
                 <i class="fas fa-user"></i> Profile
@@ -193,8 +197,8 @@
                     required>
 
                 <label for="name">Nomer Telepon</label>
-                <input type="text" id="notelp" name="notelp" value="{{ old('notelp', auth()->user()->itc->no_telp ?? '') }}"
-                    required>
+                <input type="text" id="notelp" name="notelp"
+                    value="{{ old('notelp', auth()->user()->itc->no_telp ?? '') }}" required>
 
                 <label for="role">Role</label>
                 <input type="text" id="role" name="role" value="{{ old('role', auth()->user()->role) }}" readonly>

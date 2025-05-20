@@ -223,26 +223,27 @@
                 class="sidebar-link {{ request()->routeIs('itc.dashboard') ? 'active' : '' }}">
                 <i class="fas fa-home"></i> Dashboard
             </a>
-
             <a href="{{ route('itc.pendaftar') }}"
                 class="sidebar-link {{ request()->routeIs('itc.pendaftar') ? 'active' : '' }}">
                 <i class="fas fa-calendar-alt"></i> Data Pendaftar Tes
+            </a>
+            <a href="{{ route('itc.upload_nilai') }}"
+                class="sidebar-link {{ request()->routeIs('itc.upload_nilai') ? 'active' : '' }}">
+                <i class="fas fa-file-pdf"></i> Upload Nilai TOEIC
             </a>
             <a href="{{ route('itc.profile') }}"
                 class="sidebar-link {{ request()->routeIs('itc.profile') ? 'active' : '' }}">
                 <i class="fas fa-user"></i> Profile
             </a>
-
             <a href="{{ route('logout') }}"
                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="sidebar-link">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
                 @csrf
             </form>
         </nav>
     </aside>
-
 
     <!-- Main content -->
     <main>
