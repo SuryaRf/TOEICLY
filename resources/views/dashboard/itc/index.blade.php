@@ -216,15 +216,13 @@
     <!-- Sidebar -->
     <aside class="sidebar flex flex-col">
     <div class="p-6">
-        <h2 class="text-4xl font-extrabold tracking-tight select-none">TOEICLY Admin</h2>
+        <h2 class="text-4xl font-extrabold tracking-tight select-none">TOEICLY ITC</h2>
     </div>
     <nav class="mt-8 flex flex-col gap-2 px-2">
-        <a href="{{ route('admin.dashboard') }}" class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+        <a href="{{ route('itc.dashboard') }}" class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
             <i class="fas fa-home"></i> Dashboard
         </a>
-        <a href="{{ route('admin.manage') }}" class="sidebar-link {{ request()->routeIs('admin.manage') ? 'active' : '' }}">
-            <i class="fas fa-users"></i> Manajemen Pengguna
-        </a>
+   
   <a href="#" class="sidebar-link">
                 <i class="fas fa-calendar-alt"></i> Kelola Jadwal Sertifikat
             </a>
@@ -255,21 +253,7 @@
                         45 <i class="fas fa-star"></i>
                     </span>
                 </div>
-                {{-- <div class="user-profile relative" tabindex="0" aria-label="User profile dropdown">
-                    <img src="https://via.placeholder.com/40" alt="User" class="w-12 h-12 rounded-full cursor-pointer"
-                        id="userAvatar" />
-                    <div class="dropdown-menu" id="userDropdown" role="menu" aria-hidden="true">
-                        <a href="#" role="menuitem"
-                            class="block px-4 py-2 hover:bg-purple-100 hover:text-purple-700">Profile</a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="m-0">
-                            @csrf
-                            <button type="submit" role="menuitem"
-                                class="w-full text-left px-4 py-2 hover:bg-purple-100 hover:text-purple-700 bg-transparent border-0 cursor-pointer">
-                                Logout
-                            </button>
-                        </form>
-                    </div>
-                </div> --}}
+
 
 
             </div>
