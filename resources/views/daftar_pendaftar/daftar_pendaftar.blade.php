@@ -220,7 +220,16 @@
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $pendaftaran->pendaftaran_kode }}</td>
                     <td>{{ $pendaftaran->mahasiswa->nama ?? '-' }}</td>
-                      <td>{{ $pendaftaran->mahasiswa->no_telp ?? '-' }}</td>
+                       <td>
+                    @if($pendaftaran->mahasiswa->no_telp)
+                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $pendaftaran->mahasiswa->no_telp) }}" 
+                           target="_blank" class="btn btn-sm btn-outline-success">
+                            {{ $pendaftaran->mahasiswa->no_telp }}
+                        </a>
+                    @else
+                        -
+                    @endif
+                </td>
                     <td>{{ ucfirst($pendaftaran->detail->status ?? 'belum ada') }}</td>
                     <td>{{ $pendaftaran->tanggal_pendaftaran->format('d-m-Y') }}</td>
                     <td>

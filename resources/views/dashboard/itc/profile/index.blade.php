@@ -192,6 +192,10 @@
                 <input type="text" id="name" name="name" value="{{ old('name', auth()->user()->itc->nama ?? '') }}"
                     required>
 
+                <label for="name">Nomer Telepon</label>
+                <input type="text" id="notelp" name="notelp" value="{{ old('notelp', auth()->user()->itc->no_telp ?? '') }}"
+                    required>
+
                 <label for="role">Role</label>
                 <input type="text" id="role" name="role" value="{{ old('role', auth()->user()->role) }}" readonly>
 
