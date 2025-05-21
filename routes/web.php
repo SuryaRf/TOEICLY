@@ -54,6 +54,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('kampus/list', [KampusController::class, 'list'])->name('kampus.list');
     Route::get('jurusan/list', [JurusanController::class, 'list'])->name('jurusan.list');
     Route::get('prodi/list', [ProdiController::class, 'list'])->name('prodi.list');
+   Route::get('/admin/pendaftar', [AdminController::class, 'daftarPendaftarSertifikat'])->name('admin.pendaftar');
+
+    Route::post('/itc/pendaftar/{pendaftaran}/status-sertifikat', [ItcController::class, 'updateStatusSertifikat'])
+        ->name('itc.updateStatusSertifikat');
 
     Route::resource('kampus', KampusController::class);
 

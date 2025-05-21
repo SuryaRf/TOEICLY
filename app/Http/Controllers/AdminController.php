@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AdminModel;  // Pastikan model AdminModel sudah ada
 use Illuminate\Http\Request;
 use App\Models\UserModel;
+use App\Models\PendaftaranModel;
 
 class AdminController extends Controller
 {
@@ -29,5 +30,11 @@ class AdminController extends Controller
         $users = UserModel::with(['admin', 'mahasiswa', 'dosen', 'tendik'])->get();
 
         return view('dashboard.admin.manage.index', compact('users'));
+    }
+
+    public function daftarPendaftarSertifikat()
+    {
+        $pendaftarans = PendaftaranModel::with(['mahasiswa', 'jadwal', 'detail', 'sertifikatStatus'])->get();
+        return view('daftar_pendaftar.daftar_pendaftar_sertifikat', compact('pendaftarans'));
     }
 }

@@ -28,7 +28,7 @@ class PendaftaranModel extends Model
         'created_at',
         'updated_at',
     ];
-      // Tambahkan ini untuk otomatis cast ke Carbon
+    // Tambahkan ini untuk otomatis cast ke Carbon
     protected $casts = [
         'tanggal_pendaftaran' => 'datetime',
     ];
@@ -49,5 +49,11 @@ class PendaftaranModel extends Model
     public function detail()
     {
         return $this->hasOne(DetailPendaftaranModel::class, 'pendaftaran_id', 'pendaftaran_id');
+    }
+
+    // Di PendaftaranModel.php
+    public function sertifikatStatus()
+    {
+        return $this->hasOne(SertifikatStatus::class, 'pendaftaran_id', 'pendaftaran_id');
     }
 }

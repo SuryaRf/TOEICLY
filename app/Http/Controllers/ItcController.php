@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\UserModel;
 use Illuminate\Support\Facades\Auth;
 use App\Models\PendaftaranModel;
+use App\Models\SertifikatStatus;
 
 class ItcController extends Controller
 {
@@ -26,6 +27,7 @@ class ItcController extends Controller
         $pendaftarans = PendaftaranModel::with(['mahasiswa', 'jadwal', 'detail'])->get();
         return view('daftar_pendaftar.daftar_pendaftar', compact('pendaftarans'));
     }
+
 
     // Tampilkan halaman profil (GET)
     public function showProfile()
@@ -106,5 +108,22 @@ class ItcController extends Controller
         // NilaiToeicModel::create(['file_path' => $path, 'uploaded_by' => Auth::id()]);
 
         return redirect()->route('itc.upload_nilai')->with('success', 'File PDF nilai TOEIC berhasil diupload.');
+    }
+    public function updateStatusSertifikat(Request $request, $pendaftaran_id)
+    {
+        $request->validate([
+            'status' => 'required|in:sudah,belum',
+        ]);
+
+        $status = SertifikatStatus::updateOrCreate(
+            ['pendaftaran_id' => $pendaftaran_id],
+            ['status' => $request->status]
+        );
+
+        if($request->ajax()) {
+            return response()->json(['success' => true, 'status' => $status->status]);
+        }
+
+        return redirect()->back()->with('success', 'Status sertifikat berhasil diperbarui.');
     }
 }
