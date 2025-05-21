@@ -58,4 +58,9 @@ class ProfileController extends Controller
 
         return redirect()->route('profile')->with('success', 'Profile berhasil diperbarui!');
     }
+        public function showProfile()
+    {
+        $user = Auth::user();
+        return view('dashboard.admin.profile.index', compact('user'));
+    }
 }
