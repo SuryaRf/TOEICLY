@@ -48,28 +48,12 @@
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="#hero" class="active">Home<br></a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#services">Services</a></li>
-          <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="#">Dropdown 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i
-                    class="bi bi-chevron-down toggle-dropdown"></i></a>
-                <ul>
-                  <li><a href="#">Deep Dropdown 1</a></li>
-                  <li><a href="#">Deep Dropdown 2</a></li>
-                  <li><a href="#">Deep Dropdown 3</a></li>
-                  <li><a href="#">Deep Dropdown 4</a></li>
-                  <li><a href="#">Deep Dropdown 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Dropdown 2</a></li>
-              <li><a href="#">Dropdown 3</a></li>
-              <li><a href="#">Dropdown 4</a></li>
-            </ul>
-          </li>
-
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="#about">Our Values</a></li>
+          <li><a href="#services">Services</a></li>      
+          <li><a href="#faq">FAQ</a></li>      
+          <li><a href="#testimonial">Testimonials</a></li>      
+          <li><a href="#ourteam">Our Team</a></li>      
+          {{-- <li><a href="#contact">Contact</a></li> --}}
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -109,7 +93,7 @@
     </section><!-- /Hero Section -->
 
     <!-- Values Section -->
-    <section id="values" class="values section">
+    <section id="about" class="values section">
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
@@ -383,7 +367,7 @@
 
 
     <!-- Testimonials Section -->
-    <section id="testimonials" class="testimonials section">
+    <section id="testimonial" class="testimonials section">
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
@@ -521,7 +505,7 @@
 
 
     <!-- Team Section -->
-    <section id="team" class="team section">
+    <section id="ourteam" class="team section">
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
