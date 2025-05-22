@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\UserModel;
 use App\Models\PendaftaranModel;
 use Illuminate\Support\Facades\DB;
-
+use Carbon\Carbon;
 class AdminController extends Controller
 {
     // Pastikan menggunakan middleware auth agar hanya pengguna yang login yang bisa mengakses
@@ -17,13 +17,18 @@ class AdminController extends Controller
     }
 
     // Menampilkan halaman dashboard admin
-   public function index()
+public function index()
     {
-        // Count total registrants
-        $totalRegistrants = PendaftaranModel::count();
+        // Count total registrants (current year only for relevance)
+        $currentYear = Carbon::now()->year;
+        $totalRegistrants = PendaftaranModel::whereYear('tanggal_pendaftaran', $currentYear)->count();
 
-        // Fetch data for weekly overview (group by week)
+        // Count total users
+        $totalUsers = UserModel::count();
+
+        // Fetch data for weekly overview (group by week, current year)
         $registrationsByWeek = PendaftaranModel::selectRaw('WEEK(tanggal_pendaftaran) as week, COUNT(*) as count')
+            ->whereYear('tanggal_pendaftaran', $currentYear)
             ->groupBy('week')
             ->orderBy('week')
             ->get();
@@ -34,9 +39,9 @@ class AdminController extends Controller
 
         $data = $registrationsByWeek->pluck('count')->toArray();
 
-        return view('dashboard.admin.index', compact('totalRegistrants', 'labels', 'data'));
+        // Pass all variables to the view
+        return view('dashboard.admin.index', compact('totalRegistrants', 'totalUsers', 'labels', 'data'));
     }
-
     public function manage()
     {
         // Ambil semua user dengan relasi masing-masing role

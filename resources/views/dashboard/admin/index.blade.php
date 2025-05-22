@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -184,6 +185,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Sidebar -->
     <aside class="sidebar flex flex-col">
@@ -191,31 +193,39 @@
             <h2 class="text-4xl font-extrabold tracking-tight select-none">TOEICLY Admin</h2>
         </div>
         <nav class="mt-8 flex flex-col gap-2 px-2">
-            <a href="{{ route('admin.dashboard') }}" class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+            <a href="{{ route('admin.dashboard') }}"
+                class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                 <i class="fas fa-home"></i> Dashboard
             </a>
-            <a href="{{ route('admin.manage') }}" class="sidebar-link {{ request()->routeIs('admin.manage') ? 'active' : '' }}">
+            <a href="{{ route('admin.manage') }}"
+                class="sidebar-link {{ request()->routeIs('admin.manage') ? 'active' : '' }}">
                 <i class="fas fa-users"></i> Manajemen Pengguna
             </a>
-            <a href="{{ route('jadwal_sertifikat.index') }}" class="sidebar-link {{ request()->routeIs('jadwal_sertifikat.*') ? 'active' : '' }}">
+            <a href="{{ route('jadwal_sertifikat.index') }}"
+                class="sidebar-link {{ request()->routeIs('jadwal_sertifikat.*') ? 'active' : '' }}">
                 <i class="fas fa-calendar-alt"></i> Kelola Jadwal Sertifikat
             </a>
-            <a href="{{ route('admin.pendaftar') }}" class="sidebar-link {{ request()->routeIs('admin.pendaftar') ? 'active' : '' }}">
+            <a href="{{ route('admin.pendaftar') }}"
+                class="sidebar-link {{ request()->routeIs('admin.pendaftar') ? 'active' : '' }}">
                 <i class="fas fa-users"></i> Kelola Pendaftar Sertifikat
             </a>
-            <a href="{{ route('kampus.index') }}" class="sidebar-link {{ request()->routeIs('kampus.*') ? 'active' : '' }}">
+            <a href="{{ route('kampus.index') }}"
+                class="sidebar-link {{ request()->routeIs('kampus.*') ? 'active' : '' }}">
                 <i class="fas fa-building"></i> Data Kampus
             </a>
-            <a href="{{ route('jurusan.index') }}" class="sidebar-link {{ request()->routeIs('jurusan.*') ? 'active' : '' }}">
+            <a href="{{ route('jurusan.index') }}"
+                class="sidebar-link {{ request()->routeIs('jurusan.*') ? 'active' : '' }}">
                 <i class="fas fa-book"></i> Data Jurusan
             </a>
-            <a href="{{ route('prodi.index') }}" class="sidebar-link {{ request()->routeIs('prodi.*') ? 'active' : '' }}">
+            <a href="{{ route('prodi.index') }}"
+                class="sidebar-link {{ request()->routeIs('prodi.*') ? 'active' : '' }}">
                 <i class="fas fa-graduation-cap"></i> Data Prodi
             </a>
             <a href="{{ route('profile') }}" class="sidebar-link {{ request()->routeIs('profile') ? 'active' : '' }}">
                 <i class="fas fa-user"></i> Profile
             </a>
-            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="sidebar-link">
+            <a href="{{ route('logout') }}"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="sidebar-link">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -229,12 +239,13 @@
         <header class="flex justify-between items-center mb-12">
             <h1 class="text-5xl font-extrabold text-gray-900 tracking-tight">Dashboard</h1>
             <div class="flex items-center space-x-6">
-                
+
                 <div class="user-profile relative">
-                   
+
                     <div id="userDropdown" class="dropdown-menu" aria-hidden="true">
                         <a href="{{ route('profile') }}">Profile</a>
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                        <a href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                     </div>
                 </div>
             </div>
@@ -244,10 +255,11 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <!-- Congratulations Card -->
             <section class="card">
-                <p class="text-gray-600 font-semibold">Congratulations Admin! 🎉</p>
-                <p class="text-4xl font-extrabold mt-3 text-primary">{{ $totalRegistrants }}k</p>
-                <p class="text-sm text-gray-500 mt-1">78% of target achieved <i class="fas fa-star text-yellow-400"></i></p>
-                <button class="btn-modern mt-5">View Details</button>
+                <p class="text-gray-600 font-semibold">Total Users! 🎉</p>
+                <p class="text-4xl font-extrabold mt-3 text-primary">{{ $totalUsers }}</p>
+                <p class="text-sm text-gray-500 mt-1">78% of target achieved <i class="fas fa-star text-yellow-400"></i>
+                </p>
+                <a href="{{ route('admin.manage') }}" class="btn-modern mt-5 text-white">View Details</a>
             </section>
 
             <!-- Test Registrations Card -->
@@ -266,7 +278,7 @@
                     <canvas id="weeklyChart"></canvas>
                 </div>
                 <p class="text-sm text-gray-500 mt-5">45% Test participation is 45% higher than last month</p>
-               
+
             </section>
 
             <!-- Total Revenue Card -->
@@ -284,7 +296,7 @@
                 </p>
             </section>
 
-    
+
 
             <!-- New Registrations Card -->
             <section class="card">
@@ -312,7 +324,8 @@
                     Java <span class="text-green-600 ml-2">8,656</span> <span class="text-green-600 ml-2">+25%</span>
                 </p>
                 <p class="mt-1 text-lg font-semibold">
-                    Sumatra <span class="text-green-600 ml-2">2,475</span> <span class="text-green-600 ml-2">+6.2%</span>
+                    Sumatra <span class="text-green-600 ml-2">2,475</span> <span
+                        class="text-green-600 ml-2">+6.2%</span>
                 </p>
             </section>
         </div>
@@ -379,4 +392,5 @@
         });
     </script>
 </body>
+
 </html>
