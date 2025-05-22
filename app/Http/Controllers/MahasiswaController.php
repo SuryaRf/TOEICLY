@@ -19,10 +19,14 @@ class MahasiswaController extends Controller
 
 
     // Halaman utama (overview)
-    public function index()
-    {
-        return view('dashboard.mahasiswa.overview');
-    }
+  public function index()
+{
+    $user = Auth::user(); // ambil user yang login
+    $toeicScore = $user->toeicScore; // ambil data TOEIC via relasi
+
+    return view('dashboard.mahasiswa.overview', compact('toeicScore'));
+}
+
 
 
     public function daftarTes()

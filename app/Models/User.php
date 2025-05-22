@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\ToeicScore; // tambahkan ini untuk mengimpor model relasi
 
 class User extends Authenticatable
 {
@@ -41,4 +42,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Relasi ke skor TOEIC
+     */
+    public function toeicScore()
+    {
+        return $this->hasOne(ToeicScore::class, 'user_id', 'user_id');
+    }
 }
