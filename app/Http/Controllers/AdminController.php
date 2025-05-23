@@ -26,18 +26,21 @@ public function index()
         // Count total users
         $totalUsers = UserModel::count();
 
-        // Fetch data for weekly overview (group by week, current year)
-        $registrationsByWeek = PendaftaranModel::selectRaw('WEEK(tanggal_pendaftaran) as week, COUNT(*) as count')
-            ->whereYear('tanggal_pendaftaran', $currentYear)
-            ->groupBy('week')
-            ->orderBy('week')
-            ->get();
+        // Fetch data for monthly overview (last 12 months)
+        $registrationsByMonth = PendaftaranModel::select(
+            DB::raw("DATE_FORMAT(tanggal_pendaftaran, '%Y-%m') as month"),
+            DB::raw("COUNT(*) as total")
+        )
+        ->where('tanggal_pendaftaran', '>=', now()->subYear())
+        ->groupBy('month')
+        ->orderBy('month')
+        ->get();
 
-        $labels = $registrationsByWeek->pluck('week')->map(function ($week) {
-            return "Week " . $week;
+        $labels = $registrationsByMonth->pluck('month')->map(function ($m) {
+            return Carbon::createFromFormat('Y-m', $m)->format('M Y');
         })->toArray();
 
-        $data = $registrationsByWeek->pluck('count')->toArray();
+        $data = $registrationsByMonth->pluck('total')->toArray();
 
         // Pass all variables to the view
         return view('dashboard.admin.index', compact('totalRegistrants', 'totalUsers', 'labels', 'data'));
