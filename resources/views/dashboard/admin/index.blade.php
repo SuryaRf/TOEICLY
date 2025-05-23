@@ -140,15 +140,7 @@
             border-radius: 10px;
         }
 
-        .user-profile img {
-            border: 2px solid #7c3aed;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
 
-        .user-profile img:hover {
-            transform: scale(1.1);
-        }
 
         .dropdown-menu {
             position: absolute;
@@ -228,15 +220,7 @@
     <main>
         <header class="flex justify-between items-center mb-12">
             <h1 class="text-5xl font-extrabold text-gray-900 tracking-tight">Dashboard</h1>
-            <div class="flex items-center space-x-6">
-                <div class="user-profile relative">
-                    <img src="https://via.placeholder.com/40" alt="User" class="w-10 h-10 rounded-full">
-                    <div id="userDropdown" class="dropdown-menu" aria-hidden="true">
-                        <a href="{{ route('profile') }}">Profile</a>
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-                    </div>
-                </div>
-            </div>
+            
         </header>
 
         <!-- Cards Grid -->
@@ -303,22 +287,6 @@
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // User profile dropdown toggle
-        const userProfile = document.querySelector('.user-profile');
-        const dropdownMenu = document.getElementById('userDropdown');
-
-        userProfile.addEventListener('click', (e) => {
-            e.stopPropagation();
-            dropdownMenu.classList.toggle('active');
-            dropdownMenu.setAttribute('aria-hidden', !dropdownMenu.classList.contains('active'));
-        });
-
-        document.addEventListener('click', () => {
-            if (dropdownMenu.classList.contains('active')) {
-                dropdownMenu.classList.remove('active');
-                dropdownMenu.setAttribute('aria-hidden', 'true');
-            }
-        });
 
         // Chart.js configuration for monthly data
         const ctx = document.getElementById('monthlyChart').getContext('2d');
