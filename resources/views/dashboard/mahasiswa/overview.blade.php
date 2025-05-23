@@ -37,6 +37,14 @@
 
     <!-- Main Content -->
     <main id="overview" class="flex-1 p-10 overflow-auto fade-slide">
+
+        {{-- Notifikasi success --}}
+        @if (session('success'))
+            <div class="mb-4 p-4 bg-green-100 text-green-800 rounded-lg shadow">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <h1 class="text-4xl font-bold text-purple-800 mb-6">Welcome to TOEIC Dashboard!</h1>
         <p class="text-lg text-gray-700 mb-10">Your TOEIC test overview and performance charts.</p>
 
@@ -63,7 +71,7 @@
             <canvas id="scoresChart" class="w-full h-64 bounce"></canvas>
         </section>
 
-        <!-- Tambahan: Informasi TOEIC dan Sertifikat -->
+        <!-- Informasi TOEIC dan Sertifikat -->
         <section class="bg-white mt-10 p-8 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
             <h2 class="text-2xl font-semibold text-purple-700 mb-6">Informasi TOEIC Anda</h2>
 
