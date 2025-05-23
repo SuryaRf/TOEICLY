@@ -49,6 +49,9 @@ Route::middleware('auth')->group(function () {
     // Kampus, Jurusan, Prodi dengan resource + list khusus
     Route::get('kampus/list', [KampusController::class, 'list'])->name('kampus.list');
     Route::resource('kampus', KampusController::class);
+    Route::get('kampus/{id}/edit_ajax', [KampusController::class, 'editAjax'])->name('kampus.edit_ajax');
+    Route::get('kampus/{id}/delete_ajax', [KampusController::class, 'deleteAjax'])->name('kampus.delete_ajax');
+
 
     Route::get('jurusan/list', [JurusanController::class, 'list'])->name('jurusan.list');
     Route::resource('jurusan', JurusanController::class);
