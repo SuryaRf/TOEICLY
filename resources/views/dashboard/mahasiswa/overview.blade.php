@@ -3,26 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
-    <title>Daftar Tes - TOEICLY</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-        .fade-in.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .zoom-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .zoom-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.3);
-=======
     <title>TOEIC Dashboard - Overview</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -46,7 +26,6 @@
             50% {
                 transform: translateY(-10px);
             }
->>>>>>> e66727d1e9ccd1ec5dba2160ca0f4708b6904d96
         }
     </style>
 </head>
@@ -57,33 +36,15 @@
     @include('dashboard.mahasiswa.sidebar')
 
     <!-- Main Content -->
-<<<<<<< HEAD
-    <main id="daftar-tes" class="flex-1 p-10 overflow-auto fade-in">
-        <h1 class="text-4xl font-bold text-purple-800 mb-6">Daftar Tes</h1>
-        <div class="bg-white p-8 rounded-xl shadow-lg zoom-card">
-            <table class="w-full text-left text-gray-700">
-                <thead>
-                    <tr>
-                        <th class="py-4 px-6 bg-purple-600 text-white">Test Name</th>
-                        <th class="py-4 px-6 bg-purple-600 text-white">Date</th>
-                        <th class="py-4 px-6 bg-purple-600 text-white">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="bg-gray-100 hover:bg-purple-50 transition-colors">
-                        <td class="py-4 px-6">TOEIC Practice Test 1</td>
-                        <td class="py-4 px-6">20 May 2025</td>
-                        <td class="py-4 px-6">
-                            <button class="bg-purple-600 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-purple-700 transition-colors bounce-on-hover">
-                                Register
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-=======
     <main id="overview" class="flex-1 p-10 overflow-auto fade-slide">
+
+        {{-- Notifikasi success --}}
+        @if (session('success'))
+            <div class="mb-4 p-4 bg-green-100 text-green-800 rounded-lg shadow">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <h1 class="text-4xl font-bold text-purple-800 mb-6">Welcome to TOEIC Dashboard!</h1>
         <p class="text-lg text-gray-700 mb-10">Your TOEIC test overview and performance charts.</p>
 
@@ -109,19 +70,39 @@
             <h2 class="text-2xl font-semibold text-purple-700 mb-6">Score Trends</h2>
             <canvas id="scoresChart" class="w-full h-64 bounce"></canvas>
         </section>
->>>>>>> e66727d1e9ccd1ec5dba2160ca0f4708b6904d96
+
+        <!-- Informasi TOEIC dan Sertifikat -->
+        <section class="bg-white mt-10 p-8 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
+            <h2 class="text-2xl font-semibold text-purple-700 mb-6">Informasi TOEIC Anda</h2>
+
+            @if ($toeicScore)
+                <div class="space-y-4 text-gray-700">
+                    <div>
+                        <span class="font-semibold text-purple-800">Skor Terakhir:</span>
+                        <span class="text-2xl font-bold text-green-600">{{ $toeicScore->score }}</span>
+                    </div>
+                    <div>
+                        <span class="font-semibold text-purple-800">Tanggal Sertifikat:</span>
+                        <span>{{ \Carbon\Carbon::parse($toeicScore->certificate_date)->translatedFormat('d F Y') }}</span>
+                    </div>
+                    <div>
+                        <span class="font-semibold text-purple-800">Sertifikat PDF:</span>
+                        @if ($toeicScore->certificate_pdf)
+                            <a href="{{ asset('storage/' . $toeicScore->certificate_pdf) }}"
+                               class="text-blue-600 underline hover:text-blue-800" target="_blank">Lihat Sertifikat</a>
+                        @else
+                            <span class="text-red-500">Belum tersedia</span>
+                        @endif
+                    </div>
+                </div>
+            @else
+                <p class="text-red-600">Belum ada data TOEIC yang tersedia untuk ditampilkan.</p>
+            @endif
+        </section>
     </main>
 </div>
 
 <script>
-<<<<<<< HEAD
-    // Add fade-in effect on page load
-    window.addEventListener('load', () => {
-        const daftarTes = document.getElementById('daftar-tes');
-        setTimeout(() => {
-            daftarTes.classList.add('show');
-        }, 100);
-=======
     // Add fade-slide effect on page load
     window.addEventListener('load', () => {
         const overview = document.getElementById('overview');
@@ -176,13 +157,8 @@
                 }
             }
         });
->>>>>>> e66727d1e9ccd1ec5dba2160ca0f4708b6904d96
     });
 </script>
 
 </body>
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> e66727d1e9ccd1ec5dba2160ca0f4708b6904d96

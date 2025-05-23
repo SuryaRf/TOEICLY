@@ -4,6 +4,12 @@
 <div class="container mx-auto p-4 max-w-3xl">
     <h1 class="text-3xl font-bold mb-6 text-purple-700">Form Pendaftaran TOEIC</h1>
 
+    {{-- Tombol Back ke dashboard mahasiswa --}}
+    <a href="{{ route('mahasiswa.dashboard') }}" 
+       class="inline-block mb-6 px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded text-gray-700 font-semibold transition duration-200">
+        &laquo; Kembali ke Dashboard
+    </a>
+
     @if(session('success'))
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
             {{ session('success') }}
@@ -99,7 +105,10 @@
             <input type="file" id="pas_foto" name="pas_foto" required accept="image/*" class="border border-purple-400 rounded px-3 py-2 w-full" />
         </div>
 
-        <button type="submit" class="btn-modern">Daftar TOEIC</button>
+        <button type="submit" 
+                class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md flex items-center gap-2 transition duration-300">
+            ✍️ Daftar TOEIC
+        </button>
     </form>
 </div>
 @endsection

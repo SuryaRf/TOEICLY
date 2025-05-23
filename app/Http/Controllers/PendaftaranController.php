@@ -22,7 +22,7 @@ class PendaftaranController extends Controller
         $prodi = ProdiModel::all();
         $jadwal = JadwalModel::all();
 
-        $mahasiswa = Auth::user()->mahasiswa; // asumsi user sudah login sebagai mahasiswa
+        $mahasiswa = Auth::user()->mahasiswa;
 
         return view('pendaftaran.create', compact('kampus', 'jurusan', 'prodi', 'jadwal', 'mahasiswa'));
     }
@@ -45,39 +45,42 @@ class PendaftaranController extends Controller
             return redirect()->back()->withErrors('Data mahasiswa tidak ditemukan.');
         }
 
-        // Update nomor telp dan alamat jika perlu
-        $mahasiswa->no_telp = $request->no_telp;
-        $mahasiswa->alamat_asal = $request->alamat_asal;
-        $mahasiswa->alamat_sekarang = $request->alamat_sekarang;
-        $mahasiswa->prodi_id = $request->prodi_id;
-        $mahasiswa->save();
+        // Update data mahasiswa
+        $mahasiswa->update([
+            'no_telp' => $request->no_telp,
+            'alamat_asal' => $request->alamat_asal,
+            'alamat_sekarang' => $request->alamat_sekarang,
+            'prodi_id' => $request->prodi_id,
+        ]);
 
         // Upload file
         $ktpPath = $request->file('scan_ktp')->store('uploads/ktp', 'public');
         $ktmPath = $request->file('scan_ktm')->store('uploads/ktm', 'public');
         $fotoPath = $request->file('pas_foto')->store('uploads/foto', 'public');
 
-        // Buat kode pendaftaran unik (misal 10 karakter random)
+        // Buat kode pendaftaran unik
         $kode = strtoupper(Str::random(10));
 
         // Simpan ke tabel pendaftaran
-        $pendaftaran = new PendaftaranModel();
-        $pendaftaran->pendaftaran_kode = $kode;
-        $pendaftaran->tanggal_pendaftaran = now();
-        $pendaftaran->scan_ktp = $ktpPath;
-        $pendaftaran->scan_ktm = $ktmPath;
-        $pendaftaran->pas_foto = $fotoPath;
-        $pendaftaran->mahasiswa_id = $mahasiswa->mahasiswa_id;
-        $pendaftaran->jadwal_id = $request->jadwal_id;
-        $pendaftaran->save();
+        $pendaftaran = PendaftaranModel::create([
+            'pendaftaran_kode' => $kode,
+            'tanggal_pendaftaran' => now(),
+            'scan_ktp' => $ktpPath,
+            'scan_ktm' => $ktmPath,
+            'pas_foto' => $fotoPath,
+            'mahasiswa_id' => $mahasiswa->mahasiswa_id,
+            'jadwal_id' => $request->jadwal_id,
+        ]);
 
-        // Buat detail pendaftaran dengan status default "menunggu"
-        $detail = new DetailPendaftaranModel();
-        $detail->pendaftaran_id = $pendaftaran->pendaftaran_id;
-        $detail->status = 'menunggu';
-        $detail->catatan = null;
-        $detail->save();
+        // Simpan detail pendaftaran
+        DetailPendaftaranModel::create([
+            'pendaftaran_id' => $pendaftaran->pendaftaran_id,
+            'status' => 'menunggu',
+            'catatan' => null,
+        ]);
 
-        return redirect()->route('pendaftaran.create')->with('success', 'Pendaftaran TOEIC berhasil diajukan!');
+        // Redirect ke dashboard overview mahasiswa
+return redirect()->route('mahasiswa.dashboard')
+                 ->with('success', 'Pendaftaran TOEIC berhasil diajukan!');
     }
 }

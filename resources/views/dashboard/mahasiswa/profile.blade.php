@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil - TOEICLY</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+    </style>
 </head>
 <body class="bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 min-h-screen">
 
@@ -14,7 +30,7 @@
 
     <!-- Main Content -->
     <main class="flex-1 p-10 overflow-auto">
-        <div class="bg-white p-10 rounded-3xl shadow-lg transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
+        <div class="bg-white p-10 rounded-3xl shadow-lg animate-fade-in">
             <div class="flex items-center space-x-8">
                 <!-- Avatar Slot -->
                 <div class="relative">
@@ -45,8 +61,4 @@
 </div>
 
 </body>
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> e66727d1e9ccd1ec5dba2160ca0f4708b6904d96
