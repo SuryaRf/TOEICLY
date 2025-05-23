@@ -262,18 +262,10 @@
                 <a href="{{ route('admin.manage') }}" class="btn-modern mt-5 text-white">View Details</a>
             </section>
 
-            <!-- Test Registrations Card -->
-            <section class="card">
-                <p class="text-gray-600 font-semibold">Test Registrations</p>
-                <p class="text-4xl font-extrabold mt-3 text-primary">48.5%</p>
-                <p class="text-sm text-green-600 mt-1 font-semibold flex items-center gap-1">
-                    Growth this month <i class="fas fa-arrow-up"></i>
-                </p>
-            </section>
 
             <!-- Weekly Overview Chart Card -->
             <section class="card lg:col-span-2 flex flex-col">
-                <p class="text-gray-600 font-semibold mb-4">Weekly Test Overview</p>
+                <p class="text-gray-600 font-semibold mb-4">Test Registrations</p>
                 <div class="w-full h-64">
                     <canvas id="weeklyChart"></canvas>
                 </div>
@@ -281,11 +273,6 @@
 
             </section>
 
-            <!-- Total Revenue Card -->
-            <section class="card">
-                <p class="text-gray-600 font-semibold">Total Revenue</p>
-                <p class="text-4xl font-extrabold mt-3 text-primary">$86.4k</p>
-            </section>
 
             <!-- Profit Card -->
             <section class="card">
