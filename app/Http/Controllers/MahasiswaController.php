@@ -3,40 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Models\MahasiswaModel;
-use App\Models\DetailPendaftaranModel;
 use App\Models\KampusModel;
 use App\Models\JurusanModel;
 use App\Models\ProdiModel;
 use App\Models\JadwalModel;
 use Illuminate\Http\Request;
-
-
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 
 class MahasiswaController extends Controller
 {
-
-
     // Halaman utama (overview)
-  public function index()
-{
-    $user = Auth::user(); // ambil user yang login
-    $toeicScore = $user->toeicScore; // ambil data TOEIC via relasi
+    public function index()
+    {
+        $user = Auth::user(); // Ambil user yang login
+        $toeicScore = $user->toeicScore; // Ambil data TOEIC via relasi
 
-    return view('dashboard.mahasiswa.overview', compact('toeicScore'));
-}
-
-
+        return view('dashboard.mahasiswa.overview', compact('toeicScore'));
+    }
 
     public function daftarTes()
     {
         $kampus = KampusModel::all();
         $jurusan = JurusanModel::all();
-        $prodi = ProdiModel::all();    // <-- ini harus ada
+        $prodi = ProdiModel::all();
         $jadwal = JadwalModel::all();
 
-        $mahasiswa = Auth::user()->mahasiswa;
+        // Ambil mahasiswa dari user yang login, eager load prodi
+        $mahasiswa = Auth::user()->mahasiswa()->with('prodi')->first();
 
         return view('pendaftaran.create', compact('kampus', 'jurusan', 'prodi', 'jadwal', 'mahasiswa'));
     }
@@ -48,6 +41,11 @@ class MahasiswaController extends Controller
 
     public function profile()
     {
-        return view('dashboard.mahasiswa.profile');
+        $user = Auth::user();
+
+        // Ambil mahasiswa dengan eager loading prodi
+        $mahasiswa = $user->mahasiswa()->with('prodi')->first();
+
+        return view('dashboard.mahasiswa.profile', compact('mahasiswa', 'user'));
     }
 }

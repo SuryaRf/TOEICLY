@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Profil - TOEICLY</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -16,7 +16,6 @@
                 transform: translateY(0);
             }
         }
-
         .animate-fade-in {
             animation: fadeInUp 0.8s ease-out forwards;
         }
@@ -30,31 +29,44 @@
 
     <!-- Main Content -->
     <main class="flex-1 p-10 overflow-auto">
-        <div class="bg-white p-10 rounded-3xl shadow-lg animate-fade-in">
-            <div class="flex items-center space-x-8">
-                <!-- Avatar Slot -->
-                <div class="relative">
-                    <div class="w-40 h-40 bg-purple-200 rounded-full overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300">
-                        <img src="https://via.placeholder.com/150" alt="Avatar" class="w-full h-full object-cover">
-                    </div>
-                    <label for="avatar" class="absolute bottom-0 right-0 bg-purple-600 text-white p-2 rounded-full cursor-pointer shadow-lg hover:bg-purple-700 transition duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm0 2h12v3.586l-3.293-3.293a1 1 0 00-1.414 0L10 8.586 7.707 6.293a1 1 0 00-1.414 0L4 8.586V5zm0 5.414L6.293 8.707a1 1 0 011.414 0L10 11.414l2.293-2.293a1 1 0 011.414 0L16 10.414V15H4v-4.586z" />
-                        </svg>
-                    </label>
-                    <input type="file" id="avatar" class="hidden">
+        <div class="bg-white p-10 rounded-3xl shadow-lg animate-fade-in max-w-4xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center md:items-start space-y-8 md:space-y-0 md:space-x-8">
+
+                <!-- Avatar Section -->
+                <div class="relative w-40 h-40 rounded-full overflow-hidden shadow-lg bg-purple-200 hover:scale-105 transition-transform duration-300">
+                    @if($mahasiswa && $mahasiswa->avatar)
+                        <img src="{{ asset('storage/avatars/' . $mahasiswa->avatar) }}" alt="Avatar" class="w-full h-full object-cover" />
+                    @elseif($user && $user->avatar)
+                        <img src="{{ asset('storage/avatars/' . $user->avatar) }}" alt="Avatar" class="w-full h-full object-cover" />
+                    @else
+                        <img src="https://via.placeholder.com/150" alt="Avatar" class="w-full h-full object-cover" />
+                    @endif
+
+                    <form action="{{ route('mahasiswa.profile.uploadAvatar') }}" method="POST" enctype="multipart/form-data" 
+                          class="absolute bottom-2 right-2 bg-purple-600 p-2 rounded-full cursor-pointer shadow-lg hover:bg-purple-700 transition duration-300 flex items-center justify-center"
+                          title="Upload Avatar">
+                        @csrf
+                        <label for="avatar" class="cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </label>
+                        <input type="file" name="avatar" id="avatar" class="hidden" onchange="this.form.submit()" />
+                    </form>
                 </div>
 
-                <!-- Profile Info -->
-                <div>
-                    <h2 class="text-4xl font-bold text-purple-700 mb-4">Mahasiswa Name</h2>
-                    <p class="text-lg text-gray-600 mb-2">Email: mahasiswa@example.com</p>
-                    <p class="text-lg text-gray-600 mb-2">NIM: 12345678</p>
-                    <p class="text-lg text-gray-600 mb-2">Program Studi: Teknik Informatika</p>
-                    <button class="mt-6 bg-purple-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-purple-700 transition duration-300">
-                        Edit Profile
-                    </button>
+                <!-- Profile Info Section -->
+                <div class="flex-1 text-center md:text-left">
+                    <h2 class="text-4xl font-bold text-purple-700 mb-4">{{ $mahasiswa->nama ?? '-' }}</h2>
+
+                    <div class="space-y-2 text-gray-700 text-lg">
+                        <p><strong>Email:</strong> {{ $user->email ?? '-' }}</p>
+                        <p><strong>NIM:</strong> {{ $mahasiswa->nim ?? '-' }}</p>
+                        <p><strong>NIK:</strong> {{ $mahasiswa->nik ?? '-' }}</p>
+                        <p><strong>Program Studi:</strong> {{ $mahasiswa->prodi->nama_prodi ?? '-' }}</p>
+                    </div>
                 </div>
+
             </div>
         </div>
     </main>
