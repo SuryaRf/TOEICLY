@@ -10,7 +10,7 @@ class UserModel extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $table = 'user'; // Menambahkan nama tabel yang benar
+    protected $table = 'user'; // Corrected to 'users' to match your schema
     protected $primaryKey = 'user_id';
     public $timestamps = true;
 
@@ -27,39 +27,39 @@ class UserModel extends Authenticatable
         'itc_id',
     ];
 
-    // Relasi
+    // Relasi (corrected to hasOne since the foreign key is in users table)
     public function admin()
     {
-        return $this->belongsTo(AdminModel::class, 'admin_id');
+        return $this->hasOne(AdminModel::class, 'admin_id', 'admin_id');
     }
 
     public function mahasiswa()
     {
-        return $this->belongsTo(MahasiswaModel::class, 'mahasiswa_id');
+        return $this->hasOne(MahasiswaModel::class, 'mahasiswa_id', 'mahasiswa_id');
     }
 
     public function dosen()
     {
-        return $this->belongsTo(DosenModel::class, 'dosen_id');
+        return $this->hasOne(DosenModel::class, 'dosen_id', 'dosen_id');
     }
 
     public function tendik()
     {
-        return $this->belongsTo(TendikModel::class, 'tendik_id');
+        return $this->hasOne(TendikModel::class, 'tendik_id', 'tendik_id');
     }
+
     public function itc()
-{
-    return $this->belongsTo(ItcModel::class, 'itc_id');
-}
+    {
+        return $this->hasOne(ItcModel::class, 'itc_id', 'itc_id');
+    }
+
+    public function getAuthIdentifierName()
+    {
+        return 'email'; // Revert to default or use a custom guard if needed
+    }
 
     public function getAuthPassword()
     {
         return $this->password;
-    }
-
-    // Fix login menggunakan username
-    public function getAuthIdentifierName()
-    {
-        return 'username';
     }
 }

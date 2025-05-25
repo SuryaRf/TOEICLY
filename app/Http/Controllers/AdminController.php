@@ -48,7 +48,7 @@ public function index()
     public function manage()
     {
         // Ambil semua user dengan relasi masing-masing role
-        $users = UserModel::with(['admin', 'mahasiswa', 'dosen', 'tendik'])->get();
+        $users = UserModel::with(['admin', 'mahasiswa', 'dosen', 'tendik', 'itc'])->get();
 
         return view('dashboard.admin.manage.index', compact('users'));
     }

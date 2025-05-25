@@ -216,7 +216,7 @@
                                     {{ $user->tendik->nama }}
                                 @elseif ($user->role === 'itc' && $user->itc)
                                     {{ $user->itc->nama }}
-                                   
+
                                 @else
                                     -
                                 @endif

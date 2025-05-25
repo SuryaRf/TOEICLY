@@ -13,10 +13,7 @@ class ItcModel extends Model
     protected $primaryKey = 'itc_id';
     public $timestamps = true;
 
-    protected $fillable = [
-        'nama',
-        'no_telp',
-    ];
+protected $fillable = ['nama', 'user_id', 'no_telp'];
 
     // Relasi ke User (one to one)
     public function user()
