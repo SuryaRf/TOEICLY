@@ -84,7 +84,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [MahasiswaController::class, 'index'])->name('dashboard');
 
         // // Profile mahasiswa menggunakan controller di namespace Mahasiswa
-        // Route::get('/profile', [MahasiswaProfileController::class, 'index'])->name('profile');
+        Route::get('/profile', [MahasiswaController::class, 'profile'])->name('profile');
         // Route::post('/profile/avatar', [MahasiswaProfileController::class, 'uploadAvatar'])->name('profile.uploadAvatar');
 
         Route::get('/daftar-tes', [MahasiswaController::class, 'daftarTes'])->name('daftar-tes');
