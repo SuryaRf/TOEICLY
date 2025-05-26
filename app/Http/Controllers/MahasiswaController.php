@@ -7,38 +7,28 @@ use App\Models\DetailPendaftaranModel;
 use App\Models\KampusModel;
 use App\Models\JurusanModel;
 use App\Models\ProdiModel;
-use App\Models\JadwalModel;
 use Illuminate\Http\Request;
-
-
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 
 class MahasiswaController extends Controller
 {
-
-
     // Halaman utama (overview)
-  public function index()
-{
-    $user = Auth::user(); // ambil user yang login
-    $toeicScore = $user->toeicScore; // ambil data TOEIC via relasi
+    public function index()
+    {
+        $user = Auth::user(); // ambil user yang login
+        $toeicScore = $user->toeicScore; // ambil data TOEIC via relasi
 
-    return view('dashboard.mahasiswa.overview', compact('toeicScore'));
-}
-
-
+        return view('dashboard.mahasiswa.overview', compact('toeicScore'));
+    }
 
     public function daftarTes()
     {
         $kampus = KampusModel::all();
         $jurusan = JurusanModel::all();
-        $prodi = ProdiModel::all();    // <-- ini harus ada
-        $jadwal = JadwalModel::all();
-
+        $prodi = ProdiModel::all();
         $mahasiswa = Auth::user()->mahasiswa;
 
-        return view('pendaftaran.create', compact('kampus', 'jurusan', 'prodi', 'jadwal', 'mahasiswa'));
+        return view('pendaftaran.create', compact('kampus', 'jurusan', 'prodi', 'mahasiswa'));
     }
 
     public function riwayatUjian()
