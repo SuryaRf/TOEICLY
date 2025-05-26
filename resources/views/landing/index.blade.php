@@ -12,8 +12,6 @@
   <link rel="icon" href="{{ asset('img/favicon.png') }}" type="image/png">
   <link rel="apple-touch-icon" href="{{ asset('img/apple-touch-icon.png') }}">
 
-
-
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
@@ -28,7 +26,6 @@
   <link href="{{ asset('vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
   <link href="{{ asset('vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
 
-
   <!-- Main CSS File -->
   <link href="{{ asset('css/main.css') }}" rel="stylesheet">
 </head>
@@ -41,26 +38,22 @@
       <a href="index.html" class="logo d-flex align-items-center me-auto">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <img src="{{ asset('img/logo.png') }}" alt="Logo" class="img-fluid">
-
         <h1 class="sitename">Toeicly</h1>
       </a>
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="#hero" class="active">Home<br></a></li>
+          <li><a href="#hero" class="active">Home</a></li>
           <li><a href="#about">Our Values</a></li>
-          <li><a href="#services">Services</a></li>      
-          <li><a href="#faq">FAQ</a></li>      
-          <li><a href="#testimonial">Testimonials</a></li>      
-          <li><a href="#ourteam">Our Team</a></li>      
-          {{-- <li><a href="#contact">Contact</a></li> --}}
+          <li><a href="#services">Services</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#testimonial">Testimonials</a></li>
+          <li><a href="#ourteam">Our Team</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
       <a class="btn-getstarted flex-md-shrink-0" href="{{ url('/login') }}">Get Started</a>
-
-
     </div>
   </header>
 
@@ -68,7 +61,6 @@
 
     <!-- Hero Section -->
     <section id="hero" class="hero section">
-
       <div class="container">
         <div class="row gy-4">
           <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
@@ -89,12 +81,10 @@
           </div>
         </div>
       </div>
-
     </section><!-- /Hero Section -->
 
     <!-- Values Section -->
     <section id="about" class="values section">
-
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>Our Values</h2>
@@ -102,15 +92,12 @@
       </div><!-- End Section Title -->
 
       <div class="container">
-
         <div class="row gy-4">
-
           <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
             <div class="card">
               <img src="{{ asset('img/values-1.png') }}" class="img-fluid" alt="User Friendly">
               <h3>User Friendly</h3>
-              <p>Antarmuka yang intuitif dan mudah digunakan oleh semua kalangan, dari peserta tes hingga administrator.
-              </p>
+              <p>An intuitive and easy-to-use interface for all users, from test participants to administrators.</p>
             </div>
           </div><!-- End Card Item -->
 
@@ -118,7 +105,8 @@
             <div class="card">
               <img src="{{ asset('img/values-2.png') }}" class="img-fluid" alt="Fast & Reliable">
               <h3>Fast & Reliable</h3>
-              <p>Proses manajemen tes yang cepat dan handal, memastikan kelancaran pelaksanaan TOEIC tanpa hambatan.</p>
+              <p>A fast and reliable test management process, ensuring smooth TOEIC test execution without
+                interruptions.</p>
             </div>
           </div><!-- End Card Item -->
 
@@ -126,32 +114,24 @@
             <div class="card">
               <img src="{{ asset('img/values-3.png') }}" class="img-fluid" alt="Secure & Supportive">
               <h3>Secure & Supportive</h3>
-              <p>Keamanan data terjamin dengan sistem enkripsi dan dukungan profesional yang siap membantu kapan saja.
-              </p>
+              <p>Guaranteed data security with encryption systems and professional support ready to assist anytime.</p>
             </div>
           </div><!-- End Card Item -->
-
         </div>
-
       </div>
-
     </section><!-- /Values Section -->
-
 
     <!-- Stats Section -->
     <section id="stats" class="stats section">
-
       <div class="container" data-aos="fade-up" data-aos-delay="100">
-
         <div class="row gy-4">
-
           <div class="col-lg-3 col-md-6">
             <div class="stats-item d-flex align-items-center w-100 h-100">
               <i class="bi bi-emoji-smile color-blue flex-shrink-0"></i>
               <div>
                 <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1"
                   class="purecounter"></span>
-                <p>Jumlah Mahasiswa</p>
+                <p>Number of Students</p>
               </div>
             </div>
           </div><!-- End Stats Item -->
@@ -162,7 +142,7 @@
               <div>
                 <span data-purecounter-start="0" data-purecounter-end="7" data-purecounter-duration="1"
                   class="purecounter"></span>
-                <p>Jurusan</p>
+                <p>Departments</p>
               </div>
             </div>
           </div><!-- End Stats Item -->
@@ -173,7 +153,7 @@
               <div>
                 <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="1"
                   class="purecounter"></span>
-                <p>Hours Of Support</p>
+                <p>Hours of Support</p>
               </div>
             </div>
           </div><!-- End Stats Item -->
@@ -188,96 +168,73 @@
               </div>
             </div>
           </div><!-- End Stats Item -->
-
         </div>
-
       </div>
-
     </section><!-- /Stats Section -->
-
-    <!-- Features Section -->
-
-
-    <!-- Alt Features Section -->
 
     <!-- Services Section -->
     <section id="services" class="services section">
-
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>Services</h2>
-        <p>Check Our Services<br></p>
+        <p>Check Our Services</p>
       </div><!-- End Section Title -->
 
       <div class="container">
-
         <div class="row gy-4">
-
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
             <div class="service-item item-cyan position-relative">
               <i class="bi bi-pencil-square icon"></i>
-              <h3>Pendaftaran TOEIC</h3>
-              <p>Memudahkan peserta dalam proses pendaftaran ujian TOEIC secara online dengan cepat dan aman.</p>
-
+              <h3>TOEIC Registration</h3>
+              <p>Facilitates participants in the TOEIC exam registration process quickly and securely online.</p>
             </div>
           </div><!-- End Service Item -->
 
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="service-item item-orange position-relative">
               <i class="bi bi-calendar-event icon"></i>
-              <h3>Manajemen Jadwal Ujian</h3>
-              <p>Mengelola dan menjadwalkan pelaksanaan ujian TOEIC dengan sistem yang terorganisir dan terintegrasi.
-              </p>
-
+              <h3>Exam Schedule Management</h3>
+              <p>Manages and schedules TOEIC exams with an organized and integrated system.</p>
             </div>
           </div><!-- End Service Item -->
 
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
             <div class="service-item item-teal position-relative">
               <i class="bi bi-award icon"></i>
-              <h3>Pengelolaan Sertifikat TOEIC</h3>
-              <p>Memudahkan proses pembuatan dan pengelolaan sertifikat TOEIC secara digital dan valid.</p>
-
+              <h3>TOEIC Certificate Management</h3>
+              <p>Facilitates the management of TOEIC certificates with validity.</p>
             </div>
           </div><!-- End Service Item -->
 
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
             <div class="service-item item-red position-relative">
               <i class="bi bi-people icon"></i>
-              <h3>Manajemen Admin UPA Bahasa</h3>
-              <p>Mengelola akun dan hak akses admin untuk kelancaran operasional sistem TOEIC secara profesional.</p>
-
+              <h3>Language Unit Admin Management</h3>
+              <p>Manages admin accounts and access rights for smooth and professional TOEIC system operations.</p>
             </div>
           </div><!-- End Service Item -->
 
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
             <div class="service-item item-indigo position-relative">
               <i class="bi bi-bar-chart-line icon"></i>
-              <h3>Mengelola Nilai Hasil Ujian</h3>
-              <p>Mencatat, mengelola, dan menampilkan hasil nilai TOEIC secara akurat dan transparan.</p>
-
+              <h3>Exam Results Management</h3>
+              <p>Records, manages, and displays TOEIC exam results accurately and transparently.</p>
             </div>
           </div><!-- End Service Item -->
 
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
             <div class="service-item item-pink position-relative">
               <i class="bi bi-journal-text icon"></i>
-              <h3>Melihat Riwayat Ujian</h3>
-              <p>Memudahkan peserta dan admin melihat histori ujian TOEIC secara lengkap dan mudah diakses.</p>
-
+              <h3>Exam History Review</h3>
+              <p>Enables participants and admins to view complete and easily accessible TOEIC exam history.</p>
             </div>
           </div><!-- End Service Item -->
-
         </div>
-
       </div>
-
-    </section>
-
+    </section><!-- /Services Section -->
 
     <!-- Faq Section -->
     <section id="faq" class="faq section">
-
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>F.A.Q</h2>
@@ -285,98 +242,81 @@
       </div><!-- End Section Title -->
 
       <div class="container">
-
         <div class="row">
-
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-
             <div class="faq-container">
-
               <div class="faq-item faq-active">
-                <h3>Bagaimana cara mendaftar ujian TOEIC melalui Toeicly?</h3>
+                <h3>How do I register for the TOEIC exam through Toeicly?</h3>
                 <div class="faq-content">
-                  <p>Peserta dapat mendaftar ujian TOEIC secara online dengan membuat akun, mengisi formulir
-                    pendaftaran, dan memilih jadwal ujian yang tersedia.</p>
+                  <p>Participants can register for the TOEIC exam online by creating an account, filling out the
+                    registration form, and selecting an available exam schedule.</p>
                 </div>
                 <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
+              </div><!-- End Faq item -->
 
               <div class="faq-item">
-                <h3>Apakah saya bisa mengubah jadwal ujian setelah mendaftar?</h3>
+                <h3>Can I change the exam schedule after registering?</h3>
                 <div class="faq-content">
-                  <p>Ya, Anda dapat mengubah jadwal ujian melalui akun Anda dengan syarat dan ketentuan yang berlaku,
-                    biasanya paling lambat 3 hari sebelum tanggal ujian.</p>
+                  <p>Yes, you can change the exam schedule through your account, subject to applicable terms and
+                    conditions, typically at least 3 days before the exam date.</p>
                 </div>
                 <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
+              </div><!-- End Faq item -->
 
               <div class="faq-item">
-                <h3>Bagaimana cara mendapatkan sertifikat TOEIC setelah ujian?</h3>
+                <h3>How do I obtain my TOEIC certificate after the exam?</h3>
                 <div class="faq-content">
-                  <p>Sertifikat TOEIC akan tersedia secara digital di akun peserta setelah hasil ujian diproses,
-                    biasanya dalam waktu 2 minggu setelah ujian.</p>
+                  <p>The TOEIC certificate will be available digitally in the participant's account after the exam
+                    results are processed, typically within 2 weeks after the exam.</p>
                 </div>
                 <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
-
+              </div><!-- End Faq item -->
             </div>
-
-          </div><!-- End Faq Column-->
+          </div><!-- End Faq Column -->
 
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-
             <div class="faq-container">
-
               <div class="faq-item">
-                <h3>Bagaimana keamanan data pribadi saya di Toeicly?</h3>
+                <h3>How secure is my personal data on Toeicly?</h3>
                 <div class="faq-content">
-                  <p>Kami menjaga keamanan data pribadi peserta dengan sistem enkripsi dan protokol keamanan yang ketat
-                    sesuai standar internasional.</p>
+                  <p>We ensure the security of participants' personal data with strict encryption systems and
+                    international standard security protocols.</p>
                 </div>
                 <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
+              </div><!-- End Faq item -->
 
               <div class="faq-item">
-                <h3>Apakah ada dukungan jika mengalami kesulitan menggunakan sistem?</h3>
+                <h3>Is there support available if I encounter difficulties using the system?</h3>
                 <div class="faq-content">
-                  <p>Tim support kami siap membantu Anda melalui fitur kontak bantuan di dalam sistem atau melalui email
-                    resmi Toeicly.</p>
+                  <p>Our support team is ready to assist you through the help contact feature within the system or via
+                    Toeicly's official email.</p>
                 </div>
                 <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
+              </div><!-- End Faq item -->
 
               <div class="faq-item">
-                <h3>Bisakah saya melihat riwayat hasil ujian saya?</h3>
+                <h3>Can I view my exam result history?</h3>
                 <div class="faq-content">
-                  <p>Ya, peserta dapat mengakses dan melihat riwayat hasil ujian TOEIC yang pernah diikuti melalui
-                    dashboard akun mereka.</p>
+                  <p>Yes, participants can access and view the history of TOEIC exam results they have taken through
+                    their account dashboard.</p>
                 </div>
                 <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
-
+              </div><!-- End Faq item -->
             </div>
-
-          </div><!-- End Faq Column-->
-
+          </div><!-- End Faq Column -->
         </div>
-
       </div>
-
     </section><!-- /Faq Section -->
-
-
 
     <!-- Testimonials Section -->
     <section id="testimonial" class="testimonials section">
-
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>Testimonials</h2>
-        <p>What they are saying about us<br></p>
+        <p>What they are saying about us</p>
       </div><!-- End Section Title -->
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
-
         <div class="swiper init-swiper">
           <script type="application/json" class="swiper-config">
         {
@@ -404,7 +344,6 @@
         }
       </script>
           <div class="swiper-wrapper">
-
             <div class="swiper-slide">
               <div class="testimonial-item">
                 <div class="stars">
@@ -417,7 +356,6 @@
                 </p>
                 <div class="profile mt-auto">
                   <img src="{{ asset('img/testimonials/testimonials-1.jpg') }}" class="testimonial-img" alt="User 1">
-
                   <h3>Emily Johnson</h3>
                   <h4>English Language Student</h4>
                 </div>
@@ -494,34 +432,26 @@
                 </div>
               </div>
             </div><!-- End testimonial item -->
-
           </div>
           <div class="swiper-pagination"></div>
         </div>
-
       </div>
-
     </section><!-- /Testimonials Section -->
-
 
     <!-- Team Section -->
     <section id="ourteam" class="team section">
-
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>Team</h2>
-        <p>Our hard working team</p>
+        <p>Our hard-working team</p>
       </div><!-- End Section Title -->
 
       <div class="container">
-
         <div class="row gy-4">
-
           <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
             <div class="team-member">
               <div class="member-img">
                 <img src="{{ asset('img/team/team-1.jpg') }}" class="img-fluid" alt="Team Member">
-
                 <div class="social">
                   <a href="#"><i class="bi bi-twitter"></i></a>
                   <a href="#"><i class="bi bi-facebook"></i></a>
@@ -532,7 +462,7 @@
               <div class="member-info">
                 <h4>Surya Rahmat Fatahillah</h4>
                 <span>Project Manager</span>
-                <p>Memimpin pengembangan dan koordinasi proyek dengan fokus pada hasil dan kolaborasi tim.</p>
+                <p>Leads project development and coordination with a focus on results and team collaboration.</p>
               </div>
             </div>
           </div><!-- End Team Member -->
@@ -551,7 +481,7 @@
               <div class="member-info">
                 <h4>Imel Theresia BR Sembiring</h4>
                 <span>Lead Developer</span>
-                <p>Memastikan kualitas kode dan inovasi teknologi dalam pengembangan sistem TOEIC.</p>
+                <p>Ensures code quality and technological innovation in the development of the TOEIC system.</p>
               </div>
             </div>
           </div><!-- End Team Member -->
@@ -570,7 +500,7 @@
               <div class="member-info">
                 <h4>Josephine Antonia</h4>
                 <span>UI/UX Designer</span>
-                <p>Mendesain antarmuka yang menarik dan pengalaman pengguna yang mudah digunakan.</p>
+                <p>Designs engaging interfaces and user-friendly experiences.</p>
               </div>
             </div>
           </div><!-- End Team Member -->
@@ -589,7 +519,7 @@
               <div class="member-info">
                 <h4>Mohammad Syifa’ul Faj Ismunir</h4>
                 <span>Backend Developer</span>
-                <p>Memastikan performa backend yang handal dan aman untuk sistem manajemen TOEIC.</p>
+                <p>Ensures reliable and secure backend performance for the TOEIC management system.</p>
               </div>
             </div>
           </div><!-- End Team Member -->
@@ -609,23 +539,17 @@
               <div class="member-info">
                 <h4>Muhammad Mahdi Arielreza Hafiz</h4>
                 <span>Quality Assurance</span>
-                <p>Memastikan kualitas dan kestabilan sistem dengan melakukan pengujian yang menyeluruh.</p>
+                <p>Ensures system quality and stability through comprehensive testing.</p>
               </div>
             </div>
           </div><!-- End Team Member -->
-
         </div>
-
       </div>
-
-    </section>
-
-
+    </section><!-- /Team Section -->
 
   </main>
 
   <footer id="footer" class="footer">
-
     <div class="container footer-top">
       <div class="row gy-4">
         <div class="col-lg-4 col-md-6 footer-about">
@@ -633,8 +557,8 @@
             <span class="sitename">Toeicly</span>
           </a>
           <div class="footer-contact pt-3">
-            <p>Jl. Soekarno Hatta No.9, Jatimulyo, Kec. Lowokwaru, Kota Malang, Jawa Timur 65141</p>
-            <p>Kec. Lowokwaru, Kota Malang, Jawa Timur 65141</p>
+            <p>Jl. Soekarno Hatta No.9, Jatimulyo, Lowokwaru District, Malang City, East Java 65141</p>
+            <p>Lowokwaru District, Malang City, East Java 65141</p>
             <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
             <p><strong>Email:</strong> <span>info@example.com</span></p>
           </div>
@@ -662,7 +586,7 @@
 
         <div class="col-lg-4 col-md-12">
           <h4>Follow Us</h4>
-          <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
+          <p>Stay connected with us on social media for the latest updates and news.</p>
           <div class="social-links d-flex">
             <a href=""><i class="bi bi-twitter-x"></i></a>
             <a href=""><i class="bi bi-facebook"></i></a>
@@ -670,7 +594,6 @@
             <a href=""><i class="bi bi-linkedin"></i></a>
           </div>
         </div>
-
       </div>
     </div>
 
@@ -678,10 +601,9 @@
       <p>© <span>Copyright</span> <strong class="px-1 sitename">Toeicly</strong> <span>All Rights Reserved</span></p>
       <div class="credits">
         Designed by <a href="https://bootstrapmade.com/">Group 1</a> Distributed by <a
-          href=“https://themewagon.com>Toeicly
+          href="https://themewagon.com">Toeicly</a>
       </div>
     </div>
-
   </footer>
 
   <!-- Scroll Top -->
@@ -699,7 +621,6 @@
   <script src="{{ asset('vendor/swiper/swiper-bundle.min.js') }}"></script>
   <!-- Main JS File -->
   <script src="{{ asset('js/main.js') }}"></script>
-
 </body>
 
 </html>
