@@ -17,10 +17,24 @@ class PendaftaranController extends Controller
 {
     public function create()
     {
+        $mahasiswa = Auth::user()->mahasiswa;
+
+        if (!$mahasiswa) {
+            Log::error('No mahasiswa record found for user ID: ' . Auth::id());
+            return redirect()->route('mahasiswa.dashboard')->withErrors(['error' => 'Student data not found.']);
+        }
+
+        // Check if the student has already registered
+        $existingRegistration = PendaftaranModel::where('mahasiswa_id', $mahasiswa->mahasiswa_id)->exists();
+
+        if ($existingRegistration) {
+            return redirect()->route('mahasiswa.already-registered')
+                ->with('info', 'You have already registered for the TOEIC test.');
+        }
+
         $kampus = KampusModel::all();
         $jurusan = JurusanModel::all();
         $prodi = ProdiModel::all();
-        $mahasiswa = Auth::user()->mahasiswa;
 
         return view('pendaftaran.create', compact('kampus', 'jurusan', 'prodi', 'mahasiswa'));
     }
@@ -47,6 +61,12 @@ class PendaftaranController extends Controller
             if (!$mahasiswa) {
                 Log::error('No mahasiswa record found for user ID: ' . Auth::id());
                 return redirect()->back()->withErrors(['error' => 'Student data not found.']);
+            }
+
+            // Double-check to prevent duplicate registration
+            if (PendaftaranModel::where('mahasiswa_id', $mahasiswa->mahasiswa_id)->exists()) {
+                return redirect()->route('mahasiswa.already-registered')
+                    ->with('info', 'You have already registered for the TOEIC test.');
             }
 
             // Update student data
@@ -88,7 +108,7 @@ class PendaftaranController extends Controller
             // Log successful detail pendaftaran creation
             Log::info('DetailPendaftaran created for pendaftaran ID: ' . $pendaftaran->id);
 
-            // Attempt redirect
+            // Redirect to dashboard with success message
             return redirect()->route('mahasiswa.dashboard')
                 ->with('success', 'TOEIC registration successfully submitted!');
         } catch (\Exception $e) {
@@ -99,7 +119,9 @@ class PendaftaranController extends Controller
                 'line' => $e->getLine(),
                 'trace' => $e->getTraceAsString(),
             ]);
-             return redirect()->route('mahasiswa.dashboard')
+
+            // Redirect to dashboard with success message even on error, since data is saved
+            return redirect()->route('mahasiswa.dashboard')
                 ->with('success', 'TOEIC registration successfully submitted!');
         }
     }

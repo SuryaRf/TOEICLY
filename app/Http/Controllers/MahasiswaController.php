@@ -15,8 +15,8 @@ class MahasiswaController extends Controller
     // Halaman utama (overview)
     public function index()
     {
-        $user = Auth::user(); // ambil user yang login
-        $toeicScore = $user->toeicScore; // ambil data TOEIC via relasi
+        $user = Auth::user();
+        $toeicScore = $user->toeicScore;
 
         return view('dashboard.mahasiswa.overview', compact('toeicScore'));
     }
@@ -39,5 +39,20 @@ class MahasiswaController extends Controller
     public function profile()
     {
         return view('dashboard.mahasiswa.profile');
+    }
+
+    public function alreadyRegistered()
+    {
+        return view('dashboard.mahasiswa.already_registered');
+    }
+
+    public function lihatNilai()
+    {
+        return view('dashboard.mahasiswa.nilai-toeic');
+    }
+
+    public function lihatJadwal()
+    {
+        return view('dashboard.mahasiswa.jadwal-sertifikat');
     }
 }

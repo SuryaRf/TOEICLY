@@ -91,7 +91,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/riwayat-ujian', [MahasiswaController::class, 'riwayatUjian'])->name('riwayat-ujian');
         Route::get('/nilai-toeic', [MahasiswaController::class, 'lihatNilai'])->name('nilai-toeic');
         Route::get('/jadwal-sertifikat', [MahasiswaController::class, 'lihatJadwal'])->name('jadwal-sertifikat');
-
+        Route::get('/already-registered', [MahasiswaController::class, 'alreadyRegistered'])->name('already-registered');
         Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     });
 
