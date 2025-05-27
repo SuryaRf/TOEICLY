@@ -273,6 +273,9 @@
                     <div class="flex-1">
                         <h2 class="text-4xl font-bold text-purple-800 mb-4">{{ $user->username ?? 'Mahasiswa Name' }}</h2>
                         <p class="text-lg text-gray-600 mb-2">
+                            <span class="font-semibold text-purple-800">Nama:</span> {{ $mahasiswa ? $mahasiswa->nama : '12345678' }}
+                        </p>
+                        <p class="text-lg text-gray-600 mb-2">
                             <span class="font-semibold text-purple-800">Email:</span> {{ $user->email ?? 'mahasiswa@example.com' }}
                         </p>
                         <p class="text-lg text-gray-600 mb-2">
