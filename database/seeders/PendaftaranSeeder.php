@@ -17,7 +17,7 @@ class PendaftaranSeeder extends Seeder
                 'scan_ktm' => 'ktm1.jpg',
                 'pas_foto' => 'foto1.jpg',
                 'mahasiswa_id' => 1,
-                'jadwal_id' => 1,
+                // 'jadwal_id' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

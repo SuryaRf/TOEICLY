@@ -158,21 +158,21 @@
             <a href="{{ route('mahasiswa.profile') }}"
                class="{{ request()->routeIs('mahasiswa.profile') ? 'active' : '' }}">
                 <i class="fas fa-user"></i>
-                <span>PROFIL</span>
+                <span>PROFILE</span>
             </a>
         </li>
         <li>
             <a href="{{ route('mahasiswa.daftar-tes') }}"
                class="{{ request()->routeIs('mahasiswa.daftar-tes') ? 'active' : '' }}">
                 <i class="fas fa-file-alt"></i>
-                <span>DAFTAR TES</span>
+                <span>TEST LIST</span>
             </a>
         </li>
         <li>
             <a href="{{ route('mahasiswa.riwayat-ujian') }}"
                class="{{ request()->routeIs('mahasiswa.riwayat-ujian') ? 'active' : '' }}">
                 <i class="fas fa-history"></i>
-                <span>RIWAYAT UJIAN</span>
+                <span>TEST HISTORY</span>
             </a>
         </li>
         <li>
