@@ -93,6 +93,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/jadwal-sertifikat', [MahasiswaController::class, 'lihatJadwal'])->name('jadwal-sertifikat');
         Route::get('/already-registered', [MahasiswaController::class, 'alreadyRegistered'])->name('already-registered');
         Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+       // Add the avatar update route
+    Route::post('/profile/avatar', [MahasiswaController::class, 'updateAvatar'])->name('update-avatar');
     });
 
     // ITC routes

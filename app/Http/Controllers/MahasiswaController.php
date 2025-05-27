@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class MahasiswaController extends Controller
 {
-    // Halaman utama (overview)
+    // Existing methods
     public function index()
     {
         $user = Auth::user();
@@ -38,7 +38,9 @@ class MahasiswaController extends Controller
 
     public function profile()
     {
-        return view('dashboard.mahasiswa.profile');
+        $user = Auth::user();
+        $mahasiswa = $user->mahasiswa()->with('prodi')->first();
+        return view('dashboard.mahasiswa.profile', compact('user', 'mahasiswa'));
     }
 
     public function alreadyRegistered()
@@ -54,5 +56,30 @@ class MahasiswaController extends Controller
     public function lihatJadwal()
     {
         return view('dashboard.mahasiswa.jadwal-sertifikat');
+    }
+
+    // New method for avatar upload
+    public function updateAvatar(Request $request)
+    {
+        // Validate the uploaded file
+        $request->validate([
+            'avatar' => 'required|image|mimes:jpeg,png,jpg|max:2048', // Max 2MB
+        ]);
+
+        $user = Auth::user();
+
+        if ($request->hasFile('avatar')) {
+            // Store the file in storage/app/public/avatars
+            $file = $request->file('avatar');
+            $path = $file->store('avatars', 'public');
+
+            // Update the user's profile field with the file path
+            $user->profile = $path;
+            $user->save();
+
+            return redirect()->route('dashboard.mahasiswa.profile')->with('success', 'Avatar updated successfully.');
+        }
+
+        return redirect()->route('dashboard.mahasiswa.profile')->with('error', 'Failed to upload avatar.');
     }
 }

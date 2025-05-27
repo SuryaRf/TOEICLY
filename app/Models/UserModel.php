@@ -33,11 +33,11 @@ class UserModel extends Authenticatable
         return $this->hasOne(AdminModel::class, 'admin_id', 'admin_id');
     }
 
+// Updated relationship
     public function mahasiswa()
     {
-        return $this->hasOne(MahasiswaModel::class, 'mahasiswa_id', 'mahasiswa_id');
+        return $this->belongsTo(MahasiswaModel::class, 'mahasiswa_id', 'mahasiswa_id');
     }
-
     public function dosen()
     {
         return $this->hasOne(DosenModel::class, 'dosen_id', 'dosen_id');

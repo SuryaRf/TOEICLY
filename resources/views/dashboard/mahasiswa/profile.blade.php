@@ -9,7 +9,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-        /* Sidebar Styles (from artifact ID: 1374b258-c6e9-4c43-bb17-d4a941ee5fda) */
+        /* Sidebar Styles (unchanged from your original) */
         .sidebar {
             background: linear-gradient(180deg, #4c1d95 0%, #7c3aed 100%);
             color: white;
@@ -258,25 +258,40 @@
                     <!-- Avatar Slot -->
                     <div class="avatar-upload relative">
                         <div class="w-40 h-40 bg-purple-200 rounded-full overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300">
-                            <img src="https://via.placeholder.com/150" alt="Avatar" class="w-full h-full object-cover">
+                            <img src="{{ $user->profile ? asset('storage/' . $user->profile) : 'https://via.placeholder.com/150' }}" alt="Avatar" class="w-full h-full object-cover">
                         </div>
-                        <label for="avatar" class="absolute bottom-0 right-0 bg-purple-600 text-white p-3 rounded-full cursor-pointer shadow-lg hover:bg-purple-700 transition duration-300">
-                            <i class="fas fa-camera"></i>
-                        </label>
-                        <input type="file" id="avatar" class="hidden" accept="image/*">
+                        <form action="{{ route('mahasiswa.update-avatar') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <label for="avatar" class="absolute bottom-0 right-0 bg-purple-600 text-white p-3 rounded-full cursor-pointer shadow-lg hover:bg-purple-700 transition duration-300">
+                                <i class="fas fa-camera"></i>
+                            </label>
+                            <input type="file" id="avatar" name="avatar" class="hidden" accept="image/*">
+                        </form>
                     </div>
 
                     <!-- Profile Info -->
                     <div class="flex-1">
-                        <h2 class="text-4xl font-bold text-purple-800 mb-4">{{ Auth::user()->name ?? 'Mahasiswa Name' }}</h2>
+                        <h2 class="text-4xl font-bold text-purple-800 mb-4">{{ $user->username ?? 'Mahasiswa Name' }}</h2>
                         <p class="text-lg text-gray-600 mb-2">
-                            <span class="font-semibold text-purple-800">Email:</span> {{ Auth::user()->email ?? 'mahasiswa@example.com' }}
+                            <span class="font-semibold text-purple-800">Email:</span> {{ $user->email ?? 'mahasiswa@example.com' }}
                         </p>
                         <p class="text-lg text-gray-600 mb-2">
-                            <span class="font-semibold text-purple-800">NIM:</span> {{ Auth::user()->nim ?? '12345678' }}
+                            <span class="font-semibold text-purple-800">NIM:</span> {{ $mahasiswa ? $mahasiswa->nim : '12345678' }}
                         </p>
                         <p class="text-lg text-gray-600 mb-2">
-                            <span class="font-semibold text-purple-800">Program Studi:</span> {{ Auth::user()->program_studi ?? 'Teknik Informatika' }}
+                            <span class="font-semibold text-purple-800">NIK:</span> {{ $mahasiswa ? $mahasiswa->nik : 'Tidak tersedia' }}
+                        </p>
+                        <p class="text-lg text-gray-600 mb-2">
+                            <span class="font-semibold text-purple-800">No. Telepon:</span> {{ $mahasiswa ? $mahasiswa->no_telp : 'Tidak tersedia' }}
+                        </p>
+                        <p class="text-lg text-gray-600 mb-2">
+                            <span class="font-semibold text-purple-800">Jenis Kelamin:</span> {{ $mahasiswa ? $mahasiswa->jenis_kelamin : 'Tidak tersedia' }}
+                        </p>
+                        <p class="text-lg text-gray-600 mb-2">
+                            <span class="font-semibold text-purple-800">Keterangan:</span> {{ $mahasiswa ? $mahasiswa->keterangan : 'Tidak tersedia' }}
+                        </p>
+                        <p class="text-lg text-gray-600 mb-2">
+                            <span class="font-semibold text-purple-800">Program Studi:</span> {{ $mahasiswa && $mahasiswa->prodi ? $mahasiswa->prodi->prodi_nama : 'Teknik Informatika' }}
                         </p>
                         <button class="mt-6 bg-purple-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-purple-700 transition duration-300">
                             Edit Profile
