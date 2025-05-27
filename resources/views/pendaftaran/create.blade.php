@@ -251,6 +251,11 @@
         .submit-button:hover {
             background-color: #5b21b6;
         }
+        input[readonly] {
+            background-color:rgb(231, 222, 236);
+            color: #6b7280;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 

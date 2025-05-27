@@ -140,6 +140,13 @@
             text-decoration: none;
             color: white;
         }
+
+        /* Tambahan styling untuk input readonly */
+        input[readonly] {
+            background-color:rgb(231, 222, 236);
+            color: #6b7280;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 
@@ -165,8 +172,6 @@
                 class="sidebar-link {{ request()->routeIs('admin.pendaftar') ? 'active' : '' }}">
                 <i class="fas fa-users"></i> Kelola Pendaftar Sertifikat
             </a>
-
-
 
             <!-- Tambahan menu data kampus, jurusan, prodi -->
             <a href="{{ route('kampus.index') }}"

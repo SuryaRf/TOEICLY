@@ -140,6 +140,11 @@
             text-decoration: none;
             color: white;
         }
+        input[readonly] {
+            background-color:rgb(231, 222, 236);
+            color: #6b7280;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 
