@@ -71,6 +71,7 @@
             margin: 0.5rem 0;
         }
 
+        /* Apply these styles consistently to both links and buttons */
         .sidebar a, .sidebar button {
             display: flex;
             align-items: center;
@@ -81,8 +82,13 @@
             text-decoration: none;
             border-radius: 8px;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            position: relative; /* Crucial for the extend effect */
+            overflow: hidden; /* Crucial for the extend effect */
+            background: none; /* Reset button default background */
+            border: none; /* Reset button default border */
+            width: 100%; /* Make button take full width of its parent li */
+            text-align: left; /* Align text to the left for consistency */
+            cursor: pointer; /* Indicate it's clickable */
         }
 
         .sidebar a:hover, .sidebar button:hover, .sidebar a.active, .sidebar button.active {
@@ -201,7 +207,6 @@
 </head>
 <body>
     <div class="flex min-h-screen">
-        <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <button class="toggle-btn" onclick="toggleSidebar()">
                 <i class="fas fa-bars"></i>
@@ -241,6 +246,7 @@
                 <li>
                     <form action="{{ route('mahasiswa.logout') }}" method="POST">
                         @csrf
+                        {{-- The button now explicitly gets the same styling as 'a' tags --}}
                         <button type="submit">
                             <i class="fas fa-sign-out-alt"></i>
                             <span>LOGOUT</span>
@@ -250,7 +256,6 @@
             </ul>
         </aside>
 
-        <!-- Main Content -->
         <main id="overview" class="main-content fade-slide">
             @if (session('success'))
                 <div class="mb-6 p-4 bg-green-100 text-green-800 rounded-lg shadow-lg full-width">
@@ -261,33 +266,7 @@
             <h1 class="text-4xl font-bold text-purple-900 mb-4">Welcome to TOEIC Dashboard!</h1>
             <p class="text-lg text-gray-600 mb-8">Track your TOEIC test performance and upcoming schedules.</p>
 
-            <!-- Stats Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 full-width">
-                <div class="card rounded-xl p-6">
-                    <h3 class="text-xl font-semibold text-purple-800 mb-2">Total Tests Taken</h3>
-                    <p class="text-4xl font-bold text-gray-900">5</p>
-                    <p class="text-sm text-gray-500 mt-1">Tests completed</p>
-                </div>
-                <div class="card rounded-xl p-6">
-                    <h3 class="text-xl font-semibold text-purple-800 mb-2">Highest Score</h3>
-                    <p class="text-4xl font-bold text-green-600">945</p>
-                    <p class="text-sm text-gray-500 mt-1">Best TOEIC score</p>
-                </div>
-                <div class="card rounded-xl p-6">
-                    <h3 class="text-xl font-semibold text-purple-800 mb-2">Next Test Date</h3>
-                    <p class="text-4xl font-bold text-red-600">20 May 2025</p>
-                    <p class="text-sm text-gray-500 mt-1">Mark your calendar!</p>
-                </div>
-            </div>
-
-            <!-- Score Trends Chart -->
             <section class="card rounded-xl p-8 mb-8 full-width">
-                <h2 class="text-2xl font-semibold text-purple-800 mb-6">Score Trends</h2>
-                <canvas id="scoresChart" class="w-full h-64 bounce"></canvas>
-            </section>
-
-            <!-- TOEIC Information -->
-            <section class="card rounded-xl p-8 full-width">
                 <h2 class="text-2xl font-semibold text-purple-800 mb-6">Your TOEIC Information</h2>
                 @if ($toeicScore)
                     <div class="space-y-4 text-gray-700">
@@ -310,8 +289,46 @@
                         </div>
                     </div>
                 @else
-                    <p class="text-red-600">No TOEIC data available to display.</p>
+                    <div class="space-y-4 text-gray-700">
+                        <p class="text-lg text-purple-700 font-semibold mb-2">No past TOEIC data available yet. Here's what you need to know:</p>
+                        <div>
+                            <span class="font-semibold text-purple-800">Latest Test Score:</span>
+                            <span>Awaiting result for your most recent test.</span>
+                        </div>
+                        <div>
+                            <span class="font-semibold text-purple-800">Next Certificate Collection:</span>
+                            <span class="text-green-600">Available from June 15, 2025 (9:00 AM - 4:00 PM)</span>
+                        </div>
+                        <div>
+                            <span class="font-semibold text-purple-800">Collection Location:</span>
+                            <span>Main Office, Building A, Room 101</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-2">Please ensure you bring your ID for certificate collection.</p>
+                    </div>
                 @endif
+            </section>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 full-width">
+                <div class="card rounded-xl p-6">
+                    <h3 class="text-xl font-semibold text-purple-800 mb-2">Total Tests Taken</h3>
+                    <p class="text-4xl font-bold text-gray-900">5</p>
+                    <p class="text-sm text-gray-500 mt-1">Tests completed</p>
+                </div>
+                <div class="card rounded-xl p-6">
+                    <h3 class="text-xl font-semibold text-purple-800 mb-2">Highest Score</h3>
+                    <p class="text-4xl font-bold text-green-600">945</p>
+                    <p class="text-sm text-gray-500 mt-1">Best TOEIC score</p>
+                </div>
+                <div class="card rounded-xl p-6">
+                    <h3 class="text-xl font-semibold text-purple-800 mb-2">Next Test Date</h3>
+                    <p class="text-4xl font-bold text-red-600">20 May 2025</p>
+                    <p class="text-sm text-gray-500 mt-1">Mark your calendar!</p>
+                </div>
+            </div>
+
+            <section class="card rounded-xl p-8 mb-8 full-width">
+                <h2 class="text-2xl font-semibold text-purple-800 mb-6">Score Trends</h2>
+                <canvas id="scoresChart" class="w-full h-64 bounce"></canvas>
             </section>
         </main>
     </div>
