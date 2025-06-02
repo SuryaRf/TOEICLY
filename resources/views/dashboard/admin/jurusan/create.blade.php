@@ -140,40 +140,56 @@
 </head>
 
 <body>
-    <aside class="sidebar">
-        <div class="title">TOEICLY Admin</div>
-        <nav>
-            <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+    <aside class="sidebar flex flex-col">
+        <div class="p-6">
+            <h2 class="text-4xl font-extrabold tracking-tight select-none">TOEICLY Admin</h2>
+        </div>
+        <nav class="mt-8 flex flex-col gap-2 px-2">
+            <a href="{{ route('admin.dashboard') }}"
+                class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                 <i class="fas fa-home"></i> Dashboard
             </a>
-            <a href="{{ route('admin.manage') }}" class="{{ request()->routeIs('admin.manage') ? 'active' : '' }}">
+            <a href="{{ route('admin.manage') }}"
+                class="sidebar-link {{ request()->routeIs('admin.manage') ? 'active' : '' }}">
                 <i class="fas fa-users"></i> Manajemen Pengguna
             </a>
-            <a href="{{ route('jadwal_sertifikat.index') }}" class="{{ request()->routeIs('jadwal_sertifikat.*') ? 'active' : '' }}">
+            <a href="{{ route('jadwal_sertifikat.index') }}"
+                class="sidebar-link {{ request()->routeIs('jadwal_sertifikat.*') ? 'active' : '' }}">
                 <i class="fas fa-calendar-alt"></i> Kelola Jadwal Sertifikat
             </a>
-            <a href="{{ route('kampus.index') }}" class="{{ request()->routeIs('kampus.*') ? 'active' : '' }}">
+            <a href="{{ route('admin.pendaftar') }}"
+                class="sidebar-link {{ request()->routeIs('admin.pendaftar') ? 'active' : '' }}">
+                <i class="fas fa-users"></i> Kelola Pendaftar Sertifikat
+            </a>
+
+
+
+            <!-- Tambahan menu data kampus, jurusan, prodi -->
+            <a href="{{ route('kampus.index') }}"
+                class="sidebar-link {{ request()->routeIs('kampus.*') ? 'active' : '' }}">
                 <i class="fas fa-building"></i> Data Kampus
             </a>
-            <a href="{{ route('jurusan.index') }}" class="{{ request()->routeIs('jurusan.*') ? 'active' : '' }}">
+            <a href="{{ route('jurusan.index') }}"
+                class="sidebar-link {{ request()->routeIs('jurusan.*') ? 'active' : '' }}">
                 <i class="fas fa-book"></i> Data Jurusan
             </a>
-            <a href="{{ route('prodi.index') }}" class="{{ request()->routeIs('prodi.*') ? 'active' : '' }}">
+            <a href="{{ route('prodi.index') }}"
+                class="sidebar-link {{ request()->routeIs('prodi.*') ? 'active' : '' }}">
                 <i class="fas fa-graduation-cap"></i> Data Prodi
             </a>
-            <a href="{{ route('profile') }}" class="{{ request()->routeIs('profile') ? 'active' : '' }}">
+
+            <a href="{{ route('profile') }}" class="sidebar-link {{ request()->routeIs('profile') ? 'active' : '' }}">
                 <i class="fas fa-user"></i> Profile
             </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="margin-top: auto;">
+            <a href="{{ route('logout') }}"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="sidebar-link">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
-                <button type="submit" style="all: unset; cursor:pointer; display:flex; align-items:center; padding: 0.75rem 1rem; font-weight:600; border-radius: 0.5rem; color:white; width: 100%;"
-                    onmouseover="this.style.backgroundColor='rgba(255 255 255 / 0.25)'"
-                    onmouseout="this.style.backgroundColor='transparent'">
-                    <i class="fas fa-sign-out-alt" style="margin-right: 0.75rem;"></i> Logout
-                </button>
             </form>
         </nav>
-    </aside> 
+    </aside>
 
     <main>
         <h1 class="text-4xl font-bold mb-6 text-purple-700">Tambah Jurusan</h1>
@@ -214,6 +230,7 @@
             </div>
 
             <button type="submit" class="btn-modern">Simpan</button>
+                    <a href="{{ route('jurusan.index') }}" class="btn-modern" style="background: gray;">Batal</a>
         </form>
     </main>
 </body>
