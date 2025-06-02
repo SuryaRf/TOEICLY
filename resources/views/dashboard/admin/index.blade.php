@@ -241,44 +241,6 @@
                 </div>
             </section>
 
-            <!-- Profit Card -->
-            <section class="card">
-                <p class="text-gray-600 font-semibold">Total Profit</p>
-                <p class="text-4xl font-extrabold mt-3 text-primary">$25.6k</p>
-                <p class="text-sm text-green-600 mt-1 font-semibold flex items-center gap-1">
-                    +42% <i class="fas fa-arrow-up"></i>
-                </p>
-            </section>
-
-            <!-- New Registrations Card -->
-            <section class="card">
-                <p class="text-gray-600 font-semibold">New Registrations</p>
-                <p class="text-4xl font-extrabold mt-3 text-primary">862</p>
-                <p class="text-sm text-red-600 mt-1 font-semibold flex items-center gap-1">
-                    -18% <i class="fas fa-arrow-down"></i>
-                </p>
-            </section>
-
-            <!-- Active Sessions Card -->
-            <section class="card">
-                <p class="text-gray-600 font-semibold mb-4">Active Sessions</p>
-                <div class="flex items-end justify-around space-x-4 h-28">
-                    <div class="chart-bar bg-red-600 w-12 rounded-t" style="height: 85%;"></div>
-                    <div class="chart-bar bg-red-600 w-12 rounded-t" style="height: 70%;"></div>
-                    <div class="chart-bar bg-red-600 w-12 rounded-t" style="height: 100%;"></div>
-                </div>
-            </section>
-
-            <!-- Registrations by Region -->
-            <section class="card">
-                <p class="text-gray-600 font-semibold">Registrations by Region</p>
-                <p class="mt-3 text-lg font-semibold">
-                    Java <span class="text-green-600 ml-2">8,656</span> <span class="text-green-600 ml-2">+25%</span>
-                </p>
-                <p class="mt-1 text-lg font-semibold">
-                    Sumatra <span class="text-green-600 ml-2">2,475</span> <span class="text-green-600 ml-2">+6.2%</span>
-                </p>
-            </section>
         </div>
     </main>
 
