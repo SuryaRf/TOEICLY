@@ -36,4 +36,11 @@ class JurusanController extends Controller
 
         return redirect()->route('jurusan.index')->with('success', 'Data jurusan berhasil ditambahkan.');
     }
+    public function destroy($id)
+    {
+        $jurusan = JurusanModel::findOrFail($id);
+        $jurusan->delete();
+
+        return redirect()->route('jurusan.index')->with('success', 'Data jurusan berhasil dihapus.');
+    }
 }
