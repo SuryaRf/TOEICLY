@@ -223,13 +223,13 @@
                             </td>
 
                             <td>
-                                <a href="{{ route('admin.manage.edit', $user->user_id) }}" class="btn-action">Edit</a>
+                                <a href="{{ route('admin.manage.edit', $user->user_id) }}" class="btn-action"> <i class="fas fa-edit"></i> Edit</a>
 
                                 <form action="{{ route('admin.manage.destroy', $user->user_id) }}" method="POST"
                                     class="inline-block" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn-action ml-2 bg-red-500 hover:bg-red-600">Hapus</button>
+                                    <button type="submit" class="btn-action ml-2 bg-red-500 hover:bg-red-600"><i class="fas fa-trash"></i> Hapus</button>
                                 </form>
                             </td>
 

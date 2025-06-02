@@ -154,19 +154,21 @@
         }
 
         .btn-action.edit {
-            background-color: #fbbf24;
+             background: linear-gradient(90deg, #7c3aed, #a78bfa);
         }
 
         .btn-action.edit:hover {
-            background-color: #f59e0b;
+             background: linear-gradient(90deg, #a78bfa, #7c3aed);
         }
 
         .btn-action.delete {
-            background-color: #ef4444;
+                       background: linear-gradient(90deg, #7c3aed, #a78bfa);
+
         }
 
         .btn-action.delete:hover {
-            background-color: #dc2626;
+                        background: linear-gradient(90deg, #a78bfa, #7c3aed);
+
         }
     </style>
 </head>
@@ -253,12 +255,12 @@
                         <td>{{ $k->kampus_kode }}</td>
                         <td>{{ $k->kampus_nama }}</td>
                         <td>
-                            <a href="{{ route('kampus.edit', $k->kampus_id) }}" class="btn-action edit">Edit</a>
+                            <a href="{{ route('kampus.edit', $k->kampus_id) }}" class="btn-action edit"><i class="fas fa-edit"></i> Edit</a>
                             <form action="{{ route('kampus.destroy', $k->kampus_id) }}" method="POST" class="inline-block"
                                 onsubmit="return confirm('Yakin ingin menghapus kampus ini?');">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn-action delete">Hapus</button>
+                                <button type="submit" class="btn-action delete"><i class="fas fa-trash"></i> Hapus</button>
                             </form>
                         </td>
                     </tr>
