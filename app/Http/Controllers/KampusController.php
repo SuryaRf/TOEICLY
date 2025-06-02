@@ -44,7 +44,7 @@ class KampusController extends Controller
     public function edit($id)
     {
         $kampus = KampusModel::findOrFail($id);
-        return view('kampus.edit', compact('kampus'));
+        return view('dashboard.admin.kampus.edit', compact('kampus'));
     }
 
     public function update(Request $request, $id)
