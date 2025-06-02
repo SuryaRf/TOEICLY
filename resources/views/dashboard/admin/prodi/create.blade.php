@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Tambah Jurusan - TOEICLY Admin</title>
+    <title>Tambah Prodi - TOEICLY Admin</title>
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
     <!-- Bootstrap CSS -->
@@ -140,7 +140,7 @@
 </head>
 
 <body>
-    <aside class="sidebar">
+   <aside class="sidebar">
         <div class="title">TOEICLY Admin</div>
         <nav>
             <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
@@ -173,10 +173,10 @@
                 </button>
             </form>
         </nav>
-    </aside> 
+    </aside>
 
     <main>
-        <h1 class="text-4xl font-bold mb-6 text-purple-700">Tambah Jurusan</h1>
+        <h1 class="text-4xl font-bold mb-6 text-purple-700">Tambah Program Studi</h1>
 
         @if ($errors->any())
             <div class="alert-danger">
@@ -188,32 +188,33 @@
             </div>
         @endif
 
-        <form action="{{ route('jurusan.store') }}" method="POST" class="space-y-6">
+        <form action="{{ route('prodi.store') }}" method="POST" class="space-y-6">
             @csrf
 
             <div>
-                <label for="jurusan_kode">Kode Jurusan</label>
-                <input type="text" id="jurusan_kode" name="jurusan_kode" maxlength="10" required value="{{ old('jurusan_kode') }}">
+                <label for="prodi_kode">Kode Prodi</label>
+                <input type="text" id="prodi_kode" name="prodi_kode" maxlength="20" required value="{{ old('prodi_kode') }}">
             </div>
 
             <div>
-                <label for="jurusan_nama">Nama Jurusan</label>
-                <input type="text" id="jurusan_nama" name="jurusan_nama" maxlength="100" required value="{{ old('jurusan_nama') }}">
+                <label for="prodi_nama">Nama Prodi</label>
+                <input type="text" id="prodi_nama" name="prodi_nama" maxlength="50" required value="{{ old('prodi_nama') }}">
             </div>
 
             <div>
-                <label for="kampus_id">Pilih Kampus</label>
-                <select id="kampus_id" name="kampus_id" required>
-                    <option value="">-- Pilih Kampus --</option>
-                    @foreach($kampus as $k)
-                        <option value="{{ $k->kampus_id }}" {{ old('kampus_id') == $k->kampus_id ? 'selected' : '' }}>
-                            {{ $k->kampus_nama }}
+                <label for="jurusan_id">Pilih Jurusan</label>
+                <select id="jurusan_id" name="jurusan_id" required>
+                    <option value="">-- Pilih Jurusan --</option>
+                    @foreach($jurusan as $j)
+                        <option value="{{ $j->jurusan_id }}" {{ old('jurusan_id') == $j->jurusan_id ? 'selected' : '' }}>
+                            {{ $j->jurusan_nama }}
                         </option>
                     @endforeach
                 </select>
             </div>
 
             <button type="submit" class="btn-modern">Simpan</button>
+            <a href="{{ route('prodi.index') }}" class="btn-modern" style="background: gray;">Batal</a>
         </form>
     </main>
 </body>
