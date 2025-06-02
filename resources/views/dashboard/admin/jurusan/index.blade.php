@@ -141,6 +141,7 @@
 
         /* Action buttons */
         .btn-action {
+            background: linear-gradient(90deg, #7c3aed, #a78bfa);
             padding: 0.375rem 0.75rem;
             border-radius: 0.375rem;
             font-weight: 600;
@@ -154,19 +155,23 @@
         }
 
         .btn-action.edit {
-            background-color: #fbbf24;
+            background: linear-gradient(90deg, #7c3aed, #a78bfa);
+
         }
 
         .btn-action.edit:hover {
-            background-color: #f59e0b;
+            background: linear-gradient(90deg, #a78bfa, #7c3aed);
+
         }
 
         .btn-action.delete {
-            background-color: #ef4444;
+            background: linear-gradient(90deg, #7c3aed, #a78bfa);
+
         }
 
         .btn-action.delete:hover {
-            background-color: #dc2626;
+            background: linear-gradient(90deg, #a78bfa, #7c3aed);
+
         }
     </style>
 </head>
@@ -255,12 +260,12 @@
                             <td>{{ $jurusan->jurusan_nama }}</td>
                             <td>{{ $jurusan->kampus ? $jurusan->kampus->kampus_nama : '-' }}</td>
                             <td>
-                                <a href="{{ route('jurusan.edit', $jurusan->jurusan_id) }}" class="btn-action edit">Edit</a>
-                                <form action="{{ route('jurusan.destroy', $jurusan->jurusan_id) }}" method="POST" class="inline-block"
-                                    onsubmit="return confirm('Yakin ingin menghapus jurusan ini?');">
+                                <a href="{{ route('jurusan.edit', $jurusan->jurusan_id) }}" class="btn-action edit"><i class="fas fa-edit"></i> Edit</a>
+                                <form action="{{ route('jurusan.destroy', $jurusan->jurusan_id) }}" method="POST"
+                                    class="inline-block" onsubmit="return confirm('Yakin ingin menghapus jurusan ini?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn-action delete">Hapus</button>
+                                    <button type="submit" class="btn-action delete"><i class="fas fa-trash"></i> Hapus</button>
                                 </form>
                             </td>
                         </tr>

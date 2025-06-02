@@ -138,6 +138,8 @@
 
         /* Action buttons */
         .btn-action {
+            background: linear-gradient(90deg, #7c3aed, #a78bfa);
+
             padding: 0.375rem 0.75rem;
             border-radius: 0.375rem;
             font-weight: 600;
@@ -151,19 +153,23 @@
         }
 
         .btn-action.edit {
-            background-color: #fbbf24;
+            background: linear-gradient(90deg, #7c3aed, #a78bfa);
+
         }
 
         .btn-action.edit:hover {
-            background-color: #f59e0b;
+            background: linear-gradient(90deg, #a78bfa, #7c3aed);
+
         }
 
         .btn-action.delete {
-            background-color: #ef4444;
+            background: linear-gradient(90deg, #7c3aed, #a78bfa);
+
         }
 
         .btn-action.delete:hover {
-            background-color: #dc2626;
+            background: linear-gradient(90deg, #a78bfa, #7c3aed);
+
         }
     </style>
 </head>
@@ -233,42 +239,43 @@
 
         <br>
         <br>
-  <div class="card">
-        <table>
-            <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>Kode Prodi</th>
-                    <th>Nama Prodi</th>
-                    <th>Jurusan</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($prodi as $index => $p)
+        <div class="card">
+            <table>
+                <thead>
                     <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $p->prodi_kode }}</td>
-                        <td>{{ $p->prodi_nama }}</td>
-                        <td>{{ $p->jurusan ? $p->jurusan->jurusan_nama : '-' }}</td>
-                        <td>
-                            <a href="{{ route('prodi.edit', $p->prodi_id) }}" class="btn-action edit">Edit</a>
-                            <form action="{{ route('prodi.destroy', $p->prodi_id) }}" method="POST" class="inline-block"
-                                onsubmit="return confirm('Yakin ingin menghapus program studi ini?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn-action delete">Hapus</button>
-                            </form>
-                        </td>
+                        <th>No.</th>
+                        <th>Kode Prodi</th>
+                        <th>Nama Prodi</th>
+                        <th>Jurusan</th>
+                        <th>Aksi</th>
                     </tr>
-                @empty
-                    <tr>
-                        <td colspan="5" class="text-center p-4 text-gray-500">Tidak ada data program studi tersedia.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
-           </div>
+                </thead>
+                <tbody>
+                    @forelse ($prodi as $index => $p)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $p->prodi_kode }}</td>
+                            <td>{{ $p->prodi_nama }}</td>
+                            <td>{{ $p->jurusan ? $p->jurusan->jurusan_nama : '-' }}</td>
+                            <td>
+                                <a href="{{ route('prodi.edit', $p->prodi_id) }}" class="btn-action edit"><i class="fas fa-edit"></i> Edit</a>
+                                <form action="{{ route('prodi.destroy', $p->prodi_id) }}" method="POST" class="inline-block"
+                                    onsubmit="return confirm('Yakin ingin menghapus program studi ini?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn-action delete"><i class="fas fa-trash"></i> Hapus</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="text-center p-4 text-gray-500">Tidak ada data program studi tersedia.
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
     </main>
 </body>
 
