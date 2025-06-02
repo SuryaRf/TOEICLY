@@ -110,7 +110,8 @@
                 </div>
 
                 <div class="flex justify-end"> {{-- Changed to justify-end to align "Forgot password?" to the right --}}
-                    <a href="#" class="text-sm text-purple-link hover:underline">Forgot password?</a>
+                    <a href="{{ route('forgot-password') }}" class="text-sm text-purple-link hover:underline">Forgot password?</a>
+
                 </div>
 
                 <button type="submit" class="w-full py-3 px-4 btn-purple">

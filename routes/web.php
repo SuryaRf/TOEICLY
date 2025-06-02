@@ -32,7 +32,10 @@ Route::get('/', [WelcomeController::class, 'index']);
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
+   // Route menampilkan halaman forgot password
+    Route::get('/forgot-password', function () {
+        return view('auth.forgot-password');
+    })->name('forgot-password');
 // Semua route yang butuh autentikasi
 Route::middleware('auth')->group(function () {
 
@@ -93,8 +96,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/jadwal-sertifikat', [MahasiswaController::class, 'lihatJadwal'])->name('jadwal-sertifikat');
         Route::get('/already-registered', [MahasiswaController::class, 'alreadyRegistered'])->name('already-registered');
         Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-       // Add the avatar update route
-    Route::post('/profile/avatar', [MahasiswaController::class, 'updateAvatar'])->name('update-avatar');
+        // Add the avatar update route
+        Route::post('/profile/avatar', [MahasiswaController::class, 'updateAvatar'])->name('update-avatar');
     });
 
     // ITC routes
@@ -115,4 +118,6 @@ Route::middleware('auth')->group(function () {
 
     // Tendik dashboard
     Route::get('tendik/dashboard', [TendikController::class, 'index'])->name('tendik.dashboard');
+
+ 
 });
