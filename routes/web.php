@@ -17,7 +17,7 @@ use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\JadwalSertifikatController;
 use App\Http\Controllers\ItcController;
-
+use App\Http\Controllers\Auth\RegisterController;
 // Import khusus ProfileController di folder Mahasiswa dengan alias
 use App\Http\Controllers\Mahasiswa\ProfileController as MahasiswaProfileController;
 
@@ -32,10 +32,13 @@ Route::get('/', [WelcomeController::class, 'index']);
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-   // Route menampilkan halaman forgot password
-    Route::get('/forgot-password', function () {
-        return view('auth.forgot-password');
-    })->name('forgot-password');
+// Route menampilkan halaman forgot password
+Route::get('/forgot-password', function () {
+    return view('auth.forgot-password');
+})->name('forgot-password');
+
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register'])->name('register.submit');
 // Semua route yang butuh autentikasi
 Route::middleware('auth')->group(function () {
 
@@ -118,6 +121,4 @@ Route::middleware('auth')->group(function () {
 
     // Tendik dashboard
     Route::get('tendik/dashboard', [TendikController::class, 'index'])->name('tendik.dashboard');
-
- 
 });

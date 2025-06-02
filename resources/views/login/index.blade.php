@@ -119,10 +119,11 @@
                 </button>
             </form>
 
-            <p class="text-base text-gray-600 text-center mt-8">
-                Don't have an account?
-                <a href="#" class="text-purple-link hover:underline font-semibold">Sign Up</a>
-            </p>
+          <p class="text-base text-gray-600 text-center mt-8">
+    Don't have an account?
+    <a href="{{ route('register') }}" class="text-purple-link hover:underline font-semibold">Sign Up</a>
+</p>
+
 
         </div>
     </div>
