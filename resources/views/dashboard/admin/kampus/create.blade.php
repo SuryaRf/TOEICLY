@@ -163,8 +163,8 @@
                 <label for="kampus_nama">Nama Kampus</label>
                 <input type="text" id="kampus_nama" name="kampus_nama" maxlength="50" required value="{{ old('kampus_nama') }}">
             </div>
-            <button type="submit" class="btn-modern">Simpan</button>
-                        <a href="{{ route('kampus.index') }}" class="btn-modern" style="background: gray;">Batal</a>
+            <button type="submit" class="btn-modern">Save</button>
+                        <a href="{{ route('kampus.index') }}" class="btn-modern" style="background: gray;">Cancel</a>
         </form>
     </main>
 

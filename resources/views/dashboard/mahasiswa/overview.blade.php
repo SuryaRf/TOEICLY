@@ -221,6 +221,25 @@
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
+
+        /* Download Button Styles */
+        .download-btn {
+            display: inline-block;
+            margin-top: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: #7c3aed;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background-color: #6b21a8;
+        }
     </style>
 </head>
 
