@@ -203,53 +203,8 @@
 <body>
     <div class="flex min-h-screen">
         <!-- Sidebar -->
-        <aside class="sidebar" id="sidebar">
-            <button class="toggle-btn" onclick="toggleSidebar()">
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="brand">
-                <h2>TOEICLY</h2>
-            </div>
-            <ul>
-                <li>
-                    <a href="{{ route('mahasiswa.dashboard') }}"
-                       class="{{ request()->routeIs('mahasiswa.dashboard') ? 'active' : '' }}">
-                        <i class="fas fa-home"></i>
-                        <span>OVERVIEW</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('mahasiswa.profile') }}"
-                       class="{{ request()->routeIs('mahasiswa.profile') ? 'active' : '' }}">
-                        <i class="fas fa-user"></i>
-                        <span>PROFIL</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('mahasiswa.daftar-tes') }}"
-                       class="{{ request()->routeIs('mahasiswa.daftar-tes') ? 'active' : '' }}">
-                        <i class="fas fa-file-alt"></i>
-                        <span>DAFTAR TES</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('mahasiswa.riwayat-ujian') }}"
-                       class="{{ request()->routeIs('mahasiswa.riwayat-ujian') ? 'active' : '' }}">
-                        <i class="fas fa-history"></i>
-                        <span>RIWAYAT UJIAN</span>
-                    </a>
-                </li>
-                <li>
-                    <form action="{{ route('mahasiswa.logout') }}" method="POST">
-                        @csrf
-                        <button type="submit">
-                            <i class="fas fa-sign-out-alt"></i>
-                            <span>LOGOUT</span>
-                        </button>
-                    </form>
-                </li>
-            </ul>
-        </aside>
+          <!-- Sidebar -->
+  @include('dashboard.mahasiswa.sidebar')
 
         <!-- Main Content -->
         <main class="main-content">

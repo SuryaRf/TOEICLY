@@ -165,7 +165,7 @@
             <a href="{{ route('mahasiswa.daftar-tes') }}"
                class="{{ request()->routeIs('mahasiswa.daftar-tes') ? 'active' : '' }}">
                 <i class="fas fa-file-alt"></i>
-                <span>TEST LIST</span>
+                <span>REGISTER TEST</span>
             </a>
         </li>
         <li>
