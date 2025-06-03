@@ -185,9 +185,12 @@
         }
 
         @keyframes bounce {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: translateY(0);
             }
+
             50% {
                 transform: translateY(-10px);
             }
@@ -246,19 +249,21 @@
                                 <h3 class="text-xl font-semibold text-purple-800">{{ $jadwal->judul }}</h3>
                                 <p class="text-gray-600">{{ \Carbon\Carbon::parse($jadwal->tanggal)->format('d M Y') }}</p>
                                 @if($jadwal->file_pdf)
-                                    <iframe 
-                                        src="{{ route('mahasiswa.certificate.view', ['filename' => basename($jadwal->file_pdf)]) }}#toolbar=0&navpanes=0&scrollbar=0" 
-                                        class="pdf-iframe"
-                                        title="PDF Schedule: {{ $jadwal->judul }}"
-                                    >
+                                    <iframe
+                                        src="{{ route('mahasiswa.certificate.view', ['filename' => basename($jadwal->file_pdf)]) }}#toolbar=0&navpanes=0&scrollbar=0"
+                                        class="pdf-iframe" title="PDF Schedule: {{ $jadwal->judul }}">
                                         <p class="text-gray-600">
-                                            Your browser does not support PDFs or the file failed to load. 
-                                            <a href="{{ route('mahasiswa.certificate.view', ['filename' => basename($jadwal->file_pdf)]) }}" 
-                                               class="text-blue-600 hover:underline" target="_blank">
-                                               View PDF instead.
+                                            Your browser does not support PDFs or the file failed to load.
+                                            <a href="{{ route('mahasiswa.certificate.view', ['filename' => basename($jadwal->file_pdf)]) }}"
+                                                class="text-blue-600 hover:underline" target="_blank">
+                                                View PDF instead.
                                             </a>
                                         </p>
                                     </iframe>
+                                    <a href="{{ route('mahasiswa.certificate.view', ['filename' => basename($jadwal->file_pdf)]) }}?download=1"
+                                        class="download-btn">
+                                        Download PDF
+                                    </a>
                                 @else
                                     <p class="text-gray-500">No PDF uploaded.</p>
                                 @endif

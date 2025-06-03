@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 
 class CertificateController extends Controller
 {
-public function viewPdf($filename)
+    public function viewPdf($filename)
     {
         // Validate filename to prevent directory traversal
         if (!preg_match('/^[a-zA-Z0-9_\-\.]+\.pdf$/', $filename)) {
@@ -22,7 +22,9 @@ public function viewPdf($filename)
 
         $file = Storage::disk('public')->get($path);
         $mimeType = Storage::disk('public')->mimeType($path);
-
+        // Check for download query parameter
+        $isDownload = request()->has('download');
+        
         return response($file, 200)
             ->header('Content-Type', 'application/pdf')
             ->header('Content-Disposition', 'inline; filename="' . $filename . '"')
