@@ -246,14 +246,19 @@
                                 <h3 class="text-xl font-semibold text-purple-800">{{ $jadwal->judul }}</h3>
                                 <p class="text-gray-600">{{ \Carbon\Carbon::parse($jadwal->tanggal)->format('d M Y') }}</p>
                                 @if($jadwal->file_pdf)
-                                    <div class="pdf-viewer">
-                                        <canvas id="pdf-canvas-{{ $loop->index }}" class="w-full border border-gray-200 rounded-lg" style="min-height: 600px;"></canvas>
-                                        <p class="text-gray-500 mt-2">
-                                            <a href="{{ url('/storage/' . $jadwal->file_pdf) }}" class="text-blue-600 hover:underline" download>
-                                                Download PDF
+                                    <iframe 
+                                        src="{{ route('mahasiswa.certificate.view', ['filename' => basename($jadwal->file_pdf)]) }}#toolbar=0&navpanes=0&scrollbar=0" 
+                                        class="pdf-iframe"
+                                        title="PDF Schedule: {{ $jadwal->judul }}"
+                                    >
+                                        <p class="text-gray-600">
+                                            Your browser does not support PDFs or the file failed to load. 
+                                            <a href="{{ route('mahasiswa.certificate.view', ['filename' => basename($jadwal->file_pdf)]) }}" 
+                                               class="text-blue-600 hover:underline" target="_blank">
+                                               View PDF instead.
                                             </a>
                                         </p>
-                                    </div>
+                                    </iframe>
                                 @else
                                     <p class="text-gray-500">No PDF uploaded.</p>
                                 @endif
@@ -290,28 +295,7 @@
         </main>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.16.105/build/pdf.min.js"></script>
     <script>
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.16.105/build/pdf.worker.min.js';
-
-        document.querySelectorAll('.pdf-viewer').forEach((viewer, index) => {
-            const pdfUrl = viewer.querySelector('a').href;
-            const canvas = document.getElementById(`pdf-canvas-${index}`);
-            const ctx = canvas.getContext('2d');
-
-            pdfjsLib.getDocument(pdfUrl).promise.then((pdf) => {
-                pdf.getPage(1).then((page) => {
-                    const viewport = page.getViewport({ scale: 1.5 });
-                    canvas.height = viewport.height;
-                    canvas.width = viewport.width;
-                    page.render({ canvasContext: ctx, viewport: viewport });
-                });
-            }).catch((error) => {
-                console.error('Error loading PDF from URL:', pdfUrl, error);
-                viewer.innerHTML = '<p class="text-red-600">Failed to load PDF. <a href="' + pdfUrl + '" class="text-blue-600 hover:underline" download>Download instead</a></p>';
-            });
-        });
-
         // Sidebar Toggle
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
