@@ -155,45 +155,7 @@
 </head>
 
 <body>
-  <aside class="sidebar flex flex-col">
-    <div class="title">TOEICLY Admin</div>
-    <nav>
-      <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-        <i class="fas fa-home"></i> Dashboard
-      </a>
-      <a href="{{ route('admin.manage') }}" class="{{ request()->routeIs('admin.manage') ? 'active' : '' }}">
-        <i class="fas fa-users"></i> Manajemen Pengguna
-      </a>
-      <a href="{{ route('jadwal_sertifikat.index') }}"
-        class="{{ request()->routeIs('jadwal_sertifikat.*') ? 'active' : '' }}">
-        <i class="fas fa-calendar-alt"></i> Kelola Jadwal Sertifikat
-      </a>
-      <a href="{{ route('admin.pendaftar') }}" class="{{ request()->routeIs('admin.pendaftar') ? 'active' : '' }}">
-        <i class="fas fa-users"></i> Kelola Pendaftar Sertifikat
-      </a>
-
-      <a href="{{ route('kampus.index') }}" class="{{ request()->routeIs('kampus.*') ? 'active' : '' }}">
-        <i class="fas fa-building"></i> Data Kampus
-      </a>
-      <a href="{{ route('jurusan.index') }}" class="{{ request()->routeIs('jurusan.*') ? 'active' : '' }}">
-        <i class="fas fa-book"></i> Data Jurusan
-      </a>
-      <a href="{{ route('prodi.index') }}" class="{{ request()->routeIs('prodi.*') ? 'active' : '' }}">
-        <i class="fas fa-graduation-cap"></i> Data Prodi
-      </a>
-
-      <a href="{{ route('profile') }}" class="{{ request()->routeIs('profile') ? 'active' : '' }}">
-        <i class="fas fa-user"></i> Profile
-      </a>
-      <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-        class="sidebar-link">
-        <i class="fas fa-sign-out-alt"></i> Logout
-      </a>
-      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-        @csrf
-      </form>
-    </nav>
-  </aside>
+     @include('dashboard.admin.sidebar')
 
   <main>
     <h1 class="text-4xl font-bold mb-6 text-purple-700">Edit Pengguna: {{ $user->username }}</h1>

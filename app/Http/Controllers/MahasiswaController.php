@@ -9,17 +9,41 @@ use App\Models\JurusanModel;
 use App\Models\ProdiModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\JadwalSertifikat;
+use App\Models\JadwalSertifikatModel;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Response;
 
 class MahasiswaController extends Controller
 {
     // Existing methods
-    public function index()
-    {
-        $user = Auth::user();
-        $toeicScore = $user->toeicScore;
+public function index()
+{
+    $user = Auth::user();
+    $toeicScore = $user->toeicScore;
 
-        return view('dashboard.mahasiswa.overview', compact('toeicScore'));
+    $jadwals = JadwalSertifikatModel::orderBy('tanggal', 'desc')->get();
+
+    return view('dashboard.mahasiswa.overview', compact('toeicScore', 'jadwals'));
+}
+
+  public function viewPdf($filename)
+    {
+        $path = 'jadwal_pdf/' . $filename;
+
+        if (!Storage::disk('public')->exists($path)) {
+            abort(404, "File not found.");
+        }
+
+        $fileContent = Storage::disk('public')->get($path);
+        $mimeType = Storage::disk('public')->mimeType($path);
+
+        return response($fileContent, 200)
+            ->header('Content-Type', $mimeType)
+            ->header('Content-Disposition', 'inline; filename="'.$filename.'"');
     }
+
+
 
     public function daftarTes()
     {

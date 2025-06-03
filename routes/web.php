@@ -20,6 +20,7 @@ use App\Http\Controllers\ItcController;
 use App\Http\Controllers\Auth\RegisterController;
 // Import khusus ProfileController di folder Mahasiswa dengan alias
 use App\Http\Controllers\Mahasiswa\ProfileController as MahasiswaProfileController;
+use App\Http\Controllers\CertificateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,6 +93,7 @@ Route::middleware('auth')->group(function () {
         // // Profile mahasiswa menggunakan controller di namespace Mahasiswa
         Route::get('/profile', [MahasiswaController::class, 'profile'])->name('profile');
         // Route::post('/profile/avatar', [MahasiswaProfileController::class, 'uploadAvatar'])->name('profile.uploadAvatar');
+Route::get('/certificate/view/{filename}', [CertificateController::class, 'viewPdf'])->name('certificate.view');
 
         Route::get('/daftar-tes', [MahasiswaController::class, 'daftarTes'])->name('daftar-tes');
         Route::get('/riwayat-ujian', [MahasiswaController::class, 'riwayatUjian'])->name('riwayat-ujian');

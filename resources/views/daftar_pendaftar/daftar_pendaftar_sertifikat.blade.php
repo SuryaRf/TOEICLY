@@ -167,56 +167,7 @@
 
 <body>
 
-    <aside class="sidebar flex flex-col">
-        <div class="p-6">
-            <h2 class="text-4xl font-extrabold tracking-tight select-none">TOEICLY Admin</h2>
-        </div>
-        <nav class="mt-8 flex flex-col gap-2 px-2">
-            <a href="{{ route('admin.dashboard') }}"
-                class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                <i class="fas fa-home"></i> Dashboard
-            </a>
-            <a href="{{ route('admin.manage') }}"
-                class="sidebar-link {{ request()->routeIs('admin.manage') ? 'active' : '' }}">
-                <i class="fas fa-users"></i> Manajemen Pengguna
-            </a>
-            <a href="{{ route('jadwal_sertifikat.index') }}"
-                class="sidebar-link {{ request()->routeIs('jadwal_sertifikat.*') ? 'active' : '' }}">
-                <i class="fas fa-calendar-alt"></i> Kelola Jadwal Sertifikat
-            </a>
-            <a href="{{ route('admin.pendaftar') }}"
-                class="sidebar-link {{ request()->routeIs('admin.pendaftar') ? 'active' : '' }}">
-                <i class="fas fa-users"></i> Kelola Pendaftar Sertifikat
-            </a>
-
-
-
-            <!-- Tambahan menu data kampus, jurusan, prodi -->
-            <a href="{{ route('kampus.index') }}"
-                class="sidebar-link {{ request()->routeIs('kampus.*') ? 'active' : '' }}">
-                <i class="fas fa-building"></i> Data Kampus
-            </a>
-            <a href="{{ route('jurusan.index') }}"
-                class="sidebar-link {{ request()->routeIs('jurusan.*') ? 'active' : '' }}">
-                <i class="fas fa-book"></i> Data Jurusan
-            </a>
-            <a href="{{ route('prodi.index') }}"
-                class="sidebar-link {{ request()->routeIs('prodi.*') ? 'active' : '' }}">
-                <i class="fas fa-graduation-cap"></i> Data Prodi
-            </a>
-
-            <a href="{{ route('profile') }}" class="sidebar-link {{ request()->routeIs('profile') ? 'active' : '' }}">
-                <i class="fas fa-user"></i> Profile
-            </a>
-            <a href="{{ route('logout') }}"
-                onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="sidebar-link">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-        </nav>
-    </aside>
+       @include('dashboard.admin.sidebar')
 
     <main>
         <h1 class="text-4xl font-bold mb-6 text-purple-700">Daftar Pendaftar Tes TOEIC</h1>
@@ -228,15 +179,16 @@
         <table class="table table-bordered table-striped">
             <thead class="table-primary">
                 <tr>
-                    <th>No.</th>
-                    <th>Kode Pendaftaran</th>
-                    <th>Nama Mahasiswa</th>
-                    <th>Nomor Telepon</th>
-                    <th>Tanggal Daftar</th>
-                    <th>Scan KTP</th>
-                    <th>Scan KTM</th>
-                    <th>Pas Foto</th>
-                    <th>Status Sertifikat</th>
+   <th>No.</th>
+<th>Registration Code</th>
+<th>Student Name</th>
+<th>Phone Number</th>
+<th>Registration Date</th>
+<th>ID Card Scan</th>
+<th>Student Card Scan</th>
+<th>Passport Photo</th>
+<th>Certificate Status</th>
+
                 </tr>
             </thead>
              <tbody>
@@ -289,7 +241,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="9" class="text-center">Belum ada pendaftar.</td>
+                        <td colspan="9" class="text-center">There are no applicants yet.</td>
                     </tr>
                 @endforelse
             </tbody>

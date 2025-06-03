@@ -61,7 +61,8 @@
         margin: 0.5rem 0;
     }
 
-    .sidebar a, .sidebar button {
+    .sidebar a,
+    .sidebar button {
         display: flex;
         align-items: center;
         padding: 0.75rem 1.25rem;
@@ -75,7 +76,10 @@
         overflow: hidden;
     }
 
-    .sidebar a:hover, .sidebar button:hover, .sidebar a.active, .sidebar button.active {
+    .sidebar a:hover,
+    .sidebar button:hover,
+    .sidebar a.active,
+    .sidebar button.active {
         background: rgba(255, 255, 255, 0.15);
         color: #ffffff;
         transform: translateX(5px);
@@ -88,16 +92,19 @@
         transition: transform 0.3s ease;
     }
 
-    .sidebar a:hover i, .sidebar button:hover i {
+    .sidebar a:hover i,
+    .sidebar button:hover i {
         transform: scale(1.2) rotate(5deg);
         color: #a78bfa;
     }
 
-    .sidebar.collapsed a span, .sidebar.collapsed button span {
+    .sidebar.collapsed a span,
+    .sidebar.collapsed button span {
         display: none;
     }
 
-    .sidebar.collapsed a, .sidebar.collapsed button {
+    .sidebar.collapsed a,
+    .sidebar.collapsed button {
         justify-content: center;
         padding: 0.75rem;
     }
@@ -149,28 +156,28 @@
     <ul>
         <li>
             <a href="{{ route('mahasiswa.dashboard') }}"
-               class="{{ request()->routeIs('mahasiswa.dashboard') ? 'active' : '' }}">
+                class="{{ request()->routeIs('mahasiswa.dashboard') ? 'active' : '' }}">
                 <i class="fas fa-home"></i>
                 <span>OVERVIEW</span>
             </a>
         </li>
         <li>
             <a href="{{ route('mahasiswa.profile') }}"
-               class="{{ request()->routeIs('mahasiswa.profile') ? 'active' : '' }}">
+                class="{{ request()->routeIs('mahasiswa.profile') ? 'active' : '' }}">
                 <i class="fas fa-user"></i>
                 <span>PROFILE</span>
             </a>
         </li>
         <li>
             <a href="{{ route('mahasiswa.daftar-tes') }}"
-               class="{{ request()->routeIs('mahasiswa.daftar-tes') ? 'active' : '' }}">
+                class="{{ request()->routeIs('mahasiswa.daftar-tes') ? 'active' : '' }}">
                 <i class="fas fa-file-alt"></i>
                 <span>REGISTER TEST</span>
             </a>
         </li>
         <li>
             <a href="{{ route('mahasiswa.riwayat-ujian') }}"
-               class="{{ request()->routeIs('mahasiswa.riwayat-ujian') ? 'active' : '' }}">
+                class="{{ request()->routeIs('mahasiswa.riwayat-ujian') ? 'active' : '' }}">
                 <i class="fas fa-history"></i>
                 <span>TEST HISTORY</span>
             </a>

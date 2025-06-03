@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -71,8 +72,8 @@
             margin: 0.5rem 0;
         }
 
-        /* Apply these styles consistently to both links and buttons */
-        .sidebar a, .sidebar button {
+        .sidebar a,
+        .sidebar button {
             display: flex;
             align-items: center;
             padding: 0.75rem 1.25rem;
@@ -82,16 +83,19 @@
             text-decoration: none;
             border-radius: 8px;
             transition: all 0.3s ease;
-            position: relative; /* Crucial for the extend effect */
-            overflow: hidden; /* Crucial for the extend effect */
-            background: none; /* Reset button default background */
-            border: none; /* Reset button default border */
-            width: 100%; /* Make button take full width of its parent li */
-            text-align: left; /* Align text to the left for consistency */
-            cursor: pointer; /* Indicate it's clickable */
+            position: relative;
+            overflow: hidden;
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
         }
 
-        .sidebar a:hover, .sidebar button:hover, .sidebar a.active, .sidebar button.active {
+        .sidebar a:hover,
+        .sidebar button:hover,
+        .sidebar a.active,
+        .sidebar button.active {
             background: rgba(255, 255, 255, 0.15);
             color: #ffffff;
             transform: translateX(5px);
@@ -104,16 +108,19 @@
             transition: transform 0.3s ease;
         }
 
-        .sidebar a:hover i, .sidebar button:hover i {
+        .sidebar a:hover i,
+        .sidebar button:hover i {
             transform: scale(1.2) rotate(5deg);
             color: #a78bfa;
         }
 
-        .sidebar.collapsed a span, .sidebar.collapsed button span {
+        .sidebar.collapsed a span,
+        .sidebar.collapsed button span {
             display: none;
         }
 
-        .sidebar.collapsed a, .sidebar.collapsed button {
+        .sidebar.collapsed a,
+        .sidebar.collapsed button {
             justify-content: center;
             padding: 0.75rem;
         }
@@ -128,7 +135,7 @@
             padding: 2rem;
             background: linear-gradient(135deg, #f3e8ff 0%, #e0f2fe 100%);
             min-height: 100vh;
-            width: calc(100% - 260px); /* Ensure main-content takes remaining width */
+            width: calc(100% - 260px);
             box-sizing: border-box;
         }
 
@@ -198,17 +205,26 @@
             box-shadow: 0 10px 20px rgba(124, 58, 237, 0.2);
         }
 
-        /* Ensure grid and sections stretch to full width */
         .full-width {
             width: 100%;
             max-width: 100%;
         }
+
+        /* PDF Viewer Styles */
+        .pdf-iframe {
+            width: 100%;
+            min-height: 600px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
+
 <body>
     <div class="flex min-h-screen">
-          <!-- Sidebar -->
-  @include('dashboard.mahasiswa.sidebar')
+        <!-- Sidebar -->
+        @include('dashboard.mahasiswa.sidebar')
 
         <main id="overview" class="main-content fade-slide">
             @if (session('success'))
@@ -221,44 +237,31 @@
             <p class="text-lg text-gray-600 mb-8">Track your TOEIC test performance and upcoming schedules.</p>
 
             <section class="card rounded-xl p-8 mb-8 full-width">
-                <h2 class="text-2xl font-semibold text-purple-800 mb-6">Your TOEIC Information</h2>
-                @if ($toeicScore)
-                    <div class="space-y-4 text-gray-700">
-                        <div>
-                            <span class="font-semibold text-purple-800">Latest Score:</span>
-                            <span class="text-2xl font-bold text-green-600">{{ $toeicScore->score }}</span>
-                        </div>
-                        <div>
-                            <span class="font-semibold text-purple-800">Certificate Date:</span>
-                            <span>{{ \Carbon\Carbon::parse($toeicScore->certificate_date)->translatedFormat('d F Y') }}</span>
-                        </div>
-                        <div>
-                            <span class="font-semibold text-purple-800">Certificate PDF:</span>
-                            @if ($toeicScore->certificate_pdf)
-                                <a href="{{ asset('storage/' . $toeicScore->certificate_pdf) }}"
-                                   class="text-blue-600 underline hover:text-blue-800" target="_blank">View Certificate</a>
-                            @else
-                                <span class="text-red-500">Not available</span>
-                            @endif
-                        </div>
-                    </div>
+                <h2 class="text-2xl font-semibold text-purple-800 mb-6">Available Certificate Schedules</h2>
+
+                @if(isset($jadwals) && $jadwals->isNotEmpty())
+                    <ul>
+                        @foreach ($jadwals as $jadwal)
+                            <li class="mb-6">
+                                <h3 class="text-xl font-semibold text-purple-800">{{ $jadwal->judul }}</h3>
+                                <p class="text-gray-600">{{ \Carbon\Carbon::parse($jadwal->tanggal)->format('d M Y') }}</p>
+                                @if($jadwal->file_pdf)
+                                    <div class="pdf-viewer">
+                                        <canvas id="pdf-canvas-{{ $loop->index }}" class="w-full border border-gray-200 rounded-lg" style="min-height: 600px;"></canvas>
+                                        <p class="text-gray-500 mt-2">
+                                            <a href="{{ url('/storage/' . $jadwal->file_pdf) }}" class="text-blue-600 hover:underline" download>
+                                                Download PDF
+                                            </a>
+                                        </p>
+                                    </div>
+                                @else
+                                    <p class="text-gray-500">No PDF uploaded.</p>
+                                @endif
+                            </li>
+                        @endforeach
+                    </ul>
                 @else
-                    <div class="space-y-4 text-gray-700">
-                        <p class="text-lg text-purple-700 font-semibold mb-2">No past TOEIC data available yet. Here's what you need to know:</p>
-                        <div>
-                            <span class="font-semibold text-purple-800">Latest Test Score:</span>
-                            <span>Awaiting result for your most recent test.</span>
-                        </div>
-                        <div>
-                            <span class="font-semibold text-purple-800">Next Certificate Collection:</span>
-                            <span class="text-green-600">Available from June 15, 2025 (9:00 AM - 4:00 PM)</span>
-                        </div>
-                        <div>
-                            <span class="font-semibold text-purple-800">Collection Location:</span>
-                            <span>Main Office, Building A, Room 101</span>
-                        </div>
-                        <p class="text-sm text-gray-500 mt-2">Please ensure you bring your ID for certificate collection.</p>
-                    </div>
+                    <p class="text-gray-500">No schedules available.</p>
                 @endif
             </section>
 
@@ -287,7 +290,28 @@
         </main>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.16.105/build/pdf.min.js"></script>
     <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.16.105/build/pdf.worker.min.js';
+
+        document.querySelectorAll('.pdf-viewer').forEach((viewer, index) => {
+            const pdfUrl = viewer.querySelector('a').href;
+            const canvas = document.getElementById(`pdf-canvas-${index}`);
+            const ctx = canvas.getContext('2d');
+
+            pdfjsLib.getDocument(pdfUrl).promise.then((pdf) => {
+                pdf.getPage(1).then((page) => {
+                    const viewport = page.getViewport({ scale: 1.5 });
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+                    page.render({ canvasContext: ctx, viewport: viewport });
+                });
+            }).catch((error) => {
+                console.error('Error loading PDF from URL:', pdfUrl, error);
+                viewer.innerHTML = '<p class="text-red-600">Failed to load PDF. <a href="' + pdfUrl + '" class="text-blue-600 hover:underline" download>Download instead</a></p>';
+            });
+        });
+
         // Sidebar Toggle
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
@@ -354,4 +378,5 @@
         });
     </script>
 </body>
+
 </html>

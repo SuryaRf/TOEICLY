@@ -2,53 +2,61 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\JadwalSertifikatModel;
-use App\Models\PendaftaranModel;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class JadwalSertifikatController extends Controller
 {
     public function index()
     {
-        $jadwals = JadwalSertifikatModel::all();
+        $jadwals = JadwalSertifikatModel::orderBy('tanggal', 'desc')->get();
         return view('jadwal_sertifikat.index', compact('jadwals'));
     }
 
-    // Form upload jadwal baru
     public function create()
     {
         return view('jadwal_sertifikat.create');
     }
 
-    // Simpan jadwal baru beserta upload file PDF
     public function store(Request $request)
     {
+        // Validate the request
         $request->validate([
-            'judul' => 'required|string|max:100',
-            'tanggal' => 'required|date', // validasi input tanggal
-            'file_pdf' => 'required|file|mimes:pdf|max:5120', // max 5MB
+            'judul' => 'required|string|max:255',
+            'tanggal' => 'required|date',
+            'file_pdf' => 'required|file|mimes:pdf|max:2048', // Max 2MB
         ]);
 
-        $filePath = $request->file('file_pdf')->store('jadwal_pdf', 'public');
+        try {
+            // Handle the file upload
+            if ($request->hasFile('file_pdf')) {
+                // Store the file in storage/app/public/jadwal_pdf/
+                $file = $request->file('file_pdf');
+                $filename = $file->hashName(); // Generates a random filename like cn9ZUXHawGyS5KJmyWDkcx7OO2gEdPoIxqUBdPsY.pdf
+                $path = $file->storeAs('jadwal_pdf', $filename, 'public');
 
-        JadwalSertifikatModel::create([
-            'judul' => $request->judul,
-             'tanggal' => $request->tanggal,  // simpan tanggal jadwal
-            'file_pdf' => $filePath,
-        ]);
+                // Create a new JadwalSertifikat record
+                JadwalSertifikatModel::create([
+                    'judul' => $request->judul,
+                    'tanggal' => $request->tanggal,
+                    'file_pdf' => $path, // Store the relative path (e.g., jadwal_pdf/cn9ZUXHawGyS5KJmyWDkcx7OO2gEdPoIxqUBdPsY.pdf)
+                ]);
 
-        return redirect()->route('jadwal_sertifikat.index')->with('success', 'Jadwal berhasil diupload');
+                return redirect()->route('jadwal_sertifikat.index')->with('success', 'Jadwal uploaded successfully.');
+            }
+
+            return redirect()->back()->withErrors(['file_pdf' => 'File upload failed.']);
+        } catch (\Exception $e) {
+            Log::error('Error uploading jadwal: ' . $e->getMessage());
+            return redirect()->back()->withErrors(['file_pdf' => 'An error occurred while uploading the file.']);
+        }
     }
 
-    // Tampilkan peserta yang sudah daftar untuk jadwal tertentu
     public function peserta($jadwal_id)
     {
-        $jadwal = JadwalSertifikatModel::findOrFail($jadwal_id);
-
-        $pesertas = PendaftaranModel::with('mahasiswa')
-            ->where('jadwal_id', $jadwal_id)
-            ->get();
-
-        return view('jadwal_sertifikat.peserta', compact('jadwal', 'pesertas'));
+        // Logic for showing participants (if needed)
+        return view('jadwal_sertifikat.peserta', compact('jadwal_id'));
     }
 }

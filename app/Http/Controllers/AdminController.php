@@ -8,6 +8,7 @@ use App\Models\UserModel;
 use App\Models\PendaftaranModel;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+
 class AdminController extends Controller
 {
     // Pastikan menggunakan middleware auth agar hanya pengguna yang login yang bisa mengakses
@@ -17,7 +18,7 @@ class AdminController extends Controller
     }
 
     // Menampilkan halaman dashboard admin
-public function index()
+    public function index()
     {
         // Count total registrants (current year only for relevance)
         $currentYear = Carbon::now()->year;
@@ -31,10 +32,10 @@ public function index()
             DB::raw("DATE_FORMAT(tanggal_pendaftaran, '%Y-%m') as month"),
             DB::raw("COUNT(*) as total")
         )
-        ->where('tanggal_pendaftaran', '>=', now()->subYear())
-        ->groupBy('month')
-        ->orderBy('month')
-        ->get();
+            ->where('tanggal_pendaftaran', '>=', now()->subYear())
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get();
 
         $labels = $registrationsByMonth->pluck('month')->map(function ($m) {
             return Carbon::createFromFormat('Y-m', $m)->format('M Y');
@@ -60,23 +61,23 @@ public function index()
     }
 
     public function dashboard()
-{
-    // Ambil jumlah pendaftar per bulan selama 12 bulan terakhir
-    $pendaftaranPerBulan = PendaftaranModel::select(
+    {
+        // Ambil jumlah pendaftar per bulan selama 12 bulan terakhir
+        $pendaftaranPerBulan = PendaftaranModel::select(
             DB::raw("DATE_FORMAT(tanggal_pendaftaran, '%Y-%m') as month"),
             DB::raw("COUNT(*) as total")
         )
-        ->where('tanggal_pendaftaran', '>=', now()->subYear())
-        ->groupBy('month')
-        ->orderBy('month')
-        ->get();
+            ->where('tanggal_pendaftaran', '>=', now()->subYear())
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get();
 
-    // Siapkan data untuk chart
-    $labels = $pendaftaranPerBulan->pluck('month')->map(function($m) {
-        return \Carbon\Carbon::createFromFormat('Y-m', $m)->format('M Y');
-    });
-    $data = $pendaftaranPerBulan->pluck('total');
+        // Siapkan data untuk chart
+        $labels = $pendaftaranPerBulan->pluck('month')->map(function ($m) {
+            return \Carbon\Carbon::createFromFormat('Y-m', $m)->format('M Y');
+        });
+        $data = $pendaftaranPerBulan->pluck('total');
 
-    return view('dashboard.admin.index', compact('labels', 'data'));
-}
+        return view('dashboard.admin.index', compact('labels', 'data'));
+    }
 }
