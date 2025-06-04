@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -116,7 +117,8 @@
             overflow: hidden;
         }
 
-        th, td {
+        th,
+        td {
             text-align: left;
             padding: 0.75rem 1rem;
             border-bottom: 1px solid #e5e7eb;
@@ -159,7 +161,9 @@
             box-shadow: 0 2px 8px rgb(239 68 68 / 0.3);
         }
 
-        .btn-outline-primary, .btn-verify, .btn-detail {
+        .btn-outline-primary,
+        .btn-verify,
+        .btn-detail {
             font-weight: 600;
             padding: 0.25rem 0.75rem;
             font-size: 0.875rem;
@@ -177,6 +181,27 @@
             border-top-left-radius: 1rem;
             border-top-right-radius: 1rem;
         }
+
+        .btn-custom-purple {
+    background-color: #6f42c1; /* Primary purple color */
+    border-color: #6f42c1;
+    color: #ffffff; /* White text for contrast */
+}
+
+.btn-custom-purple:hover {
+    background-color: #5a32a3; /* Darker purple for hover */
+    border-color: #5a32a3;
+    color: #ffffff;
+}
+
+.btn-custom-purple:focus, .btn-custom-purple.focus {
+    box-shadow: 0 0 0 0.25rem rgba(111, 66, 193, 0.5); /* Purple focus ring */
+}
+
+.btn-custom-purple:active, .btn-custom-purple.active {
+    background-color: #4c2889; /* Even darker purple for active state */
+    border-color: #4c2889;
+}
 
         .modal-footer {
             border-top: none;
@@ -207,6 +232,7 @@
         }
     </style>
 </head>
+
 <body>
     @include('dashboard.admin.sidebar')
 
@@ -255,8 +281,8 @@
                         <td>{{ $pendaftaran->mahasiswa->nama ?? '-' }}</td>
                         <td>
                             @if($pendaftaran->mahasiswa->no_telp)
-                                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $pendaftaran->mahasiswa->no_telp) }}" 
-                                   target="_blank" class="btn btn-sm btn-outline-success">
+                                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $pendaftaran->mahasiswa->no_telp) }}"
+                                    target="_blank" class="btn btn-sm btn-outline-success">
                                     {{ $pendaftaran->mahasiswa->no_telp }}
                                 </a>
                             @else
@@ -267,70 +293,87 @@
                         <td>{{ $pendaftaran->tanggal_pendaftaran->format('d-m-Y') }}</td>
                         <td>
                             @if($pendaftaran->scan_ktp)
-                                <a href="{{ asset('storage/'.$pendaftaran->scan_ktp) }}" target="_blank" class="btn btn-sm btn-outline-primary">KTP</a>
+                                <a href="{{ asset('storage/' . $pendaftaran->scan_ktp) }}" target="_blank"
+                                    class="btn btn-sm btn-outline-primary">KTP</a>
                             @else
                                 -
                             @endif
                         </td>
                         <td>
                             @if($pendaftaran->scan_ktm)
-                                <a href="{{ asset('storage/'.$pendaftaran->scan_ktm) }}" target="_blank" class="btn btn-sm btn-outline-primary">KTM</a>
+                                <a href="{{ asset('storage/' . $pendaftaran->scan_ktm) }}" target="_blank"
+                                    class="btn btn-sm btn-outline-primary">KTM</a>
                             @else
                                 -
                             @endif
                         </td>
                         <td>
                             @if($pendaftaran->pas_foto)
-                                <a href="{{ asset('storage/'.$pendaftaran->pas_foto) }}" target="_blank" class="btn btn-sm btn-outline-primary">Foto</a>
+                                <a href="{{ asset('storage/' . $pendaftaran->pas_foto) }}" target="_blank"
+                                    class="btn btn-sm btn-outline-primary">Foto</a>
                             @else
                                 -
                             @endif
                         </td>
                         <td>
                             @if($pendaftaran->detail && $pendaftaran->detail->status === 'menunggu')
-                                <form action="{{ route('admin.verify', ['id' => $pendaftaran->pendaftaran_id, 'status' => 'diterima']) }}" method="POST" style="display:inline;">
+                                <form
+                                    action="{{ route('admin.verify', ['id' => $pendaftaran->pendaftaran_id, 'status' => 'diterima']) }}"
+                                    method="POST" style="display:inline;">
                                     @csrf
                                     <button type="submit" class="btn btn-sm btn-verify btn-success">Terima</button>
                                 </form>
-                                <form action="{{ route('admin.verify', ['id' => $pendaftaran->pendaftaran_id, 'status' => 'ditolak']) }}" method="POST" style="display:inline;">
+                                <form
+                                    action="{{ route('admin.verify', ['id' => $pendaftaran->pendaftaran_id, 'status' => 'ditolak']) }}"
+                                    method="POST" style="display:inline;">
                                     @csrf
                                     <button type="submit" class="btn btn-sm btn-verify btn-danger">Tolak</button>
                                 </form>
                             @endif
-                            <button class="btn btn-sm btn-verify btn-primary" data-bs-toggle="modal" 
-                                    data-bs-target="#editModal{{ $pendaftaran->pendaftaran_id }}">Edit</button>
-                            <button class="btn btn-sm btn-detail btn-info" data-bs-toggle="modal" 
-                                    data-bs-target="#detailModal{{ $pendaftaran->pendaftaran_id }}">Detail</button>
+                            <button class="btn btn-sm btn-custom-purple" data-bs-toggle="modal"
+        data-bs-target="#editModal{{ $pendaftaran->pendaftaran_id }}">Edit</button>
+<button class="btn btn-sm btn-custom-purple" data-bs-toggle="modal"
+        data-bs-target="#detailModal{{ $pendaftaran->pendaftaran_id }}">Detail</button>
                         </td>
                     </tr>
 
                     <!-- Edit Modal -->
-                    <div class="modal fade" id="editModal{{ $pendaftaran->pendaftaran_id }}" tabindex="-1" aria-labelledby="editModalLabel{{ $pendaftaran->pendaftaran_id }}" aria-hidden="true">
+                    <div class="modal fade" id="editModal{{ $pendaftaran->pendaftaran_id }}" tabindex="-1"
+                        aria-labelledby="editModalLabel{{ $pendaftaran->pendaftaran_id }}" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="editModalLabel{{ $pendaftaran->pendaftaran_id }}">Edit Status Pendaftaran</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <h5 class="modal-title" id="editModalLabel{{ $pendaftaran->pendaftaran_id }}">Edit
+                                        Status Pendaftaran</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                                 </div>
                                 <form action="{{ route('admin.editStatus', $pendaftaran->pendaftaran_id) }}" method="POST">
                                     @csrf
                                     @method('PATCH')
                                     <div class="modal-body">
                                         <div class="mb-3">
-                                            <label for="status{{ $pendaftaran->pendaftaran_id }}" class="form-label">Status</label>
-                                            <select class="form-select" id="status{{ $pendaftaran->pendaftaran_id }}" name="status" required>
+                                            <label for="status{{ $pendaftaran->pendaftaran_id }}"
+                                                class="form-label">Status</label>
+                                            <select class="form-select" id="status{{ $pendaftaran->pendaftaran_id }}"
+                                                name="status" required>
                                                 <option value="menunggu" {{ optional($pendaftaran->detail)->status === 'menunggu' ? 'selected' : '' }}>Menunggu</option>
                                                 <option value="diterima" {{ optional($pendaftaran->detail)->status === 'diterima' ? 'selected' : '' }}>Diterima</option>
-                                                <option value="ditolak" {{ optional($pendaftaran->detail)->status === 'ditolak' ? 'selected' : '' }}>Ditolak</option>
+                                                <option value="ditolak" {{ optional($pendaftaran->detail)->status === 'ditolak' ? 'selected' : '' }}>
+                                                    Ditolak</option>
                                             </select>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="catatan{{ $pendaftaran->pendaftaran_id }}" class="form-label">Catatan</label>
-                                            <textarea class="form-control" id="catatan{{ $pendaftaran->pendaftaran_id }}" name="catatan" rows="4">{{ optional($pendaftaran->detail)->catatan ?? '' }}</textarea>
+                                            <label for="catatan{{ $pendaftaran->pendaftaran_id }}"
+                                                class="form-label">Catatan</label>
+                                            <textarea class="form-control" id="catatan{{ $pendaftaran->pendaftaran_id }}"
+                                                name="catatan"
+                                                rows="4">{{ optional($pendaftaran->detail)->catatan ?? '' }}</textarea>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Batal</button>
                                         <button type="submit" class="btn btn-modern">Simpan</button>
                                     </div>
                                 </form>
@@ -339,31 +382,49 @@
                     </div>
 
                     <!-- Detail Modal -->
-                    <div class="modal fade" id="detailModal{{ $pendaftaran->pendaftaran_id }}" tabindex="-1" aria-labelledby="detailModalLabel{{ $pendaftaran->pendaftaran_id }}" aria-hidden="true">
+                    <div class="modal fade" id="detailModal{{ $pendaftaran->pendaftaran_id }}" tabindex="-1"
+                        aria-labelledby="detailModalLabel{{ $pendaftaran->pendaftaran_id }}" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="detailModalLabel{{ $pendaftaran->pendaftaran_id }}">Detail Pendaftaran</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <h5 class="modal-title" id="detailModalLabel{{ $pendaftaran->pendaftaran_id }}">Detail
+                                        Pendaftaran</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <p><strong>Kode Pendaftaran:</strong> {{ $pendaftaran->pendaftaran_kode }}</p>
                                     <p><strong>Nama Mahasiswa:</strong> {{ $pendaftaran->mahasiswa->nama ?? '-' }}</p>
-                                    <p><strong>Status:</strong> {{ ucfirst($pendaftaran->detail->status ?? 'belum ada') }}</p>
-                                    <p><strong>Tanggal Daftar:</strong> {{ $pendaftaran->tanggal_pendaftaran->format('d-m-Y') }}</p>
+                                    <p><strong>NIM:</strong> {{ $pendaftaran->mahasiswa->nim ?? '-' }}</p>
+                                    <p><strong>NIK:</strong> {{ $pendaftaran->mahasiswa->nik ?? '-' }}</p>
+                                    <p><strong>Angkatan:</strong> {{ $pendaftaran->mahasiswa->angkatan ?? '-' }}</p>
+                                    <p><strong>No. Telepon:</strong> {{ $pendaftaran->mahasiswa->no_telp ?? '-' }}</p>
+                                    <p><strong>Alamat Asal:</strong> {{ $pendaftaran->mahasiswa->alamat_asal ?? '-' }}</p>
+                                    <p><strong>Alamat Sekarang:</strong>
+                                        {{ $pendaftaran->mahasiswa->alamat_sekarang ?? '-' }}</p>
+                                    <p><strong>Jenis Kelamin:</strong> {{ $pendaftaran->mahasiswa->jenis_kelamin ?? '-' }}
+                                    </p>
+                                    <p><strong>Status Mahasiswa:</strong> {{ $pendaftaran->mahasiswa->status ?? '-' }}</p>
+                                    <p><strong>Keterangan:</strong> {{ $pendaftaran->mahasiswa->keterangan ?? '-' }}</p>
+                                    <p><strong>Program Studi:</strong>
+                                        {{ $pendaftaran->mahasiswa->prodi->nama_prodi ?? 'D-IV Sistem Informasi Bisnis' }}</p>
+                                    <p><strong>Status Pendaftaran:</strong>
+                                        {{ ucfirst($pendaftaran->detail->status ?? 'belum ada') }}</p>
+                                    <p><strong>Tanggal Daftar:</strong>
+                                        {{ $pendaftaran->tanggal_pendaftaran->format('d-m-Y') }}</p>
                                     <p><strong>Catatan:</strong> {{ $pendaftaran->detail->catatan ?? '-' }}</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Tutup</button>
+                                    </div>  
                                 </div>
                             </div>
                         </div>
-                    </div>
                 @empty
-                    <tr>
-                        <td colspan="10" class="text-center">Belum ada pendaftar.</td>
-                    </tr>
-                @endforelse
+                        <tr>
+                            <td colspan="10" class="text-center">Belum ada pendaftar.</td>
+                        </tr>
+                    @endforelse
             </tbody>
         </table>
     </main>
@@ -402,4 +463,5 @@
         });
     </script>
 </body>
+
 </html>
