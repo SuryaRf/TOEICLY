@@ -1,9 +1,10 @@
+{{-- filepath: d:\laragon\www\TOEICLY\resources\views\dashboard\mahasiswa\profile.blade.php --}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Profil Mahasiswa - TOEICLY</title>
+    <title>Student Profile - TOEICLY</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
     <style>
@@ -202,7 +203,7 @@
     @include('dashboard.mahasiswa.sidebar')
 
     <main>
-        <h1>Profil Saya</h1>
+        <h1>My Profile</h1>
 
         <section class="card">
             <form class="profile-info" action="{{ route('profile.update') }}" method="POST">
@@ -215,25 +216,25 @@
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" value="{{ old('email', $user->email) }}" required>
 
-                <label for="nama">Nama Lengkap</label>
+                <label for="nama">Full Name</label>
                 <input type="text" id="nama" name="nama" value="{{ old('nama', $mahasiswa->nama ?? '') }}" required>
 
-                <label for="nim">NIM</label>
+                <label for="nim">Student ID (NIM)</label>
                 <input type="text" id="nim" name="nim" value="{{ old('nim', $mahasiswa->nim ?? '') }}" readonly>
 
-                <label for="nik">NIK</label>
+                <label for="nik">National ID (NIK)</label>
                 <input type="text" id="nik" name="nik" value="{{ old('nik', $mahasiswa->nik ?? '') }}" readonly>
 
-                <label for="no_telp">No. Telepon</label>
+                <label for="no_telp">Phone Number</label>
                 <input type="text" id="no_telp" name="no_telp" value="{{ old('no_telp', $mahasiswa->no_telp ?? '') }}" required>
 
-                <label for="jenis_kelamin">Jenis Kelamin</label>
+                <label for="jenis_kelamin">Gender</label>
                 <input type="text" id="jenis_kelamin" name="jenis_kelamin" value="{{ old('jenis_kelamin', $mahasiswa->jenis_kelamin ?? '') }}" readonly>
 
-                <label for="keterangan">Keterangan</label>
+                <label for="keterangan">Description</label>
                 <input type="text" id="keterangan" name="keterangan" value="{{ old('keterangan', $mahasiswa->keterangan ?? '') }}" readonly>
 
-                <label for="prodi">Program Studi</label>
+                <label for="prodi">Study Program</label>
                 <input type="text" id="prodi" name="prodi" value="{{ old('prodi', $mahasiswa->prodi->prodi_nama ?? '') }}" readonly>
 
                 <button type="submit" class="btn-modern">Update Profile</button>
