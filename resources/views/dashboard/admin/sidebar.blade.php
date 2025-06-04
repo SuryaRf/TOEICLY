@@ -79,6 +79,10 @@
             class="sidebar-link {{ request()->routeIs('admin.pendaftar') ? 'active' : '' }}">
             <i class="fas fa-users"></i> Manage Certificate Registrants
         </a>
+        <a href="{{ route('admin.pendaftarVerifikasi') }}"
+            class="sidebar-link {{ request()->routeIs('admin.pendaftarVerifikasi') ? 'active' : '' }}">
+            <i class="fas fa-users"></i> Manage Verification
+        </a>
 
         <!-- Additional menu for campus, department, program study -->
         <a href="{{ route('kampus.index') }}"

@@ -59,6 +59,11 @@ class AdminController extends Controller
         $pendaftarans = PendaftaranModel::with(['mahasiswa', 'jadwal', 'detail', 'sertifikatStatus'])->get();
         return view('daftar_pendaftar.daftar_pendaftar_sertifikat', compact('pendaftarans'));
     }
+    public function daftarPendaftarVerifikasi()
+    {
+        $pendaftarans = PendaftaranModel::with(['mahasiswa', 'jadwal', 'detail', 'sertifikatStatus'])->get();
+        return view('daftar_pendaftar.daftar_pendaftar_verifikasi', compact('pendaftarans'));
+    }
 
     public function dashboard()
     {
@@ -79,5 +84,67 @@ class AdminController extends Controller
         $data = $pendaftaranPerBulan->pluck('total');
 
         return view('dashboard.admin.index', compact('labels', 'data'));
+    }
+    
+   public function verifyPendaftaran(Request $request, $id, $status)
+    {
+        if (!in_array($status, ['diterima', 'ditolak'])) {
+            return redirect()->route('admin.pendaftarVerifikasi')->with('error', 'Status tidak valid.');
+        }
+
+        $pendaftaran = PendaftaranModel::with('detail')->findOrFail($id);
+
+        if (!$pendaftaran->detail) {
+            $pendaftaran->detail()->create([
+                'pendaftaran_id' => $pendaftaran->pendaftaran_id,
+                'status' => 'menunggu',
+                'catatan' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            $pendaftaran->load('detail');
+        }
+
+        if ($pendaftaran->detail->status !== 'menunggu') {
+            return redirect()->route('admin.pendaftarVerifikasi')->with('error', 'Pendaftaran tidak dapat diverifikasi karena status bukan menunggu.');
+        }
+
+        $pendaftaran->detail->update([
+            'status' => $status,
+            'catatan' => $request->input('catatan', null),
+            'updated_at' => now(),
+        ]);
+
+        $message = $status === 'diterima' ? 'Pendaftaran berhasil diterima.' : 'Pendaftaran berhasil ditolak.';
+        return redirect()->route('admin.pendaftarVerifikasi')->with('success', $message);
+    }
+
+    public function editStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:menunggu,diterima,ditolak',
+            'catatan' => 'nullable|string|max:255',
+        ]);
+
+        $pendaftaran = PendaftaranModel::with('detail')->findOrFail($id);
+
+        if (!$pendaftaran->detail) {
+            $pendaftaran->detail()->create([
+                'pendaftaran_id' => $pendaftaran->pendaftaran_id,
+                'status' => 'menunggu',
+                'catatan' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            $pendaftaran->load('detail');
+        }
+
+        $pendaftaran->detail->update([
+            'status' => $request->status,
+            'catatan' => $request->catatan,
+            'updated_at' => now(),
+        ]);
+
+        return redirect()->route('admin.pendaftarVerifikasi')->with('success', 'Status pendaftaran berhasil diperbarui.');
     }
 }

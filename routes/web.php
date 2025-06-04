@@ -51,6 +51,12 @@ Route::middleware('auth')->group(function () {
         Route::put('/manage/{user}', [UserController::class, 'update'])->name('admin.manage.update');
         Route::delete('/manage/{user}', [UserController::class, 'destroy'])->name('admin.manage.destroy');
         Route::get('/pendaftar', [AdminController::class, 'daftarPendaftarSertifikat'])->name('admin.pendaftar');
+        // Existing route
+        Route::get('/pendaftar/verifikasi', [AdminController::class, 'daftarPendaftarVerifikasi'])->name('admin.pendaftarVerifikasi');
+
+        // New route for verification
+        Route::post('/pendaftar/verify/{id}/{status}', [AdminController::class, 'verifyPendaftaran'])->name('admin.verify');
+        Route::patch('/pendaftar/edit/{id}', [AdminController::class, 'editStatus'])->name('admin.editStatus');
 
         // Profile admin (umum)
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
@@ -93,7 +99,7 @@ Route::middleware('auth')->group(function () {
         // // Profile mahasiswa menggunakan controller di namespace Mahasiswa
         Route::get('/profile', [MahasiswaController::class, 'profile'])->name('profile');
         // Route::post('/profile/avatar', [MahasiswaProfileController::class, 'uploadAvatar'])->name('profile.uploadAvatar');
-Route::get('/certificate/view/{filename}', [CertificateController::class, 'viewPdf'])->name('certificate.view');
+        Route::get('/certificate/view/{filename}', [CertificateController::class, 'viewPdf'])->name('certificate.view');
 
         Route::get('/daftar-tes', [MahasiswaController::class, 'daftarTes'])->name('daftar-tes');
         Route::get('/riwayat-ujian', [MahasiswaController::class, 'riwayatUjian'])->name('riwayat-ujian');
