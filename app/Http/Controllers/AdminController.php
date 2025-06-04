@@ -56,12 +56,12 @@ class AdminController extends Controller
 
     public function daftarPendaftarSertifikat()
     {
-        $pendaftarans = PendaftaranModel::with(['mahasiswa', 'jadwal', 'detail', 'sertifikatStatus'])->get();
+        $pendaftarans = PendaftaranModel::with(['mahasiswa', 'jadwal', 'detailPendaftaran', 'sertifikatStatus'])->get();
         return view('daftar_pendaftar.daftar_pendaftar_sertifikat', compact('pendaftarans'));
     }
     public function daftarPendaftarVerifikasi()
     {
-        $pendaftarans = PendaftaranModel::with(['mahasiswa', 'jadwal', 'detail', 'sertifikatStatus'])->get();
+        $pendaftarans = PendaftaranModel::with(['mahasiswa', 'jadwal', 'detailPendaftaran', 'sertifikatStatus'])->get();
         return view('daftar_pendaftar.daftar_pendaftar_verifikasi', compact('pendaftarans'));
     }
 

@@ -13,6 +13,7 @@ use App\Models\JadwalSertifikat;
 use App\Models\JadwalSertifikatModel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
+use App\Models\PendaftaranModel;
 
 class MahasiswaController extends Controller
 {
@@ -55,10 +56,27 @@ public function index()
         return view('pendaftaran.create', compact('kampus', 'jurusan', 'prodi', 'mahasiswa'));
     }
 
-    public function riwayatUjian()
-    {
-        return view('dashboard.mahasiswa.riwayat-ujian');
+public function riwayatUjian()
+{
+    $user = auth()->user();
+    $mahasiswa = $user->mahasiswa;
+    
+    if (!$mahasiswa) {
+        return view('dashboard.mahasiswa.riwayat-ujian', [
+            'registrations' => collect()
+        ]);
     }
+
+    // Gunakan relasi yang sudah diperbaiki
+    $registrations = PendaftaranModel::where('mahasiswa_id', $mahasiswa->mahasiswa_id)
+        ->with(['jadwal', 'detailPendaftaran']) // Eager load jadwal dan detail
+        ->orderBy('tanggal_pendaftaran', 'desc')
+        ->get();
+
+    return view('dashboard.mahasiswa.riwayat-ujian', [
+        'registrations' => $registrations
+    ]);
+}
 
     public function profile()
     {
