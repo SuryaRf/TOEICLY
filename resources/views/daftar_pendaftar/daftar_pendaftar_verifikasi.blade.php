@@ -62,7 +62,7 @@
         .sidebar a.active {
             background-color: rgba(255, 255, 255, 0.25);
             transform: translateX(8px);
-            box-shadow: 0 4px 15px rgb(124 58 237 / 0.5);
+            box-shadow: 0 4px 15px rgb(124 58 237 / 50%);
             color: white !important;
         }
 
@@ -149,6 +149,16 @@
             box-shadow: 0 2px 8px rgb(34 197 94 / 0.3);
         }
 
+        .alert-danger {
+            background-color: #fee2e2;
+            color: #dc2626;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgb(239 68 68 / 0.3);
+        }
+
         .btn-outline-primary, .btn-verify, .btn-detail {
             font-weight: 600;
             padding: 0.25rem 0.75rem;
@@ -171,6 +181,30 @@
         .modal-footer {
             border-top: none;
         }
+
+        .search-filter-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .search-filter-container input,
+        .search-filter-container select {
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            box-shadow: 0 2px 8px rgb(0 0 0 / 0.05);
+            transition: border-color 0.3s ease;
+        }
+
+        .search-filter-container input:focus,
+        .search-filter-container select:focus {
+            outline: none;
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 3px rgb(124 58 237 / 0.2);
+        }
     </style>
 </head>
 <body>
@@ -183,10 +217,22 @@
             <div class="alert-success">{{ session('success') }}</div>
         @endif
         @if(session('error'))
-            <div class="alert-danger bg-red-100 text-red-700 p-4 rounded-lg mb-6">{{ session('error') }}</div>
+            <div class="alert-danger">{{ session('error') }}</div>
         @endif
 
-        <table class="table table-bordered table-striped">
+        <!-- Search and Filter Controls -->
+        <div class="search-filter-container">
+            <input type="text" id="searchInput" class="form-control" placeholder="Cari berdasarkan nama mahasiswa..." />
+            <select id="statusFilter" class="form-select">
+                <option value="">Semua Status</option>
+                <option value="menunggu">Menunggu</option>
+                <option value="diterima">Diterima</option>
+                <option value="ditolak">Ditolak</option>
+                <option value="belum ada">Belum Ada</option>
+            </select>
+        </div>
+
+        <table class="table table-bordered table-striped" id="pendaftaranTable">
             <thead class="table-primary">
                 <tr>
                     <th>No.</th>
@@ -305,7 +351,6 @@
                                     <p><strong>Nama Mahasiswa:</strong> {{ $pendaftaran->mahasiswa->nama ?? '-' }}</p>
                                     <p><strong>Status:</strong> {{ ucfirst($pendaftaran->detail->status ?? 'belum ada') }}</p>
                                     <p><strong>Tanggal Daftar:</strong> {{ $pendaftaran->tanggal_pendaftaran->format('d-m-Y') }}</p>
-                                    <p><strong>Jadwal ID:</strong> {{ $pendaftaran->jadwal_id ?? '-' }}</p>
                                     <p><strong>Catatan:</strong> {{ $pendaftaran->detail->catatan ?? '-' }}</p>
                                 </div>
                                 <div class="modal-footer">
@@ -324,5 +369,37 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('searchInput');
+            const statusFilter = document.getElementById('statusFilter');
+            const table = document.getElementById('pendaftaranTable');
+            const rows = table.querySelectorAll('tbody tr');
+
+            function filterTable() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                const selectedStatus = statusFilter.value.toLowerCase();
+
+                rows.forEach(row => {
+                    const nameCell = row.cells[2].textContent.toLowerCase();
+                    const statusCell = row.cells[4].textContent.toLowerCase();
+
+                    const matchesSearch = nameCell.includes(searchTerm);
+                    const matchesStatus = !selectedStatus || statusCell === selectedStatus;
+
+                    row.style.display = matchesSearch && matchesStatus ? '' : 'none';
+                });
+
+                // Update row numbers
+                const visibleRows = table.querySelectorAll('tbody tr:not([style="display: none;"])');
+                visibleRows.forEach((row, index) => {
+                    row.cells[0].textContent = index + 1;
+                });
+            }
+
+            searchInput.addEventListener('input', filterTable);
+            statusFilter.addEventListener('change', filterTable);
+        });
+    </script>
 </body>
 </html>
