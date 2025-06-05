@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('no_telp', 15)->nullable();
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
             $table->enum('status', ['aktif', 'alumni']);
-            $table->enum('keterangan', ['gratis', 'berbayar']);
+            $table->enum('keterangan', ['gratis', 'berbayar'])->nullable();
         
             $table->unsignedBigInteger('prodi_id');
             $table->foreign('prodi_id')->references('prodi_id')->on('prodi')->onDelete('cascade')->onUpdate('cascade');

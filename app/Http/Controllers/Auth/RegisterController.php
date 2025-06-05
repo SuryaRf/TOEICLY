@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\UserModel;
-use App\Models\MahasiswaModel; // Import model terkait jika perlu buat role mahasiswa
+use App\Models\MahasiswaModel;
 use App\Models\AdminModel;
 use App\Models\DosenModel;
 use App\Models\TendikModel;
@@ -17,23 +17,35 @@ class RegisterController extends Controller
 {
     public function showRegistrationForm()
     {
-        return view('auth.register'); // Buat view ini nanti
+        return view('auth.register');
     }
 
     public function register(Request $request)
     {
-        $request->validate([
+        $rules = [
             'email' => 'required|email|unique:user,email',
             'username' => 'required|string|max:20|unique:user,username',
             'password' => 'required|string|min:6|confirmed',
             'role' => 'required|in:admin,mahasiswa,dosen,tendik,itc',
-            // Tambahkan validasi input lain jika perlu
-        ]);
+        ];
+
+        if ($request->role === 'mahasiswa') {
+            $rules['nim'] = 'required|string|max:10|unique:mahasiswa,nim';
+            $rules['nama'] = 'required|string|max:100';
+            $rules['nik'] = 'required|string|max:16|unique:mahasiswa,nik';
+            $rules['angkatan'] = 'required|string|max:4';
+            $rules['no_telp'] = 'nullable|string|max:15';
+            $rules['jenis_kelamin'] = 'required|in:Laki-laki,Perempuan';
+            $rules['status'] = 'required|in:aktif,alumni';
+            $rules['keterangan'] = 'required|in:gratis,berbayar';
+            $rules['prodi_id'] = 'required|exists:prodi,prodi_id';
+        }
+
+        $request->validate($rules);
 
         DB::beginTransaction();
 
         try {
-            // Buat data terkait berdasarkan role (misal mahasiswa, dosen, dll)
             $relatedId = null;
 
             switch ($request->role) {
@@ -47,17 +59,15 @@ class RegisterController extends Controller
 
                 case 'mahasiswa':
                     $mahasiswa = MahasiswaModel::create([
-                        'nama' => $request->input('nama') ?? 'Mahasiswa Default',
-                        'nim' => $request->input('nim') ?? null,
-                        'nik' => $request->input('nik') ?? null,
-                        'alamat_asal' => $request->input('alamat_asal') ?? null,
-                        'alamat_sekarang' => $request->input('alamat_sekarang') ?? null,
-                        'angkatan' => $request->input('angkatan') ?? null,
-                        'no_telp' => $request->input('no_telp') ?? null,
-                        'jenis_kelamin' => $request->input('jenis_kelamin') ?? null,
-                        'status' => $request->input('status') ?? 'aktif',
-                        'keterangan' => $request->input('keterangan') ?? null,
-                        'prodi_id' => $request->input('prodi_id') ?? 1,
+                        'nim' => $request->input('nim'),
+                        'nama' => $request->input('nama'),
+                        'nik' => $request->input('nik'),
+                        'angkatan' => $request->input('angkatan'),
+                        'no_telp' => $request->input('no_telp'),
+                        'jenis_kelamin' => $request->input('jenis_kelamin'),
+                        'status' => $request->input('status'),
+                        'keterangan' => $request->input('keterangan'),
+                        'prodi_id' => $request->input('prodi_id'),
                     ]);
                     $relatedId = $mahasiswa->mahasiswa_id;
                     break;
@@ -88,13 +98,12 @@ class RegisterController extends Controller
                 case 'itc':
                     $itc = ItcModel::create([
                         'nama' => $request->input('nama') ?? 'ITC Default',
-                        // isi field lain sesuai struktur itc
+                        'no_telp' => $request->input('no_telp') ?? null,
                     ]);
                     $relatedId = $itc->itc_id;
                     break;
             }
 
-            // Simpan user
             $user = UserModel::create([
                 'email' => $request->email,
                 'username' => $request->username,
@@ -110,7 +119,6 @@ class RegisterController extends Controller
             DB::commit();
 
             return redirect()->route('login')->with('success', 'Registrasi berhasil! Silakan login.');
-
         } catch (\Exception $e) {
             DB::rollback();
             return back()->withErrors(['error' => 'Registrasi gagal: ' . $e->getMessage()])->withInput();
