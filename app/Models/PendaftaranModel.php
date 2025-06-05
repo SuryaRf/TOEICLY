@@ -4,6 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\MahasiswaModel;
+use App\Models\JadwalModel;
+use App\Models\DetailPendaftaranModel;
+use App\Models\SertifikatStatus;
 
 class PendaftaranModel extends Model
 {
@@ -23,14 +27,11 @@ class PendaftaranModel extends Model
         'jadwal_id',
     ];
 
-    protected $dates = [
-        'tanggal_pendaftaran',
-        'created_at',
-        'updated_at',
-    ];
-    // Tambahkan ini untuk otomatis cast ke Carbon
+    // Gunakan $casts untuk tipe datetime
     protected $casts = [
         'tanggal_pendaftaran' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     // Relasi ke Mahasiswa
@@ -45,15 +46,21 @@ class PendaftaranModel extends Model
         return $this->belongsTo(JadwalModel::class, 'jadwal_id', 'jadwal_id');
     }
 
-    // Relasi ke DetailPendaftaran
-    public function detail()
+    // Relasi ke DetailPendaftaran (pilih salah satu nama)
+    public function detailPendaftaran()
     {
         return $this->hasOne(DetailPendaftaranModel::class, 'pendaftaran_id', 'pendaftaran_id');
     }
 
-    // Di PendaftaranModel.php
+    // Relasi ke SertifikatStatus (pastikan nama model benar)
     public function sertifikatStatus()
     {
         return $this->hasOne(SertifikatStatus::class, 'pendaftaran_id', 'pendaftaran_id');
     }
+    
+    // Hapus method detail() jika tidak diperlukan
+    // public function detail()
+    // {
+    //     return $this->hasOne(DetailPendaftaranModel::class, 'pendaftaran_id', 'pendaftaran_id');
+    // }
 }

@@ -53,7 +53,7 @@ class ItcController extends Controller
     }
     public function daftarPendaftar()
     {
-        $pendaftarans = PendaftaranModel::with(['mahasiswa', 'jadwal', 'detail'])->get();
+        $pendaftarans = PendaftaranModel::with(['mahasiswa', 'jadwal', 'detailPendaftaran'])->get();
         return view('daftar_pendaftar.daftar_pendaftar', compact('pendaftarans'));
     }
 

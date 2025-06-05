@@ -291,7 +291,7 @@
                 <li>
                     <a href="{{ route('mahasiswa.riwayat-ujian') }}"
                         class="{{ request()->routeIs('mahasiswa.riwayat-ujian') ? 'active' : '' }}">
-                        <i class="fas fa-history"></i><span>TEST HISTORY</span>
+                        <i class="fas fa-history"></i><span>REGISTER HISTORY</span>
                     </a>
                 </li>
                 <li>
