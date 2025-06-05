@@ -20,13 +20,13 @@
         }
 
         .sidebar {
-            background: linear-gradient(180deg, #6d28d9 0%, #8b5cf6 100%);
+            background: linear-gradient(180deg, #5b21b6 0%, #7c3aed 100%);
             color: white;
             min-height: 100vh;
             position: fixed;
             width: 16rem;
             transition: all 0.3s ease;
-            box-shadow: 4px 0 12px rgb(109 40 217 / 0.4);
+            box-shadow: 4px 0 12px rgb(123 97 255 / 0.4);
             z-index: 50;
         }
 
@@ -239,6 +239,41 @@
             color: #7c3aed;
         }
 
+        .btn-modern {
+            background: linear-gradient(90deg, #ffffff, #e0e7ff);
+            border: none;
+            font-weight: 600;
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.75rem;
+            color: #7c3aed;
+            box-shadow: 0 4px 12px rgb(124 58 237 / 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-modern:hover {
+            background: linear-gradient(90deg, #e0e7ff, #ffffff);
+            transform: scale(1.08);
+            box-shadow: 0 8px 20px rgb(124 58 237 / 0.7);
+            color: #6d28d9;
+        }
+
+        .btn-modern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-modern:hover::before {
+            left: 100%;
+        }
+
         @keyframes slideIn {
             from {
                 transform: translateX(-100%);
@@ -261,6 +296,17 @@
             }
         }
 
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         @keyframes pulse {
             0% {
                 transform: scale(1);
@@ -272,75 +318,6 @@
                 transform: scale(1);
             }
         }
-         .btn-modern {
-        background: linear-gradient(90deg, #ffffff, #e0e7ff);
-        border: none;
-        font-weight: 600;
-        padding: 0.5rem 1.5rem;
-        border-radius: 0.75rem;
-        color: #7c3aed;
-        box-shadow: 0 4px 12px rgb(124 58 237 / 0.4);
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .btn-modern:hover {
-        background: linear-gradient(90deg, #e0e7ff, #ffffff);
-        transform: scale(1.08);
-        box-shadow: 0 8px 20px rgb(124 58 237 / 0.7);
-        color: #6d28d9;
-    }
-
-    .btn-modern::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-        transition: 0.5s;
-    }
-
-    .btn-modern:hover::before {
-        left: 100%;
-    }
-
-    @keyframes fadeInDown {
-        from {
-            opacity: 0;
-            transform: translateY(-20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-
-    @keyframes fadeInDown {
-        from {
-            opacity: 0;
-            transform: translateY(-20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
     </style>
 </head>
 <body>
@@ -358,36 +335,77 @@
             <i class="fas fa-rocket icon"></i>
         </div>
 
-<header class="flex justify-between items-center mb-12 bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-6 rounded-xl shadow-lg transform transition-all duration-500 hover:shadow-2xl">
-    <div class="flex flex-col">
-        <h1 class="text-5xl font-extrabold tracking-tight animate-fadeInDown">Dashboard Admin</h1>
-        <p class="text-lg font-medium mt-2 opacity-90 animate-fadeInUp">Manage your TOEIC platform with ease</p>
-    </div>
-    <div class="flex items-center space-x-4">
-        <span class="text-sm font-semibold bg-white text-purple-600 px-3 py-1 rounded-full shadow-md">
-            {{ date('M d, Y') }}
-        </span>
-        <button class="btn-modern flex items-center space-x-2">
-            <i class="fas fa-sync-alt"></i>
-            <span>Refresh Data</span>
-        </button>
-    </div>
-</header>
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-12 bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-6 rounded-xl shadow-lg transform transition-all duration-500 hover:shadow-2xl">
+            <div class="flex flex-col">
+                <h1 class="text-5xl font-extrabold tracking-tight animate-fadeInDown">Admin Dashboard</h1>
+                <p class="text-lg font-medium mt-2 opacity-90 animate-fadeInUp">Manage your TOEIC platform with ease</p>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="text-sm font-semibold bg-white text-purple-600 px-3 py-1 rounded-full shadow-md">
+                    {{ now()->format('M d, Y') }}
+                </span>
+                <button class="btn-modern flex items-center space-x-2">
+                    <i class="fas fa-sync-alt"></i>
+                    <span>Refresh Data</span>
+                </button>
+            </div>
+        </header>
 
-<!-- User Statistics Heading -->
-<div class="text-center mb-8">
-    <h2 class="text-3xl font-bold text-gray-900 tracking-tight animate-fadeInDown">User Statistics</h2>
-    <p class="text-gray-600 mt-2">Key metrics to monitor platform engagement</p>
-</div>
+        <!-- User Statistics Heading -->
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 tracking-tight animate-fadeInDown">User Statistics</h2>
+            <p class="text-gray-600 mt-2">Key metrics to monitor platform engagement</p>
+        </div>
 
-<!-- Cards Grid -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <!-- Total Users Card -->
             <section class="card">
                 <p class="text-gray-600 font-semibold">Total Users! 🎉</p>
                 <p class="text-4xl font-extrabold mt-3 text-primary">{{ $totalUsers }}</p>
-                <p class="text-sm text-gray-500 mt-1">78% of target achieved <i class="fas fa-star text-yellow-400"></i></p>
-                <a href="{{ route('admin.pendaftar') }}" class="btn-moderns mt-5 text-white">View Details</a>
+                <p class="text-sm text-gray-500 mt-1">All registered users</p>
+                <a href="{{ route('admin.manage') }}" class="btn-moderns mt-5 text-white">View Details</a>
+            </section>
+
+            <!-- Admin Users Card -->
+            <section class="card">
+                <p class="text-gray-600 font-semibold">Admin Users</p>
+                <p class="text-4xl font-extrabold mt-3 text-primary">{{ $userCountsByRole['admin'] }}</p>
+                <p class="text-sm text-gray-500 mt-1">System administrators</p>
+                <a href="{{ route('admin.manage') }}" class="btn-moderns mt-5 text-white">View Details</a>
+            </section>
+
+            <!-- Mahasiswa Users Card -->
+            <section class="card">
+                <p class="text-gray-600 font-semibold">Mahasiswa Users</p>
+                <p class="text-4xl font-extrabold mt-3 text-primary">{{ $userCountsByRole['mahasiswa'] }}</p>
+                <p class="text-sm text-gray-500 mt-1">Student users</p>
+                <a href="{{ route('admin.manage') }}" class="btn-moderns mt-5 text-white">View Details</a>
+            </section>
+
+            <!-- Dosen Users Card -->
+            <section class="card">
+                <p class="text-gray-600 font-semibold">Dosen Users</p>
+                <p class="text-4xl font-extrabold mt-3 text-primary">{{ $userCountsByRole['dosen'] }}</p>
+                <p class="text-sm text-gray-500 mt-1">Lecturer users</p>
+                <a href="{{ route('admin.manage') }}" class="btn-moderns mt-5 text-white">View Details</a>
+            </section>
+
+            <!-- Tendik Users Card -->
+            <section class="card">
+                <p class="text-gray-600 font-semibold">Tendik Users</p>
+                <p class="text-4xl font-extrabold mt-3 text-primary">{{ $userCountsByRole['tendik'] }}</p>
+                <p class="text-sm text-gray-500 mt-1">Staff users</p>
+                <a href="{{ route('admin.manage') }}" class="btn-moderns mt-5 text-white">View Details</a>
+            </section>
+
+            <!-- ITC Users Card -->
+            <section class="card">
+                <p class="text-gray-600 font-semibold">ITC Users</p>
+                <p class="text-4xl font-extrabold mt-3 text-primary">{{ $userCountsByRole['itc'] }}</p>
+                <p class="text-sm text-gray-500 mt-1">ITC staff users</p>
+                <a href="{{ route('admin.manage') }}" class="btn-moderns mt-5 text-white">View Details</a>
             </section>
 
             <!-- Monthly Test Registrations Chart Card -->
