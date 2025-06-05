@@ -382,22 +382,22 @@
 
 <!-- Cards Grid -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-    <!-- Total Users Card -->
-    <section class="card">
-        <p class="text-gray-600 font-semibold">Total Users! 🎉</p>
-        <p class="text-4xl font-extrabold mt-3 text-primary">{{ $totalUsers }}</p>
-        <p class="text-sm text-gray-500 mt-1">78% of target achieved <i class="fas fa-star text-yellow-400"></i></p>
-        <a href="{{ route('admin.manage') }}" class="btn-moderns mt-5 text-white">View Details</a>
-    </section>
+            <!-- Total Users Card -->
+            <section class="card">
+                <p class="text-gray-600 font-semibold">Total Users! 🎉</p>
+                <p class="text-4xl font-extrabold mt-3 text-primary">{{ $totalUsers }}</p>
+                <p class="text-sm text-gray-500 mt-1">78% of target achieved <i class="fas fa-star text-yellow-400"></i></p>
+                <a href="{{ route('admin.pendaftar') }}" class="btn-moderns mt-5 text-white">View Details</a>
+            </section>
 
-    <!-- Monthly Test Registrations Chart Card -->
-    <section class="card lg:col-span-2 flex flex-col">
-        <p class="text-gray-600 font-semibold mb-4">Test Registrations (Last 12 Months)</p>
-        <div class="w-full h-64">
-            <canvas id="monthlyChart"></canvas>
+            <!-- Monthly Test Registrations Chart Card -->
+            <section class="card lg:col-span-2 flex flex-col">
+                <p class="text-gray-600 font-semibold mb-4">Test Registrations (Last 12 Months)</p>
+                <div class="w-full h-64">
+                    <canvas id="monthlyChart"></canvas>
+                </div>
+            </section>
         </div>
-    </section>
-</div>
     </main>
 
     <!-- Bootstrap JS Bundle -->

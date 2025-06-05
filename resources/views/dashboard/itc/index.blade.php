@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Admin Dashboard - TOEIC Management</title>
+    <title>ITC Dashboard - TOEIC Management</title>
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
     <!-- Bootstrap CSS -->
@@ -12,20 +11,20 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
     <style>
-        /* Gradient background for body */
         body {
-            background: linear-gradient(135deg, #eef2ff 0%, #dbeafe 100%);
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
         }
 
-        /* Sidebar styling */
         .sidebar {
             background: linear-gradient(180deg, #5b21b6 0%, #7c3aed 100%);
             color: white;
             min-height: 100vh;
             position: fixed;
             width: 16rem;
-            /* 64 */
             transition: all 0.3s ease;
             box-shadow: 4px 0 12px rgb(123 97 255 / 0.4);
             z-index: 50;
@@ -35,76 +34,108 @@
             display: flex;
             align-items: center;
             padding: 0.75rem 1rem;
-            /* py-3 px-4 */
             font-weight: 600;
             border-radius: 0.5rem;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            transition: all 0.3s ease;
             color: inherit;
             text-decoration: none;
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .sidebar a:hover::before {
+            left: 100%;
         }
 
         .sidebar a:hover,
         .sidebar a.active {
-            background-color: rgba(255 255 255 / 0.25);
+            background-color: rgba(255, 255, 255, 0.3);
             transform: translateX(8px);
-            box-shadow: 0 4px 15px rgb(124 58 237 / 0.5);
+            box-shadow: 0 4px 15px rgb(139 92 246 / 0.5);
             color: white !important;
         }
 
         .sidebar i {
             min-width: 1.25rem;
-            /* 20px */
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             margin-right: 0.75rem;
             transition: transform 0.3s ease;
         }
 
         .sidebar a:hover i {
-            transform: rotate(10deg) scale(1.2);
-            color: #ddd;
+            transform: rotate(15deg) scale(1.3);
+            color: #e0e7ff;
         }
 
-        /* Main content spacing to right of fixed sidebar */
         main {
             margin-left: 16rem;
             padding: 2.5rem;
             min-height: 100vh;
             overflow-y: auto;
+            position: relative;
         }
 
-        /* Card style */
+        .welcome-message {
+            background: linear-gradient(90deg, #7c3aed, #a78bfa);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 15px rgb(124 58 237 / 0.3);
+            margin-bottom: 2rem;
+            animation: slideIn 1s ease-out;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .welcome-message h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .welcome-message p {
+            margin: 0.5rem 0 0;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .welcome-message .icon {
+            font-size: 2rem;
+            animation: pulse 2s infinite;
+        }
+
         .card {
             background-color: #fff;
             border-radius: 1rem;
             box-shadow: 0 6px 15px rgb(0 0 0 / 0.08);
             padding: 1.5rem;
-            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            transition: all 0.4s ease;
             cursor: default;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            animation: fadeInUp 0.8s ease-out;
         }
 
         .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgb(124 58 237 / 0.25);
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 12px 25px rgb(124 58 237 / 0.3);
             cursor: pointer;
         }
 
-        /* Headings */
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6,
-        p {
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Typography */
         .text-primary {
             color: #7c3aed;
         }
@@ -113,42 +144,55 @@
             color: #a78bfa;
         }
 
-        /* Buttons */
-        .btn-modern {
+        .btn-moderns {
             background: linear-gradient(90deg, #7c3aed, #a78bfa);
             border: none;
             font-weight: 600;
-            padding: 0.5rem 1.5rem;
+            padding: 0.75rem 1.75rem;
             border-radius: 0.75rem;
             color: white;
             box-shadow: 0 4px 12px rgb(124 58 237 / 0.4);
             transition: all 0.3s ease;
             align-self: flex-start;
+            position: relative;
+            overflow: hidden;
         }
 
-        .btn-modern:hover {
+        .btn-moderns::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-moderns:hover::before {
+            left: 100%;
+        }
+
+        .btn-moderns:hover {
             background: linear-gradient(90deg, #a78bfa, #7c3aed);
-            transform: scale(1.08);
+            transform: scale(1.1);
             box-shadow: 0 8px 20px rgb(124 58 237 / 0.7);
-            text-decoration: none;
             color: white;
         }
 
-        /* Chart bars */
         .chart-bar {
             border-radius: 0.5rem 0.5rem 0 0;
-            transition: height 0.5s ease, background-color 0.3s ease;
+            transition: all 0.5s ease;
             cursor: pointer;
             box-shadow: inset 0 -4px 8px rgb(0 0 0 / 0.1);
         }
 
         .chart-bar:hover {
-            height: 120% !important;
-            background-color: #9333ea;
-            box-shadow: 0 0 10px #9333ea;
+            height: 130% !important;
+            background-color: #8b5cf6;
+            box-shadow: 0 0 12px #8b5cf6;
         }
 
-        /* Scrollbar styling */
         main::-webkit-scrollbar {
             width: 8px;
         }
@@ -162,21 +206,6 @@
             border-radius: 10px;
         }
 
-        /* User profile in header */
-        .user-profile {
-            position: relative;
-        }
-
-        .user-profile img {
-            border: 2px solid #7c3aed;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .user-profile img:hover {
-            transform: scale(1.1);
-        }
-
         .dropdown-menu {
             position: absolute;
             top: 120%;
@@ -187,7 +216,7 @@
             width: 12rem;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.3s ease;
+            transition: all 0.3s ease;
             z-index: 100;
         }
 
@@ -202,16 +231,95 @@
             font-weight: 600;
             color: #4b5563;
             text-decoration: none;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .dropdown-menu a:hover {
             background-color: #f3e8ff;
             color: #7c3aed;
         }
+
+        .btn-modern {
+            background: linear-gradient(90deg, #ffffff, #e0e7ff);
+            border: none;
+            font-weight: 600;
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.75rem;
+            color: #7c3aed;
+            box-shadow: 0 4px 12px rgb(124 58 237 / 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-modern:hover {
+            background: linear-gradient(90deg, #e0e7ff, #ffffff);
+            transform: scale(1.08);
+            box-shadow: 0 8px 20px rgb(124 58 237 / 0.7);
+            color: #6d28d9;
+        }
+
+        .btn-modern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-modern:hover::before {
+            left: 100%;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
     </style>
 </head>
-
 <body>
     <!-- Sidebar -->
     <aside class="sidebar flex flex-col">
@@ -247,161 +355,125 @@
 
     <!-- Main content -->
     <main>
-        <header class="flex justify-between items-center mb-12">
-            <h1 class="text-5xl font-extrabold text-gray-900 tracking-tight">Dashboard</h1>
-            <div class="flex items-center space-x-6">
-                <div class="flex items-center space-x-2 select-none">
-                    <span class="text-gray-700 font-semibold text-lg">Total Star:</span>
-                    <span class="text-yellow-400 text-2xl font-extrabold flex items-center gap-1">
-                        45 <i class="fas fa-star"></i>
-                    </span>
-                </div>
+        <!-- Welcome Message -->
+        <div class="welcome-message">
+            <div>
+                <h2>Welcome, {{ Auth::user()->name }}! 🚀</h2>
+                <p>Ready to manage your TOEIC platform? Let's make today productive!</p>
+            </div>
+            <i class="fas fa-rocket icon"></i>
+        </div>
 
-
-
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-12 bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-6 rounded-xl shadow-lg transform transition-all duration-500 hover:shadow-2xl">
+            <div class="flex flex-col">
+                <h1 class="text-5xl font-extrabold tracking-tight animate-fadeInDown">Dashboard ITC</h1>
+                <p class="text-lg font-medium mt-2 opacity-90 animate-fadeInUp">Manage your TOEIC platform with ease</p>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="text-sm font-semibold bg-white text-purple-600 px-3 py-1 rounded-full shadow-md">
+                    {{ now()->format('M d, Y') }}
+                </span>
+                <button class="btn-modern flex items-center space-x-2">
+                    <i class="fas fa-sync-alt"></i>
+                    <span>Refresh Data</span>
+                </button>
             </div>
         </header>
 
+        <!-- User Statistics Heading -->
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 tracking-tight animate-fadeInDown">User Statistics</h2>
+            <p class="text-gray-600 mt-2">Key metrics to monitor platform engagement</p>
+        </div>
+
         <!-- Cards Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <!-- Congratulations Card -->
+            <!-- Total Users Card -->
             <section class="card">
-                <p class="text-gray-600 font-semibold">Congratulations Admin! 🎉</p>
-                <p class="text-4xl font-extrabold mt-3 text-primary">42k</p>
-                <p class="text-sm text-gray-500 mt-1">78% of target achieved <i class="fas fa-star text-yellow-400"></i>
-                </p>
-                <button class="btn-modern mt-5">View Details</button>
+                <p class="text-gray-600 font-semibold">Total Users! 🎉</p>
+                <p class="text-4xl font-extrabold mt-3 text-primary">{{ $totalUsers }}</p>
+                <p class="text-sm text-gray-500 mt-1">78% of target achieved <i class="fas fa-star text-yellow-400"></i></p>
+                <a href="{{ route('itc.pendaftar') }}" class="btn-moderns mt-5 text-white">View Details</a>
             </section>
 
-            <!-- Test Registrations Card -->
-            <section class="card">
-                <p class="text-gray-600 font-semibold">Test Registrations</p>
-                <p class="text-4xl font-extrabold mt-3 text-primary">48.5%</p>
-                <p class="text-sm text-green-600 mt-1 font-semibold flex items-center gap-1">
-                    Growth this month <i class="fas fa-arrow-up"></i>
-                </p>
-            </section>
-
-            <!-- Weekly Overview Card -->
+            <!-- Monthly Test Registrations Chart Card -->
             <section class="card lg:col-span-2 flex flex-col">
-                <p class="text-gray-600 font-semibold mb-4">Weekly Test Overview</p>
-                <div class="flex items-end justify-around flex-grow space-x-6">
-                    <div class="chart-bar bg-primary w-12" style="height: 28rem;"></div>
-                    <div class="chart-bar bg-primary w-12" style="height: 24rem;"></div>
-                    <div class="chart-bar bg-primary w-12" style="height: 20rem;"></div>
-                    <div class="chart-bar bg-primary w-12" style="height: 32rem;"></div>
+                <p class="text-gray-600 font-semibold mb-4">Test Registrations (Last 12 Months)</p>
+                <div class="w-full h-64">
+                    <canvas id="monthlyChart"></canvas>
                 </div>
-                <p class="text-sm text-gray-500 mt-5">45% Test participation is 45% higher than last month</p>
-                <button class="btn-modern mt-5 self-start">Details</button>
-            </section>
-
-            <!-- Total Revenue Card -->
-            <section class="card">
-                <p class="text-gray-600 font-semibold">Total Revenue</p>
-                <p class="text-4xl font-extrabold mt-3 text-primary">$86.4k</p>
-            </section>
-
-            <!-- Profit Card -->
-            <section class="card">
-                <p class="text-gray-600 font-semibold">Total Profit</p>
-                <p class="text-4xl font-extrabold mt-3 text-primary">$25.6k</p>
-                <p class="text-sm text-green-600 mt-1 font-semibold flex items-center gap-1">
-                    +42% <i class="fas fa-arrow-up"></i>
-                </p>
-            </section>
-
-            <!-- Test Centers -->
-            <section class="card">
-                <p class="text-gray-600 font-semibold">Jakarta Center</p>
-                <p class="text-4xl font-extrabold mt-3 text-primary">24,985</p>
-            </section>
-            <section class="card">
-                <p class="text-gray-600 font-semibold">Surabaya Center</p>
-                <p class="text-4xl font-extrabold mt-3 text-primary">8,650</p>
-            </section>
-            <section class="card">
-                <p class="text-gray-600 font-semibold">Bandung Center</p>
-                <p class="text-4xl font-extrabold mt-3 text-primary">1,245</p>
-            </section>
-
-            <!-- New Registrations Card -->
-            <section class="card">
-                <p class="text-gray-600 font-semibold">New Registrations</p>
-                <p class="text-4xl font-extrabold mt-3 text-primary">862</p>
-                <p class="text-sm text-red-600 mt-1 font-semibold flex items-center gap-1">
-                    -18% <i class="fas fa-arrow-down"></i>
-                </p>
-            </section>
-
-            <!-- Active Sessions Card -->
-            <section class="card">
-                <p class="text-gray-600 font-semibold mb-4">Active Sessions</p>
-                <div class="flex items-end justify-around space-x-4 h-28">
-                    <div class="chart-bar bg-red-600 w-12 rounded-t" style="height: 24rem;"></div>
-                    <div class="chart-bar bg-red-600 w-12 rounded-t" style="height: 20rem;"></div>
-                    <div class="chart-bar bg-red-600 w-12 rounded-t" style="height: 28rem;"></div>
-                </div>
-            </section>
-
-            <!-- Registrations by Region -->
-            <section class="card">
-                <p class="text-gray-600 font-semibold">Registrations by Region</p>
-                <p class="mt-3 text-lg font-semibold">
-                    Java <span class="text-green-600 ml-2">8,656</span> <span class="text-green-600 ml-2">+25%</span>
-                </p>
-                <p class="mt-1 text-lg font-semibold">
-                    Sumatra <span class="text-green-600 ml-2">2,475</span> <span
-                        class="text-green-600 ml-2">+6.2%</span>
-                </p>
-            </section>
-
-            <!-- Payments Card -->
-            <section class="card">
-                <p class="text-gray-600 font-semibold">Payments</p>
-                <p class="mt-3 text-lg font-semibold">
-                    Bank Transfer <span class="text-green-600 ml-2">+$4,650</span>
-                </p>
-                <p class="mt-1 text-lg font-semibold">
-                    Credit Card <span class="text-green-600 ml-2">+$92,705</span>
-                </p>
-            </section>
-
-            <!-- Refunds Card -->
-            <section class="card">
-                <p class="text-gray-600 font-semibold">Refunds</p>
-                <p class="mt-3 text-lg font-semibold">
-                    Bank Transfer <span class="text-red-600 ml-2">-$145</span>
-                </p>
-                <p class="mt-1 text-lg font-semibold">
-                    Credit Card <span class="text-red-600 ml-2">-$1,870</span>
-                </p>
             </section>
         </div>
     </main>
 
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // User profile dropdown toggle
-        const userProfile = document.querySelector('.user-profile');
-        const dropdownMenu = document.getElementById('userDropdown');
-
-        userProfile.addEventListener('click', (e) => {
-            e.stopPropagation(); // cegah event bubble ke document
-            dropdownMenu.classList.toggle('active');
-            // Update aria-hidden
-            const isActive = dropdownMenu.classList.contains('active');
-            dropdownMenu.setAttribute('aria-hidden', !isActive);
-        });
-
-        document.addEventListener('click', () => {
-            if (dropdownMenu.classList.contains('active')) {
-                dropdownMenu.classList.remove('active');
-                dropdownMenu.setAttribute('aria-hidden', 'true');
+        // Chart.js configuration for monthly data
+        const ctx = document.getElementById('monthlyChart').getContext('2d');
+        const monthlyChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: @json($labels),
+                datasets: [{
+                    label: 'Total Registrations',
+                    data: @json($data),
+                    backgroundColor: 'rgba(124, 58, 237, 0.7)',
+                    borderColor: 'rgba(124, 58, 237, 1)',
+                    borderWidth: 1,
+                    borderRadius: 8,
+                    hoverBackgroundColor: 'rgba(139, 92, 246, 0.9)',
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Monthly Test Registrations (Last 12 Months)',
+                        font: {
+                            size: 18,
+                            weight: 'bold'
+                        },
+                        padding: {
+                            top: 10,
+                            bottom: 20
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(124, 58, 237, 0.9)',
+                        titleFont: { size: 14 },
+                        bodyFont: { size: 12 },
+                        cornerRadius: 8
+                    }
+                },
+                animation: {
+                    duration: 1500,
+                    easing: 'easeOutBounce'
+                }
             }
         });
-
     </script>
 </body>
-
 </html>

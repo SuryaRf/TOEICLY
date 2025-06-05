@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\PendaftaranModel;
 use App\Models\SertifikatStatus;
 
+
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+
 class ItcController extends Controller
 {
     public function __construct()
@@ -16,18 +20,42 @@ class ItcController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+   public function index()
     {
-        $data = ItcModel::all();
-        return view('dashboard.itc.index', compact('data'));
-    }
+        // Count total users
+        $totalUsers = UserModel::count();
 
+        // Fetch data for monthly test registrations (last 12 months)
+        $monthlyData = PendaftaranModel::select(
+            DB::raw("DATE_FORMAT(tanggal_pendaftaran, '%Y-%m') as month"),
+            DB::raw('COUNT(*) as total')
+        )
+            ->where('tanggal_pendaftaran', '>=', now()->subYear())
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get();
+
+        // Initialize arrays for Chart.js
+        $labels = [];
+        $data = [];
+        $months = collect(range(11, 0))->map(function ($i) {
+            return now()->subMonths($i)->format('Y-m');
+        });
+
+        // Fill data for the last 12 months
+        foreach ($months as $month) {
+            $labels[] = Carbon::createFromFormat('Y-m', $month)->format('M Y');
+            $record = $monthlyData->firstWhere('month', $month);
+            $data[] = $record ? $record->total : 0;
+        }
+
+        return view('dashboard.itc.index', compact('totalUsers', 'labels', 'data'));
+    }
     public function daftarPendaftar()
     {
         $pendaftarans = PendaftaranModel::with(['mahasiswa', 'jadwal', 'detail'])->get();
         return view('daftar_pendaftar.daftar_pendaftar', compact('pendaftarans'));
     }
-
 
     // Tampilkan halaman profil (GET)
     public function showProfile()
