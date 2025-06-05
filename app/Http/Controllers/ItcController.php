@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\ItcModel;
-use Illuminate\Http\Request;
+use App\Models\NilaiToeicModel;
 use App\Models\UserModel;
-use Illuminate\Support\Facades\Auth;
 use App\Models\PendaftaranModel;
 use App\Models\SertifikatStatus;
-
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -20,7 +20,7 @@ class ItcController extends Controller
         $this->middleware('auth');
     }
 
-   public function index()
+    public function index()
     {
         // Count total users
         $totalUsers = UserModel::count();
@@ -51,6 +51,7 @@ class ItcController extends Controller
 
         return view('dashboard.itc.index', compact('totalUsers', 'labels', 'data'));
     }
+
     public function daftarPendaftar()
     {
         $pendaftarans = PendaftaranModel::with(['mahasiswa', 'jadwal', 'detailPendaftaran'])->get();
@@ -117,26 +118,48 @@ class ItcController extends Controller
 
         return redirect()->route('itc.profile')->with('success', 'Profile berhasil diperbarui!');
     }
+
     public function showUploadNilaiForm()
     {
-        return view('dashboard.itc.nilai.upload_nilai'); // Buat view di resources/views/itc/upload_nilai.blade.php
+        return view('dashboard.itc.nilai.upload_nilai');
     }
 
     public function uploadNilai(Request $request)
     {
         $request->validate([
             'nilai_pdf' => 'required|file|mimes:pdf|max:5120', // max 5MB
+            'judul' => 'nullable|string|max:100',
         ]);
 
-        // Simpan file PDF ke storage public/nilai_toeic
         $path = $request->file('nilai_pdf')->store('nilai_toeic', 'public');
 
-        // Simpan info file ke database sesuai kebutuhan (opsional)
-        // Contoh:
-        // NilaiToeicModel::create(['file_path' => $path, 'uploaded_by' => Auth::id()]);
+        NilaiToeicModel::create([
+            'file_path' => $path,
+            'itc_id' => Auth::user()->itc->itc_id ?? null,
+            'judul' => $request->judul ?: 'TOEIC Score Report',
+        ]);
 
         return redirect()->route('itc.upload_nilai')->with('success', 'File PDF nilai TOEIC berhasil diupload.');
     }
+
+    public function viewNilaiPdf($filename, Request $request)
+    {
+        $path = 'nilai_toeic/' . $filename;
+
+        if (!Storage::disk('public')->exists($path)) {
+            abort(404, 'File not found.');
+        }
+
+        $fileContent = Storage::disk('public')->get($path);
+        $mimeType = Storage::disk('public')->mimeType($path);
+
+        $disposition = $request->query('download') ? 'attachment' : 'inline';
+
+        return response($fileContent, 200)
+            ->header('Content-Type', $mimeType)
+            ->header('Content-Disposition', "$disposition; filename=\"$filename\"");
+    }
+
     public function updateStatusSertifikat(Request $request, $pendaftaran_id)
     {
         $request->validate([
@@ -148,7 +171,7 @@ class ItcController extends Controller
             ['status' => $request->status]
         );
 
-        if($request->ajax()) {
+        if ($request->ajax()) {
             return response()->json(['success' => true, 'status' => $status->status]);
         }
 

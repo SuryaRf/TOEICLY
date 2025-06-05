@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TOEIC Dashboard - Overview</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
@@ -235,7 +233,6 @@
         }
     </style>
 </head>
-
 <body>
     <div class="flex min-h-screen">
         @include('dashboard.mahasiswa.sidebar')
@@ -270,7 +267,6 @@
 
             <section class="card rounded-xl p-8 mb-8 full-width">
                 <h2 class="text-2xl font-semibold text-purple-800 mb-6">Available Certificate Schedules</h2>
-
                 @if(isset($jadwals) && $jadwals->isNotEmpty())
                     <ul>
                         @foreach ($jadwals as $jadwal)
@@ -305,8 +301,38 @@
             </section>
 
             <section class="card rounded-xl p-8 mb-8 full-width">
-                <h2 class="text-2xl font-semibold text-purple-800 mb-6">Score Trends</h2>
-                <canvas id="scoresChart" class="w-full h-64 bounce"></canvas>
+                <h2 class="text-2xl font-semibold text-purple-800 mb-6">TOEIC Score Reports</h2>
+                @if(isset($nilaiToeics) && $nilaiToeics->isNotEmpty())
+                    <ul>
+                        @foreach ($nilaiToeics as $nilai)
+                            <li class="mb-6">
+                                <h3 class="text-xl font-semibold text-purple-800">{{ $nilai->judul }}</h3>
+                                <p class="text-gray-600">Uploaded on {{ optional($nilai->created_at)->format('d M Y') ?? '-' }}</p>
+                                @if($nilai->file_path)
+                                    <iframe
+                                        src="{{ route('itc.nilai.view', ['filename' => basename($nilai->file_path)]) }}#toolbar=0&navpanes=0&scrollbar=0"
+                                        class="pdf-iframe" title="PDF TOEIC Score: {{ $nilai->judul }}">
+                                        <p class="text-gray-600">
+                                            Your browser does not support PDFs or the file failed to load.
+                                            <a href="{{ route('itc.nilai.view', ['filename' => basename($nilai->file_path)]) }}"
+                                                class="text-blue-600 hover:underline" target="_blank">
+                                                View PDF instead.
+                                            </a>
+                                        </p>
+                                    </iframe>
+                                    <a href="{{ route('itc.nilai.view', ['filename' => basename($nilai->file_path)]) }}?download=1"
+                                        class="download-btn">
+                                        Download PDF
+                                    </a>
+                                @else
+                                    <p class="text-gray-500">No PDF uploaded.</p>
+                                @endif
+                            </li>
+                        @endforeach
+                    </ul>
+                @else
+                    <p class="text-gray-500">No TOEIC score reports available.</p>
+                @endif
             </section>
         </main>
     </div>
@@ -325,53 +351,6 @@
             setTimeout(() => {
                 overview.classList.add('show');
             }, 100);
-
-            const ctx = document.getElementById('scoresChart').getContext('2d');
-            const scoresChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-                    datasets: [{
-                        label: 'TOEIC Scores',
-                        data: [880, 900, 920, 930, 945],
-                        fill: true,
-                        backgroundColor: 'rgba(124, 58, 237, 0.2)',
-                        borderColor: 'rgba(124, 58, 237, 1)',
-                        tension: 0.3,
-                        pointBackgroundColor: 'rgba(124, 58, 237, 1)',
-                        pointRadius: 5,
-                        borderWidth: 3,
-                        borderRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: false,
-                            min: 800,
-                            max: 1000,
-                            ticks: {
-                                stepSize: 50
-                            }
-                        }
-                    },
-                    animation: {
-                        duration: 1200,
-                        easing: 'easeOutQuart'
-                    },
-                    plugins: {
-                        legend: {
-                            labels: {
-                                font: {
-                                    size: 14,
-                                    weight: 'bold'
-                                }
-                            }
-                        }
-                    }
-                }
-            });
         });
     </script>
 </body>
