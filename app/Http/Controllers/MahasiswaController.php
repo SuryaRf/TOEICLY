@@ -7,29 +7,33 @@ use App\Models\DetailPendaftaranModel;
 use App\Models\KampusModel;
 use App\Models\JurusanModel;
 use App\Models\ProdiModel;
+use App\Models\InformasiModel;
+use App\Models\JadwalSertifikatModel;
+use App\Models\NilaiToeicModel;
+use App\Models\PendaftaranModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\JadwalSertifikat;
-use App\Models\JadwalSertifikatModel;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\Response;
-use App\Models\PendaftaranModel;
-use App\Models\InformasiModel;
 
 class MahasiswaController extends Controller
 {
-    // Existing methods
-  public function index()
+    public function __construct()
     {
-        $user = Auth::user();
-        $toeicScore = $user->toeicScore;
-        $jadwals = JadwalSertifikatModel::orderBy('tanggal', 'desc')->get();
-        $informasis = InformasiModel::with('admin')->latest()->take(3)->get(); // Fetch latest 3 informasi records
-
-        return view('dashboard.mahasiswa.overview', compact('toeicScore', 'jadwals', 'informasis'));
+        $this->middleware(['auth', 'role:mahasiswa']);
     }
 
-  public function viewPdf($filename)
+    public function index()
+    {
+        $user = Auth::user();
+        $toeicScore = $user->toeicScore ?? null;
+        $jadwals = JadwalSertifikatModel::orderBy('tanggal', 'desc')->get();
+        $informasis = InformasiModel::with('admin')->latest()->take(3)->get();
+        $nilaiToeics = NilaiToeicModel::with('itc')->latest()->get();
+
+        return view('dashboard.mahasiswa.overview', compact('toeicScore', 'jadwals', 'informasis', 'nilaiToeics'));
+    }
+
+    public function viewPdf($filename, Request $request)
     {
         $path = 'jadwal_pdf/' . $filename;
 
@@ -40,12 +44,12 @@ class MahasiswaController extends Controller
         $fileContent = Storage::disk('public')->get($path);
         $mimeType = Storage::disk('public')->mimeType($path);
 
+        $disposition = $request->query('download') ? 'attachment' : 'inline';
+
         return response($fileContent, 200)
             ->header('Content-Type', $mimeType)
-            ->header('Content-Disposition', 'inline; filename="'.$filename.'"');
+            ->header('Content-Disposition', "$disposition; filename=\"$filename\"");
     }
-
-
 
     public function daftarTes()
     {
@@ -57,27 +61,26 @@ class MahasiswaController extends Controller
         return view('pendaftaran.create', compact('kampus', 'jurusan', 'prodi', 'mahasiswa'));
     }
 
-public function riwayatUjian()
-{
-    $user = auth()->user();
-    $mahasiswa = $user->mahasiswa;
-    
-    if (!$mahasiswa) {
+    public function riwayatUjian()
+    {
+        $user = auth()->user();
+        $mahasiswa = $user->mahasiswa;
+
+        if (!$mahasiswa) {
+            return view('dashboard.mahasiswa.riwayat-ujian', [
+                'registrations' => collect()
+            ]);
+        }
+
+        $registrations = PendaftaranModel::where('mahasiswa_id', $mahasiswa->mahasiswa_id)
+            ->with(['jadwal', 'detailPendaftaran'])
+            ->orderBy('tanggal_pendaftaran', 'desc')
+            ->get();
+
         return view('dashboard.mahasiswa.riwayat-ujian', [
-            'registrations' => collect()
+            'registrations' => $registrations
         ]);
     }
-
-    // Gunakan relasi yang sudah diperbaiki
-    $registrations = PendaftaranModel::where('mahasiswa_id', $mahasiswa->mahasiswa_id)
-        ->with(['jadwal', 'detailPendaftaran']) // Eager load jadwal dan detail
-        ->orderBy('tanggal_pendaftaran', 'desc')
-        ->get();
-
-    return view('dashboard.mahasiswa.riwayat-ujian', [
-        'registrations' => $registrations
-    ]);
-}
 
     public function profile()
     {
@@ -101,28 +104,24 @@ public function riwayatUjian()
         return view('dashboard.mahasiswa.jadwal-sertifikat');
     }
 
-    // New method for avatar upload
     public function updateAvatar(Request $request)
     {
-        // Validate the uploaded file
         $request->validate([
-            'avatar' => 'required|image|mimes:jpeg,png,jpg|max:2048', // Max 2MB
+            'avatar' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         $user = Auth::user();
 
         if ($request->hasFile('avatar')) {
-            // Store the file in storage/app/public/avatars
             $file = $request->file('avatar');
             $path = $file->store('avatars', 'public');
 
-            // Update the user's profile field with the file path
             $user->profile = $path;
             $user->save();
 
-            return redirect()->route('dashboard.mahasiswa.profile')->with('success', 'Avatar updated successfully.');
+            return redirect()->route('mahasiswa.profile')->with('success', 'Avatar updated successfully.');
         }
 
-        return redirect()->route('dashboard.mahasiswa.profile')->with('error', 'Failed to upload avatar.');
+        return redirect()->route('mahasiswa.profile')->with('error', 'Failed to upload avatar.');
     }
 }
