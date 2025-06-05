@@ -508,21 +508,21 @@
         const statusPieChart = new Chart(ctxStatus, {
             type: 'pie',
             data: {
-                labels: ['Menunggu', 'Diterima', 'Ditolak'],
+                labels: ['Diterima', 'Ditolak'],
                 datasets: [{
                     label: 'Verification Status',
                     data: [
-                        @json($verificationStatusCounts['menunggu']),
+                        // @json($verificationStatusCounts['menunggu']),
                         @json($verificationStatusCounts['diterima']),
                         @json($verificationStatusCounts['ditolak'])
                     ],
                     backgroundColor: [
-                        'rgba(255, 206, 86, 0.7)', // Menunggu (Yellow)
+                        
                         'rgba(75, 192, 192, 0.7)', // Diterima (Teal)
                         'rgba(255, 99, 132, 0.7)'  // Ditolak (Red)
                     ],
                     borderColor: [
-                        'rgba(255, 206, 86, 1)',
+                        
                         'rgba(75, 192, 192, 1)',
                         'rgba(255, 99, 132, 1)'
                     ],

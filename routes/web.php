@@ -21,6 +21,7 @@ use App\Http\Controllers\Auth\RegisterController;
 // Import khusus ProfileController di folder Mahasiswa dengan alias
 use App\Http\Controllers\Mahasiswa\ProfileController as MahasiswaProfileController;
 use App\Http\Controllers\CertificateController;
+use App\Http\Controllers\InformasiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +58,14 @@ Route::middleware('auth')->group(function () {
         // New route for verification
         Route::post('/pendaftar/verify/{id}/{status}', [AdminController::class, 'verifyPendaftaran'])->name('admin.verify');
         Route::patch('/pendaftar/edit/{id}', [AdminController::class, 'editStatus'])->name('admin.editStatus');
+
+            // Informasi Routes
+    Route::get('/informasi', [InformasiController::class, 'index'])->name('informasi.index');
+    Route::get('/informasi/create', [InformasiController::class, 'create'])->name('informasi.create');
+    Route::post('/informasi', [InformasiController::class, 'store'])->name('informasi.store');
+    Route::get('/informasi/{id}/edit', [InformasiController::class, 'edit'])->name('informasi.edit');
+    Route::put('/informasi/{id}', [InformasiController::class, 'update'])->name('informasi.update');
+    Route::delete('/informasi/{id}', [InformasiController::class, 'destroy'])->name('informasi.destroy');
 
         // Profile admin (umum)
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
