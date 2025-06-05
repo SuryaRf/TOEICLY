@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Admin Dashboard - TOEIC Management</title>
     <!-- Tailwind CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <!-- Font Awesome -->
@@ -352,69 +352,86 @@
             </div>
         </header>
 
-        <!-- User Statistics Heading -->
-        <div class="text-center mb-8">
-            <h2 class="text-3xl font-bold text-gray-900 tracking-tight animate-fadeInDown">User Statistics</h2>
-            <p class="text-gray-600 mt-2">Key metrics to monitor platform engagement</p>
+        <!-- User Statistics Section -->
+        <div class="mb-12">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 tracking-tight animate-fadeInDown">User Statistics</h2>
+                <p class="text-gray-600 mt-2">Key metrics to monitor user engagement</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Total Users Card -->
+                <section class="card">
+                    <p class="text-gray-600 font-semibold">Total Users! 🎉</p>
+                    <p class="text-4xl font-extrabold mt-3 text-primary">{{ $totalUsers }}</p>
+                    <p class="text-sm text-gray-500 mt-1">All registered users</p>
+                    <a href="{{ route('admin.manage') }}" class="btn-moderns mt-5 text-white">View Details</a>
+                </section>
+
+                <!-- Admin Users Card -->
+                <section class="card">
+                    <p class="text-gray-600 font-semibold"><i class="fas fa-user-shield mr-2"></i>Admin Users</p>
+                    <p class="text-4xl font-extrabold mt-3 text-primary">{{ $userCountsByRole['admin'] }}</p>
+                    <p class="text-sm text-gray-500 mt-1">System administrators</p>
+                    <a href="{{ route('admin.manage') }}" class="btn-moderns mt-5 text-white">View Details</a>
+                </section>
+
+                <!-- Mahasiswa Users Card -->
+                <section class="card">
+                    <p class="text-gray-600 font-semibold"><i class="fas fa-user-graduate mr-2"></i>Mahasiswa Users</p>
+                    <p class="text-4xl font-extrabold mt-3 text-primary">{{ $userCountsByRole['mahasiswa'] }}</p>
+                    <p class="text-sm text-gray-500 mt-1">Student users</p>
+                    <a href="{{ route('admin.manage') }}" class="btn-moderns mt-5 text-white">View Details</a>
+                </section>
+
+                <!-- Dosen Users Card -->
+                <section class="card">
+                    <p class="text-gray-600 font-semibold"><i class="fas fa-chalkboard-teacher mr-2"></i>Dosen Users</p>
+                    <p class="text-4xl font-extrabold mt-3 text-primary">{{ $userCountsByRole['dosen'] }}</p>
+                    <p class="text-sm text-gray-500 mt-1">Lecturer users</p>
+                    <a href="{{ route('admin.manage') }}" class="btn-moderns mt-5 text-white">View Details</a>
+                </section>
+
+                <!-- Tendik Users Card -->
+                <section class="card">
+                    <p class="text-gray-600 font-semibold"><i class="fas fa-user-tie mr-2"></i>Tendik Users</p>
+                    <p class="text-4xl font-extrabold mt-3 text-primary">{{ $userCountsByRole['tendik'] }}</p>
+                    <p class="text-sm text-gray-500 mt-1">Staff users</p>
+                    <a href="{{ route('admin.manage') }}" class="btn-moderns mt-5 text-white">View Details</a>
+                </section>
+
+                <!-- ITC Users Card -->
+                <section class="card">
+                    <p class="text-gray-600 font-semibold"><i class="fas fa-user-cog mr-2"></i>ITC Users</p>
+                    <p class="text-4xl font-extrabold mt-3 text-primary">{{ $userCountsByRole['itc'] }}</p>
+                    <p class="text-sm text-gray-500 mt-1">ITC staff users</p>
+                    <a href="{{ route('admin.manage') }}" class="btn-moderns mt-5 text-white">View Details</a>
+                </section>
+            </div>
         </div>
 
-        <!-- Cards Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <!-- Total Users Card -->
-            <section class="card">
-                <p class="text-gray-600 font-semibold">Total Users! 🎉</p>
-                <p class="text-4xl font-extrabold mt-3 text-primary">{{ $totalUsers }}</p>
-                <p class="text-sm text-gray-500 mt-1">All registered users</p>
-                <a href="{{ route('admin.manage') }}" class="btn-moderns mt-5 text-white">View Details</a>
-            </section>
+        <!-- Test Statistics Section -->
+        <div class="mb-12">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 tracking-tight animate-fadeInDown">Test Statistics</h2>
+                <p class="text-gray-600 mt-2">Key metrics to monitor test registrations</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Monthly Test Registrations Chart Card -->
+                <section class="card flex flex-col">
+                    <p class="text-gray-600 font-semibold mb-4">Test Registrations (Last 12 Months)</p>
+                    <div class="w-full h-64">
+                        <canvas id="monthlyChart"></canvas>
+                    </div>
+                </section>
 
-            <!-- Admin Users Card -->
-            <section class="card">
-                <p class="text-gray-600 font-semibold">Admin Users</p>
-                <p class="text-4xl font-extrabold mt-3 text-primary">{{ $userCountsByRole['admin'] }}</p>
-                <p class="text-sm text-gray-500 mt-1">System administrators</p>
-                <a href="{{ route('admin.manage') }}" class="btn-moderns mt-5 text-white">View Details</a>
-            </section>
-
-            <!-- Mahasiswa Users Card -->
-            <section class="card">
-                <p class="text-gray-600 font-semibold">Mahasiswa Users</p>
-                <p class="text-4xl font-extrabold mt-3 text-primary">{{ $userCountsByRole['mahasiswa'] }}</p>
-                <p class="text-sm text-gray-500 mt-1">Student users</p>
-                <a href="{{ route('admin.manage') }}" class="btn-moderns mt-5 text-white">View Details</a>
-            </section>
-
-            <!-- Dosen Users Card -->
-            <section class="card">
-                <p class="text-gray-600 font-semibold">Dosen Users</p>
-                <p class="text-4xl font-extrabold mt-3 text-primary">{{ $userCountsByRole['dosen'] }}</p>
-                <p class="text-sm text-gray-500 mt-1">Lecturer users</p>
-                <a href="{{ route('admin.manage') }}" class="btn-moderns mt-5 text-white">View Details</a>
-            </section>
-
-            <!-- Tendik Users Card -->
-            <section class="card">
-                <p class="text-gray-600 font-semibold">Tendik Users</p>
-                <p class="text-4xl font-extrabold mt-3 text-primary">{{ $userCountsByRole['tendik'] }}</p>
-                <p class="text-sm text-gray-500 mt-1">Staff users</p>
-                <a href="{{ route('admin.manage') }}" class="btn-moderns mt-5 text-white">View Details</a>
-            </section>
-
-            <!-- ITC Users Card -->
-            <section class="card">
-                <p class="text-gray-600 font-semibold">ITC Users</p>
-                <p class="text-4xl font-extrabold mt-3 text-primary">{{ $userCountsByRole['itc'] }}</p>
-                <p class="text-sm text-gray-500 mt-1">ITC staff users</p>
-                <a href="{{ route('admin.manage') }}" class="btn-moderns mt-5 text-white">View Details</a>
-            </section>
-
-            <!-- Monthly Test Registrations Chart Card -->
-            <section class="card lg:col-span-2 flex flex-col">
-                <p class="text-gray-600 font-semibold mb-4">Test Registrations (Last 12 Months)</p>
-                <div class="w-full h-64">
-                    <canvas id="monthlyChart"></canvas>
-                </div>
-            </section>
+                <!-- Verification Status Pie Chart Card -->
+                <section class="card flex flex-col">
+                    <p class="text-gray-600 font-semibold mb-4">Verification Status Distribution</p>
+                    <div class="w-full h-64">
+                        <canvas id="statusPieChart"></canvas>
+                    </div>
+                </section>
+            </div>
         </div>
     </main>
 
@@ -423,9 +440,9 @@
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Chart.js configuration for monthly data
-        const ctx = document.getElementById('monthlyChart').getContext('2d');
-        const monthlyChart = new Chart(ctx, {
+        // Monthly Registrations Bar Chart
+        const ctxMonthly = document.getElementById('monthlyChart').getContext('2d');
+        const monthlyChart = new Chart(ctxMonthly, {
             type: 'bar',
             data: {
                 labels: @json($labels),
@@ -463,6 +480,71 @@
                     title: {
                         display: true,
                         text: 'Monthly Test Registrations (Last 12 Months)',
+                        font: {
+                            size: 18,
+                            weight: 'bold'
+                        },
+                        padding: {
+                            top: 10,
+                            bottom: 20
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(124, 58, 237, 0.9)',
+                        titleFont: { size: 14 },
+                        bodyFont: { size: 12 },
+                        cornerRadius: 8
+                    }
+                },
+                animation: {
+                    duration: 1500,
+                    easing: 'easeOutBounce'
+                }
+            }
+        });
+
+        // Verification Status Pie Chart
+        const ctxStatus = document.getElementById('statusPieChart').getContext('2d');
+        const statusPieChart = new Chart(ctxStatus, {
+            type: 'pie',
+            data: {
+                labels: ['Menunggu', 'Diterima', 'Ditolak'],
+                datasets: [{
+                    label: 'Verification Status',
+                    data: [
+                        @json($verificationStatusCounts['menunggu']),
+                        @json($verificationStatusCounts['diterima']),
+                        @json($verificationStatusCounts['ditolak'])
+                    ],
+                    backgroundColor: [
+                        'rgba(255, 206, 86, 0.7)', // Menunggu (Yellow)
+                        'rgba(75, 192, 192, 0.7)', // Diterima (Teal)
+                        'rgba(255, 99, 132, 0.7)'  // Ditolak (Red)
+                    ],
+                    borderColor: [
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Verification Status Distribution',
                         font: {
                             size: 18,
                             weight: 'bold'

@@ -8,6 +8,7 @@ use App\Models\PendaftaranModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Models\DetailPendaftaranModel;
 
 class AdminController extends Controller
 {
@@ -18,7 +19,7 @@ class AdminController extends Controller
 
     public function index()
     {
-        // Count total users
+        // Total Users
         $totalUsers = UserModel::count();
 
         // Users by Role
@@ -34,11 +35,7 @@ class AdminController extends Controller
             $userCountsByRole[$role] = $userCounts[$role] ?? 0;
         }
 
-        // Count total registrants (current year only for relevance)
-        $currentYear = Carbon::now()->year;
-        $totalRegistrants = PendaftaranModel::whereYear('tanggal_pendaftaran', $currentYear)->count();
-
-        // Fetch data for monthly overview (last 12 months)
+        // Monthly Test Registrations (Last 12 Months)
         $registrationsByMonth = PendaftaranModel::select(
             DB::raw("DATE_FORMAT(tanggal_pendaftaran, '%Y-%m') as month"),
             DB::raw("COUNT(*) as total")
@@ -51,16 +48,27 @@ class AdminController extends Controller
         $labels = $registrationsByMonth->pluck('month')->map(function ($m) {
             return Carbon::createFromFormat('Y-m', $m)->format('M Y');
         })->toArray();
-
         $data = $registrationsByMonth->pluck('total')->toArray();
 
-        // Pass all variables to the view
+        // Verification Status Counts
+        $statusCounts = DetailPendaftaranModel::select('status', DB::raw('COUNT(*) as count'))
+            ->groupBy('status')
+            ->pluck('count', 'status')
+            ->toArray();
+
+        // Ensure all statuses are included, even if count is 0
+        $statuses = ['menunggu', 'diterima', 'ditolak'];
+        $verificationStatusCounts = [];
+        foreach ($statuses as $status) {
+            $verificationStatusCounts[$status] = $statusCounts[$status] ?? 0;
+        }
+
         return view('dashboard.admin.index', compact(
             'totalUsers',
             'userCountsByRole',
-            'totalRegistrants',
             'labels',
-            'data'
+            'data',
+            'verificationStatusCounts'
         ));
     }
 
