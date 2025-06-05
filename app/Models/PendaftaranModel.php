@@ -39,6 +39,10 @@ class PendaftaranModel extends Model
     {
         return $this->belongsTo(MahasiswaModel::class, 'mahasiswa_id', 'mahasiswa_id');
     }
+        public function detail()
+    {
+        return $this->hasOne(DetailPendaftaranModel::class, 'pendaftaran_id', 'pendaftaran_id');
+    }
 
     // Relasi ke Jadwal
     public function jadwal()
