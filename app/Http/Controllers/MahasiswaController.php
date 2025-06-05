@@ -14,19 +14,20 @@ use App\Models\JadwalSertifikatModel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
 use App\Models\PendaftaranModel;
+use App\Models\InformasiModel;
 
 class MahasiswaController extends Controller
 {
     // Existing methods
-public function index()
-{
-    $user = Auth::user();
-    $toeicScore = $user->toeicScore;
+  public function index()
+    {
+        $user = Auth::user();
+        $toeicScore = $user->toeicScore;
+        $jadwals = JadwalSertifikatModel::orderBy('tanggal', 'desc')->get();
+        $informasis = InformasiModel::with('admin')->latest()->take(3)->get(); // Fetch latest 3 informasi records
 
-    $jadwals = JadwalSertifikatModel::orderBy('tanggal', 'desc')->get();
-
-    return view('dashboard.mahasiswa.overview', compact('toeicScore', 'jadwals'));
-}
+        return view('dashboard.mahasiswa.overview', compact('toeicScore', 'jadwals', 'informasis'));
+    }
 
   public function viewPdf($filename)
     {

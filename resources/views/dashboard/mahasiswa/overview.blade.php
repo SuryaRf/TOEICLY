@@ -11,7 +11,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-        /* Sidebar Styles */
         .sidebar {
             background: linear-gradient(180deg, #4c1d95 0%, #7c3aed 100%);
             color: white;
@@ -168,7 +167,6 @@
             }
         }
 
-        /* Additional Dashboard Styles */
         .fade-slide {
             opacity: 0;
             transform: translateY(30px);
@@ -185,12 +183,9 @@
         }
 
         @keyframes bounce {
-
-            0%,
-            100% {
+            0%, 100% {
                 transform: translateY(0);
             }
-
             50% {
                 transform: translateY(-10px);
             }
@@ -213,7 +208,6 @@
             max-width: 100%;
         }
 
-        /* PDF Viewer Styles */
         .pdf-iframe {
             width: 100%;
             min-height: 600px;
@@ -222,7 +216,6 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
-        /* Download Button Styles */
         .download-btn {
             display: inline-block;
             margin-top: 0.5rem;
@@ -245,7 +238,6 @@
 
 <body>
     <div class="flex min-h-screen">
-        <!-- Sidebar -->
         @include('dashboard.mahasiswa.sidebar')
 
         <main id="overview" class="main-content fade-slide">
@@ -257,6 +249,24 @@
 
             <h1 class="text-4xl font-bold text-purple-900 mb-4">Welcome to TOEIC Dashboard!</h1>
             <p class="text-lg text-gray-600 mb-8">Track your TOEIC test performance and upcoming schedules.</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 full-width">
+                @for ($i = 0; $i < 3; $i++)
+                    @if (isset($informasis[$i]))
+                        <div class="card rounded-xl p-6">
+                            <h3 class="text-xl font-semibold text-purple-800 mb-2">{{ $informasis[$i]->judul }}</h3>
+                            <p class="text-lg text-gray-900">{{ Str::limit($informasis[$i]->isi, 50) }}</p>
+                            <p class="text-sm text-gray-500 mt-1">Posted on {{ optional($informasis[$i]->created_at)->format('d M Y') ?? '-' }}</p>
+                        </div>
+                    @else
+                        <div class="card rounded-xl p-6">
+                            <h3 class="text-xl font-semibold text-purple-800 mb-2">No Information</h3>
+                            <p class="text-lg text-gray-900">-</p>
+                            <p class="text-sm text-gray-500 mt-1">-</p>
+                        </div>
+                    @endif
+                @endfor
+            </div>
 
             <section class="card rounded-xl p-8 mb-8 full-width">
                 <h2 class="text-2xl font-semibold text-purple-800 mb-6">Available Certificate Schedules</h2>
@@ -294,24 +304,6 @@
                 @endif
             </section>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 full-width">
-                <div class="card rounded-xl p-6">
-                    <h3 class="text-xl font-semibold text-purple-800 mb-2">Total Tests Taken</h3>
-                    <p class="text-4xl font-bold text-gray-900">5</p>
-                    <p class="text-sm text-gray-500 mt-1">Tests completed</p>
-                </div>
-                <div class="card rounded-xl p-6">
-                    <h3 class="text-xl font-semibold text-purple-800 mb-2">Highest Score</h3>
-                    <p class="text-4xl font-bold text-green-600">945</p>
-                    <p class="text-sm text-gray-500 mt-1">Best TOEIC score</p>
-                </div>
-                <div class="card rounded-xl p-6">
-                    <h3 class="text-xl font-semibold text-purple-800 mb-2">Next Test Date</h3>
-                    <p class="text-4xl font-bold text-red-600">20 May 2025</p>
-                    <p class="text-sm text-gray-500 mt-1">Mark your calendar!</p>
-                </div>
-            </div>
-
             <section class="card rounded-xl p-8 mb-8 full-width">
                 <h2 class="text-2xl font-semibold text-purple-800 mb-6">Score Trends</h2>
                 <canvas id="scoresChart" class="w-full h-64 bounce"></canvas>
@@ -320,7 +312,6 @@
     </div>
 
     <script>
-        // Sidebar Toggle
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const mainContent = document.querySelector('.main-content');
@@ -329,14 +320,12 @@
             mainContent.classList.toggle('collapsed');
         }
 
-        // Fade-Slide Animation on Load
         window.addEventListener('load', () => {
             const overview = document.getElementById('overview');
             setTimeout(() => {
                 overview.classList.add('show');
             }, 100);
 
-            // Chart.js Setup
             const ctx = document.getElementById('scoresChart').getContext('2d');
             const scoresChart = new Chart(ctx, {
                 type: 'line',
@@ -386,5 +375,4 @@
         });
     </script>
 </body>
-
 </html>
