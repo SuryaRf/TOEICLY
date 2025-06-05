@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Data Pendaftar Tes - TOEICLY ITC</title>
+    <title>TOEIC Test Applicants - TOEICLY ITC</title>
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
     <!-- Bootstrap CSS -->
@@ -162,39 +161,71 @@
             padding: 0.25rem 0.5rem;
             font-size: 0.875rem;
         }
+
+        /* Search and filter container */
+        .search-filter-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .search-filter-container input,
+        .search-filter-container select {
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            box-shadow: 0 2px 8px rgb(0 0 0 / 0.05);
+            transition: border-color 0.3s ease;
+        }
+
+        .search-filter-container input:focus,
+        .search-filter-container select:focus {
+            outline: none;
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 3px rgb(124 58 237 / 0.2);
+        }
     </style>
 </head>
-
 <body>
-
-       @include('dashboard.admin.sidebar')
+    @include('dashboard.admin.sidebar')
 
     <main>
-        <h1 class="text-4xl font-bold mb-6 text-purple-700">Daftar Pendaftar Tes TOEIC</h1>
+        <h1 class="text-4xl font-bold mb-6 text-purple-700">TOEIC Test Applicants</h1>
 
         @if(session('success'))
             <div class="alert-success">{{ session('success') }}</div>
         @endif
 
-        <table class="table table-bordered table-striped">
+        <!-- Search and Filter Controls -->
+        <div class="search-filter-container">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search by student name..." />
+            <select id="statusFilter" class="form-select">
+                <option value="">All Certificate Status</option>
+                <option value="sudah">Sudah</option>
+                <option value="belum">Belum</option>
+            </select>
+        </div>
+
+        <table class="table table-bordered table-striped" id="pendaftaranTable">
             <thead class="table-primary">
                 <tr>
-   <th>No.</th>
-<th>Registration Code</th>
-<th>Student Name</th>
-<th>Phone Number</th>
-<th>Registration Date</th>
-<th>ID Card Scan</th>
-<th>Student Card Scan</th>
-<th>Passport Photo</th>
-<th>Certificate Status</th>
-
+                    <th>No.</th>
+                    <th>Registration Code</th>
+                    <th>Student Name</th>
+                    <th>Phone Number</th>
+                    <th>Registration Date</th>
+                    <th>ID Card Scan</th>
+                    <th>Student Card Scan</th>
+                    <th>Passport Photo</th>
+                    <th>Certificate Status</th>
                 </tr>
             </thead>
-             <tbody>
+            <tbody>
                 @forelse ($pendaftarans as $index => $pendaftaran)
                     <tr>
-                        <td>{{ $index + 1 }}</td>
+                        <td class="row-number">{{ $index + 1 }}</td>
                         <td>{{ $pendaftaran->pendaftaran_kode }}</td>
                         <td>{{ $pendaftaran->mahasiswa->nama ?? '-' }}</td>
                         <td>
@@ -224,7 +255,7 @@
                         </td>
                         <td>
                             @if($pendaftaran->pas_foto)
-                                <a href="{{ asset('storage/'.$pendaftaran->pas_foto) }}" target="_blank" class="btn btn-sm btn-outline-primary">Foto</a>
+                                <a href="{{ asset('storage/'.$pendaftaran->pas_foto) }}" target="_blank" class="btn btn-sm btn-outline-primary">Photo</a>
                             @else
                                 -
                             @endif
@@ -249,6 +280,37 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('searchInput');
+            const statusFilter = document.getElementById('statusFilter');
+            const table = document.getElementById('pendaftaranTable');
+            const rows = table.querySelectorAll('tbody tr');
 
+            function filterTable() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                const selectedStatus = statusFilter.value.toLowerCase();
+
+                rows.forEach(row => {
+                    const nameCell = row.cells[2].textContent.toLowerCase();
+                    const statusCell = row.cells[8].querySelector('select').value.toLowerCase();
+
+                    const matchesSearch = nameCell.includes(searchTerm);
+                    const matchesStatus = !selectedStatus || statusCell === selectedStatus;
+
+                    row.style.display = matchesSearch && matchesStatus ? '' : 'none';
+                });
+
+                // Update row numbers
+                const visibleRows = table.querySelectorAll('tbody tr:not([style="display: none;"])');
+                visibleRows.forEach((row, index) => {
+                    row.querySelector('.row-number').textContent = index + 1;
+                });
+            }
+
+            searchInput.addEventListener('input', filterTable);
+            statusFilter.addEventListener('change', filterTable);
+        });
+    </script>
+</body>
 </html>
