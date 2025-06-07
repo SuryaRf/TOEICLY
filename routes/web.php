@@ -21,6 +21,8 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Mahasiswa\ProfileController as MahasiswaProfileController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\InformasiController;
+use App\Http\Controllers\EmailController; // New controller
+use App\Http\Controllers\AdminEmailController; // New controller for admin email
 
 // Route publik
 Route::get('/', [WelcomeController::class, 'index']);
@@ -55,6 +57,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/informasi/{id}/edit', [InformasiController::class, 'edit'])->name('informasi.edit');
         Route::put('/informasi/{id}', [InformasiController::class, 'update'])->name('informasi.update');
         Route::delete('/informasi/{id}', [InformasiController::class, 'destroy'])->name('informasi.destroy');
+
+         // Email Sending Routes
+        Route::get('/send-email', [AdminEmailController::class, 'create'])->name('admin.send_email');
+        Route::post('/send-email', [AdminEmailController::class, 'send'])->name('admin.send_email.submit');
 
         // Profile admin
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');

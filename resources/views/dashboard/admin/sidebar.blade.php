@@ -6,7 +6,8 @@
         color: white;
         min-height: 100vh;
         position: fixed;
-        width: 15.5rem; /* Lebar sedikit lebih besar */
+        width: 15.5rem;
+        /* Lebar sedikit lebih besar */
         transition: all 0.3s ease;
         box-shadow: 4px 0 12px rgb(123 97 255 / 0.4);
         z-index: 50;
@@ -61,7 +62,7 @@
 
     .sidebar a:hover,
     .sidebar a.active {
-        background-color: rgba(255,255,255,0.18);
+        background-color: rgba(255, 255, 255, 0.18);
         transform: translateX(5px);
         color: #fff !important;
     }
@@ -109,6 +110,10 @@
                 class="sidebar-link {{ request()->routeIs('informasi.*') ? 'active' : '' }}">
                 <i class="fas fa-bullhorn"></i> Manage Information
             </a>
+            <a href="{{ route('admin.send_email') }}"
+                class="sidebar-link {{ request()->routeIs('admin.send_email') ? 'active' : '' }}">
+                <i class="fas fa-envelope"></i> Send Email
+            </a>
             <a href="{{ route('kampus.index') }}"
                 class="sidebar-link {{ request()->routeIs('kampus.*') ? 'active' : '' }}">
                 <i class="fas fa-building"></i> Campus Data
@@ -128,8 +133,7 @@
             <i class="fas fa-user"></i> Profile
         </a>
         <a href="{{ route('logout') }}"
-            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-            class="sidebar-link">
+            onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="sidebar-link">
             <i class="fas fa-sign-out-alt"></i> Logout
         </a>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
