@@ -129,9 +129,9 @@
             <div class="stats-item d-flex align-items-center w-100 h-100">
               <i class="bi bi-emoji-smile color-blue flex-shrink-0"></i>
               <div>
-                <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1"
+                <span data-purecounter-start="0" data-purecounter-end="6" data-purecounter-duration="1"
                   class="purecounter"></span>
-                <p>Number of Students</p>
+                <p>Campus Branches</p>
               </div>
             </div>
           </div><!-- End Stats Item -->
@@ -140,9 +140,9 @@
             <div class="stats-item d-flex align-items-center w-100 h-100">
               <i class="bi bi-journal-richtext color-orange flex-shrink-0" style="color: #ee6c20;"></i>
               <div>
-                <span data-purecounter-start="0" data-purecounter-end="7" data-purecounter-duration="1"
+                <span data-purecounter-start="0" data-purecounter-end="47" data-purecounter-duration="1"
                   class="purecounter"></span>
-                <p>Departments</p>
+                <p>Study Programs</p>
               </div>
             </div>
           </div><!-- End Stats Item -->
@@ -151,9 +151,9 @@
             <div class="stats-item d-flex align-items-center w-100 h-100">
               <i class="bi bi-headset color-green flex-shrink-0" style="color: #15be56;"></i>
               <div>
-                <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="1"
+                <span data-purecounter-start="0" data-purecounter-end="1" data-purecounter-duration="1"
                   class="purecounter"></span>
-                <p>Hours of Support</p>
+                <p>Admin UPA</p>
               </div>
             </div>
           </div><!-- End Stats Item -->
@@ -162,9 +162,9 @@
             <div class="stats-item d-flex align-items-center w-100 h-100">
               <i class="bi bi-people color-pink flex-shrink-0" style="color: #bb0852;"></i>
               <div>
-                <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1"
+                <span data-purecounter-start="0" data-purecounter-end="668" data-purecounter-duration="1"
                   class="purecounter"></span>
-                <p>Hard Workers</p>
+                <p>Number of Lecturers</p>
               </div>
             </div>
           </div><!-- End Stats Item -->
@@ -447,104 +447,96 @@
       </div><!-- End Section Title -->
 
       <div class="container">
-        <div class="row gy-4">
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
-            <div class="team-member">
-              <div class="member-img">
-                <img src="{{ asset('img/team/team-1.jpg') }}" class="img-fluid" alt="Team Member">
-                <div class="social">
-                  <a href="#"><i class="bi bi-twitter"></i></a>
-                  <a href="#"><i class="bi bi-facebook"></i></a>
-                  <a href="#"><i class="bi bi-instagram"></i></a>
-                  <a href="#"><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>Surya Rahmat Fatahillah</h4>
-                <span>Project Manager</span>
-                <p>Leads project development and coordination with a focus on results and team collaboration.</p>
-              </div>
-            </div>
-          </div><!-- End Team Member -->
-
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
-            <div class="team-member">
-              <div class="member-img">
-                <img src="{{ asset('img/team/team-2.jpg') }}" class="img-fluid" alt="Team Member">
-                <div class="social">
-                  <a href="#"><i class="bi bi-twitter"></i></a>
-                  <a href="#"><i class="bi bi-facebook"></i></a>
-                  <a href="#"><i class="bi bi-instagram"></i></a>
-                  <a href="#"><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>Imel Theresia BR Sembiring</h4>
-                <span>Lead Developer</span>
-                <p>Ensures code quality and technological innovation in the development of the TOEIC system.</p>
-              </div>
-            </div>
-          </div><!-- End Team Member -->
-
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="300">
-            <div class="team-member">
-              <div class="member-img">
-                <img src="{{ asset('img/team/team-4.jpg') }}" class="img-fluid" alt="Team Member">
-                <div class="social">
-                  <a href="#"><i class="bi bi-twitter"></i></a>
-                  <a href="#"><i class="bi bi-facebook"></i></a>
-                  <a href="#"><i class="bi bi-instagram"></i></a>
-                  <a href="#"><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>Josephine Antonia</h4>
-                <span>UI/UX Designer</span>
-                <p>Designs engaging interfaces and user-friendly experiences.</p>
-              </div>
-            </div>
-          </div><!-- End Team Member -->
-
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="400">
-            <div class="team-member">
-              <div class="member-img">
-                <img src="{{ asset('img/team/team-3.jpg') }}" class="img-fluid" alt="Team Member">
-                <div class="social">
-                  <a href="#"><i class="bi bi-twitter"></i></a>
-                  <a href="#"><i class="bi bi-facebook"></i></a>
-                  <a href="#"><i class="bi bi-instagram"></i></a>
-                  <a href="#"><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>Mohammad Syifa’ul Faj Ismunir</h4>
-                <span>Backend Developer</span>
-                <p>Ensures reliable and secure backend performance for the TOEIC management system.</p>
-              </div>
-            </div>
-          </div><!-- End Team Member -->
-
-          <div class="col-lg-3 col-md-6 d-flex justify-content-center align-items-center" data-aos="fade-up"
-            data-aos-delay="500">
-            <div class="team-member">
-              <div class="member-img">
-                <img src="{{ asset('img/team/team-2.jpg') }}" class="img-fluid" alt="Team Member">
-                <div class="social">
-                  <a href="#"><i class="bi bi-twitter"></i></a>
-                  <a href="#"><i class="bi bi-facebook"></i></a>
-                  <a href="#"><i class="bi bi-instagram"></i></a>
-                  <a href="#"><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>Muhammad Mahdi Arielreza Hafiz</h4>
-                <span>Quality Assurance</span>
-                <p>Ensures system quality and stability through comprehensive testing.</p>
-              </div>
-            </div>
-          </div><!-- End Team Member -->
+  <div class="row gy-4 justify-content-center">
+    <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+      <div class="team-member">
+        <div class="member-img">
+          <img src="{{ asset('img/team/surya.jpg') }}" class="img-fluid" alt="Team Member">
+          <div class="social">
+            <a href="#"><i class="bi bi-twitter"></i></a>
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-instagram"></i></a>
+            <a href="#"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+        <div class="member-info">
+          <h4>Surya Rahmat Fatahillah</h4>
+          <span>Project Manager</span>
+          <p>Leads project development and coordination with a focus on results and team collaboration.</p>
         </div>
       </div>
+    </div><div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+      <div class="team-member">
+        <div class="member-img">
+          <img src="{{ asset('/img/team/imel.jpg') }}" class="img-fluid" alt="Team Member">
+          <div class="social">
+            <a href="#"><i class="bi bi-twitter"></i></a>
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-instagram"></i></a>
+            <a href="#"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+        <div class="member-info">
+          <h4>Imel Theresia BR Sembiring</h4>
+          <span>Lead Developer</span>
+          <p>Ensures code quality and technological innovation in the development of the TOEIC system.</p>
+        </div>
+      </div>
+    </div><div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="300">
+      <div class="team-member">
+        <div class="member-img">
+          <img src="{{ asset('img/team/jose.jpg') }}" class="img-fluid" alt="Team Member">
+          <div class="social">
+            <a href="#"><i class="bi bi-twitter"></i></a>
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-instagram"></i></a>
+            <a href="#"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+        <div class="member-info">
+          <h4>Josephine Antonia</h4>
+          <span>UI/UX Designer</span>
+          <p>Designs engaging interfaces and user-friendly experiences.</p>
+        </div>
+      </div>
+    </div></div>
+
+  <div class="row gy-4 justify-content-center mt-4"> <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="400">
+      <div class="team-member">
+        <div class="member-img">
+          <img src="{{ asset('img/team/syifaul.jpg') }}" class="img-fluid" alt="Team Member">
+          <div class="social">
+            <a href="#"><i class="bi bi-twitter"></i></a>
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-instagram"></i></a>
+            <a href="#"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+        <div class="member-info">
+          <h4>Mohammad Syifa’ul Faj Ismunir</h4>
+          <span>Backend Developer</span>
+          <p>Ensures reliable and secure backend performance for the TOEIC management system.</p>
+        </div>
+      </div>
+    </div><div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="500">
+      <div class="team-member">
+        <div class="member-img">
+          <img src="{{ asset('img/team/reza.jpg') }}" class="img-fluid" alt="Team Member">
+          <div class="social">
+            <a href="#"><i class="bi bi-twitter"></i></a>
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-instagram"></i></a>
+            <a href="#"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+        <div class="member-info">
+          <h4>Muhammad Mahdi Arielreza Hafiz</h4>
+          <span>Quality Assurance</span>
+          <p>Ensures system quality and stability through comprehensive testing.</p>
+        </div>
+      </div>
+    </div></div>
+</div>
     </section><!-- /Team Section -->
 
   </main>

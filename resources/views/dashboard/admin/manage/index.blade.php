@@ -4,9 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Manajemen Pengguna - TOEIC Management</title>
-    <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
     <style>
         body {
@@ -76,10 +74,20 @@
         }
 
         h1 {
-            color: #4c1d95;
+            color: #4c1d95; /* Warna ungu gelap untuk judul utama */
             font-weight: 800;
             font-size: 2.25rem;
             margin-bottom: 1.5rem;
+        }
+
+        /* Gaya untuk teks "List of registered users" yang diperbarui */
+        .section-title-purple {
+            color: #7c3aed; /* Warna ungu senada dengan header tabel */
+            font-weight: 700; /* Lebih tebal */
+            margin-bottom: 1.2rem; /* Sedikit spasi di bawahnya */
+            font-size: 1.4rem; /* Ukuran teks lebih besar */
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Tambahkan shadow tipis */
+            letter-spacing: 0.5px; /* Sedikit spasi antar huruf */
         }
 
         table {
@@ -125,10 +133,6 @@
             background: linear-gradient(90deg, #a78bfa, #7c3aed);
         }
 
-        .btn-action.bg-red-500:hover {
-            background: linear-gradient(90deg, #ef4444, #dc2626);
-        }
-
         .search-filter-container {
             display: flex;
             gap: 1rem;
@@ -144,6 +148,16 @@
             font-size: 0.875rem;
             box-shadow: 0 2px 8px rgb(0 0 0 / 0.05);
             transition: border-color 0.3s ease;
+            color: #4c1d95; /* Warna ungu gelap untuk teks input/select */
+        }
+
+        .search-filter-container input::placeholder {
+            color: #7c3aed; /* Warna ungu yang lebih terang untuk placeholder */
+            opacity: 1; /* Pastikan placeholder tidak transparan */
+        }
+
+        .search-filter-container select option {
+            color: #4c1d95; /* Warna ungu gelap untuk opsi dropdown */
         }
 
         .search-filter-container input:focus,
@@ -165,20 +179,17 @@
     </style>
 </head>
 <body>
-    <!-- Sidebar -->
     @include('dashboard.admin.sidebar')
 
-    <!-- Main content -->
     <main>
         <h1>User Management</h1>
 
         <section class="card">
-            <p class="text-gray-600 mb-4">List of registered users</p>
+            <p class="section-title-purple">List of registered users</p>
             @if(session('success'))
                 <div class="alert-success">{{ session('success') }}</div>
             @endif
 
-            <!-- Search and Filter Controls -->
             <div class="search-filter-container">
                 <input type="text" id="searchInput" class="form-control" placeholder="Search by name..." />
                 <select id="roleFilter" class="form-select">
@@ -198,8 +209,8 @@
                         <th>Username</th>
                         <th>Email</th>
                         <th>Role</th>
-                        <th>Nama Lengkap</th>
-                        <th>Aksi</th>
+                        <th>Full Name</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -232,7 +243,7 @@
                                     class="inline-block" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn-action ml-2 bg-red-500 hover:bg-red-600">
+                                    <button type="submit" class="btn-action ml-2">
                                         <i class="fas fa-trash"></i> Hapus
                                     </button>
                                 </form>

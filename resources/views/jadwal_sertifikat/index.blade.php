@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Daftar Jadwal Sertifikat - TOEICLY Admin</title>
-    <!-- Tailwind CSS -->
+    <title>Manage Certificate Schedule - TOEICLY Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
     <style>
         body {
@@ -85,6 +82,16 @@
             overflow-y: auto;
         }
 
+        /* Gaya untuk judul utama, disamakan dengan "User Management" */
+        .main-title-purple {
+            color: #4c1d95; /* Warna ungu gelap */
+            font-weight: 800; /* Ekstra tebal */
+            font-size: 2.25rem; /* Ukuran besar */
+            margin-bottom: 1.5rem; /* Jarak bawah */
+            /* Anda bisa menambahkan text-shadow jika diinginkan, seperti pada 'List of registered users' */
+            /* text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); */
+        }
+
         .btn-modern {
             background: linear-gradient(90deg, #7c3aed, #a78bfa);
             border: none;
@@ -152,10 +159,10 @@
 </head>
 <body>
 
-       @include('dashboard.admin.sidebar')
+    @include('dashboard.admin.sidebar')
 
     <main>
-        <h1 class="text-5xl font-extrabold text-gray-900 tracking-tight mb-8">Daftar Jadwal Sertifikat</h1>
+        <h1 class="main-title-purple">Manage Certificate Schedule</h1>
 
         @if(session('success'))
             <div class="alert-success">
@@ -163,15 +170,15 @@
             </div>
         @endif
 
-        <a href="{{ route('jadwal_sertifikat.create') }}" class="btn-modern">Tambah Jadwal Baru</a>
+        <a href="{{ route('jadwal_sertifikat.create') }}" class="btn-modern">Add New Schedule</a>
 
         <table>
             <thead>
                 <tr>
                     <th>No.</th>
-                    <th>Judul Jadwal</th>
+                    <th>Schedule Name</th>
                     <th>File PDF</th>
-                    <th>Tanggal Dibuat</th>
+                    <th>Creation Date</th>
                 </tr>
             </thead>
             <tbody>
@@ -186,7 +193,7 @@
                                 Tidak ada file
                             @endif
                         </td>
-                      <td>{{ \Carbon\Carbon::parse($jadwal->tanggal)->format('d-m-Y') }}</td>
+                        <td>{{ \Carbon\Carbon::parse($jadwal->tanggal)->format('d-m-Y') }}</td>
 
                     </tr>
                 @empty

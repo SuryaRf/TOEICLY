@@ -149,6 +149,6 @@ class AdminController extends Controller
             'updated_at' => now(),
         ]);
 
-        return redirect()->route('admin.pendaftarVerifikasi')->with('success', 'Status pendaftaran berhasil diperbarui.');
+        return redirect()->route('admin.pendaftarVerifikasi')->with('success', 'Registration status updated successfully.');
     }
 }

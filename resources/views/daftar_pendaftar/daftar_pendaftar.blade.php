@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Data Pendaftar Tes - TOEICLY ITC</title>
-    <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
     <style>
         /* Background and font */
@@ -121,7 +119,8 @@
             overflow: hidden;
         }
 
-        th, td {
+        th,
+        td {
             text-align: left;
             padding: 0.75rem 1rem;
             border-bottom: 1px solid #e5e7eb;
@@ -162,104 +161,114 @@
         }
     </style>
 </head>
+
 <body>
 
-<aside class="sidebar flex flex-col">
-    <div class="p-6">
-        <h2 class="text-4xl font-extrabold tracking-tight select-none">TOEICLY ITC</h2>
-    </div>
-    <nav class="mt-8 flex flex-col gap-2 px-2">
-        <a href="{{ route('itc.dashboard') }}" class="sidebar-link {{ request()->routeIs('itc.dashboard') ? 'active' : '' }}">
-            <i class="fas fa-home"></i> Dashboard
-        </a>
-        <a href="{{ route('itc.pendaftar') }}" class="sidebar-link {{ request()->routeIs('itc.pendaftar') ? 'active' : '' }}">
-            <i class="fas fa-calendar-alt"></i> Data Pendaftar Tes
-        </a>
-        <a href="{{ route('itc.upload_nilai') }}" class="sidebar-link {{ request()->routeIs('itc.upload_nilai') ? 'active' : '' }}">
-            <i class="fas fa-file-pdf"></i> Upload Nilai TOEIC
-        </a>
-        <a href="{{ route('itc.profile') }}" class="sidebar-link {{ request()->routeIs('itc.profile') ? 'active' : '' }}">
-            <i class="fas fa-user"></i> Profile
-        </a>
-        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="sidebar-link">
-            <i class="fas fa-sign-out-alt"></i> Logout
-        </a>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
-            @csrf
-        </form>
-    </nav>
-</aside>
+    <aside class="sidebar flex flex-col">
+        <div class="p-6">
+            <h2 class="text-4xl font-extrabold tracking-tight select-none">TOEICLY ITC</h2>
+        </div>
+        <nav class="mt-8 flex flex-col gap-2 px-2">
+            <a href="{{ route('itc.dashboard') }}"
+                class="sidebar-link {{ request()->routeIs('itc.dashboard') ? 'active' : '' }}">
+                <i class="fas fa-home"></i> Dashboard
+            </a>
+            <a href="{{ route('itc.pendaftar') }}"
+                class="sidebar-link {{ request()->routeIs('itc.pendaftar') ? 'active' : '' }}">
+                <i class="fas fa-calendar-alt"></i> Data Pendaftar Tes
+            </a>
+            <a href="{{ route('itc.upload_nilai') }}"
+                class="sidebar-link {{ request()->routeIs('itc.upload_nilai') ? 'active' : '' }}">
+                <i class="fas fa-file-pdf"></i> Upload Nilai TOEIC
+            </a>
+            <a href="{{ route('itc.profile') }}"
+                class="sidebar-link {{ request()->routeIs('itc.profile') ? 'active' : '' }}">
+                <i class="fas fa-user"></i> Profile
+            </a>
+            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                class="sidebar-link">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
+                @csrf
+            </form>
+        </nav>
+    </aside>
 
-<main>
-    <h1 class="text-4xl font-bold mb-6 text-purple-700">Daftar Pendaftar Tes TOEIC</h1>
+    <main>
+        <h1 class="text-4xl font-bold mb-6 text-purple-700">Daftar Pendaftar Tes TOEIC</h1>
 
-    @if(session('success'))
+        @if(session('success'))
         <div class="alert-success">{{ session('success') }}</div>
-    @endif
+        @endif
 
-    <table class="table table-bordered table-striped">
-        <thead class="table-primary">
-            <tr>
-                <th>No.</th>
-                <th>Kode Pendaftaran</th>
-                <th>Nama Mahasiswa</th>
-                <th>Nomor Telepon</th>
-                <th>Status Pendaftaran</th>
-                <th>Tanggal Daftar</th>
-                <th>Scan KTP</th>
-                <th>Scan KTM</th>
-                <th>Pas Foto</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse ($pendaftarans as $index => $pendaftaran)
+        <table class="table table-bordered table-striped">
+            <thead class="table-primary">
+                <tr>
+                    <th>No.</th>
+                    <th>Kode Pendaftaran</th>
+                    <th>Nama Mahasiswa</th>
+                    <th>Nomor Telepon</th>
+                    <th>Status Pendaftaran</th>
+                    <th>Tanggal Daftar</th>
+                    <th>Scan KTP</th>
+                    <th>Scan KTM</th>
+                    <th>Pas Foto</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($pendaftarans as $index => $pendaftaran)
                 <tr>
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $pendaftaran->pendaftaran_kode }}</td>
                     <td>{{ $pendaftaran->mahasiswa->nama ?? '-' }}</td>
-                       <td>
-                    @if($pendaftaran->mahasiswa->no_telp)
-                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $pendaftaran->mahasiswa->no_telp) }}" 
-                           target="_blank" class="btn btn-sm btn-outline-success">
+                    <td>
+                        @if($pendaftaran->mahasiswa->no_telp)
+                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $pendaftaran->mahasiswa->no_telp) }}"
+                            target="_blank" class="btn btn-sm btn-outline-success">
                             {{ $pendaftaran->mahasiswa->no_telp }}
                         </a>
-                    @else
+                        @else
                         -
-                    @endif
-                </td>
+                        @endif
+                    </td>
                     <td>{{ ucfirst($pendaftaran->detail->status ?? 'belum ada') }}</td>
                     <td>{{ $pendaftaran->tanggal_pendaftaran->format('d-m-Y') }}</td>
                     <td>
                         @if($pendaftaran->scan_ktp)
-                            <a href="{{ asset('storage/'.$pendaftaran->scan_ktp) }}" target="_blank" class="btn btn-sm btn-outline-primary">KTP</a>
+                        <a href="{{ asset('storage/'.$pendaftaran->scan_ktp) }}" target="_blank"
+                            class="btn btn-sm btn-outline-primary">KTP</a>
                         @else
-                            -
+                        -
                         @endif
                     </td>
                     <td>
                         @if($pendaftaran->scan_ktm)
-                            <a href="{{ asset('storage/'.$pendaftaran->scan_ktm) }}" target="_blank" class="btn btn-sm btn-outline-primary">KTM</a>
+                        <a href="{{ asset('storage/'.$pendaftaran->scan_ktm) }}" target="_blank"
+                            class="btn btn-sm btn-outline-primary">KTM</a>
                         @else
-                            -
+                        -
                         @endif
                     </td>
                     <td>
                         @if($pendaftaran->pas_foto)
-                            <a href="{{ asset('storage/'.$pendaftaran->pas_foto) }}" target="_blank" class="btn btn-sm btn-outline-primary">Foto</a>
+                        <a href="{{ asset('storage/'.$pendaftaran->pas_foto) }}" target="_blank"
+                            class="btn btn-sm btn-outline-primary">Foto</a>
                         @else
-                            -
+                        -
                         @endif
                     </td>
                 </tr>
-            @empty
+                @empty
                 <tr>
                     <td colspan="9" class="text-center">Belum ada pendaftar.</td>
                 </tr>
-            @endforelse
-        </tbody>
-    </table>
-</main>
+                @endforelse
+            </tbody>
+        </table>
+    </main>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

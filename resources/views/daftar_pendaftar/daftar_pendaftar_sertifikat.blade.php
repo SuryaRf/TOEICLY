@@ -4,11 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>TOEIC Test Applicants - TOEICLY ITC</title>
-    <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
     <style>
         /* Background and font */
@@ -88,6 +84,27 @@
             overflow-y: auto;
         }
 
+        /* Gaya untuk judul utama, konsisten dengan halaman lain */
+        .main-title-purple {
+            color: #4c1d95; /* Warna ungu gelap */
+            font-weight: 800; /* Ekstra tebal */
+            font-size: 2.25rem; /* Ukuran besar */
+            margin-bottom: 1.5rem; /* Jarak bawah */
+        }
+
+        /* Card styling for the table container */
+        .card {
+            background-color: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 6px 15px rgb(0 0 0 / 0.08);
+            padding: 1.5rem;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+
         /* Button styles */
         .btn-modern {
             background: linear-gradient(90deg, #7c3aed, #a78bfa);
@@ -110,14 +127,14 @@
             color: white;
         }
 
-        /* Table styling */
+        /* Table styling (disesuaikan dengan halaman sebelumnya) */
         table {
             border-collapse: collapse;
             width: 100%;
             font-size: 1rem;
             background: white;
             border-radius: 1rem;
-            box-shadow: 0 6px 15px rgb(0 0 0 / 0.08);
+            box-shadow: 0 6px 15px rgb(0 0 0 / 0.08); /* Tetap ada shadow */
             overflow: hidden;
         }
 
@@ -129,13 +146,13 @@
         }
 
         thead th {
-            background-color: #f3e8ff;
-            color: #7c3aed;
+            background-color: #f3e8ff; /* Warna header ungu muda */
+            color: #7c3aed; /* Warna teks header ungu */
             font-weight: 700;
         }
 
         tbody tr:hover {
-            background-color: #ede9fe;
+            background-color: #ede9fe; /* Warna hover baris tabel ungu sangat muda */
         }
 
         .no-data {
@@ -155,12 +172,34 @@
             box-shadow: 0 2px 8px rgb(34 197 94 / 0.3);
         }
 
-        /* Bootstrap table buttons */
+        /* Bootstrap table buttons (tidak perlu diubah jika sudah sesuai) */
         .btn-outline-primary {
             font-weight: 600;
             padding: 0.25rem 0.5rem;
             font-size: 0.875rem;
+            border-color: #7c3aed; /* Warna border disamakan dengan tema */
+            color: #7c3aed; /* Warna teks disamakan dengan tema */
+            transition: all 0.3s ease;
         }
+
+        .btn-outline-primary:hover {
+            background-color: #7c3aed; /* Warna background saat hover */
+            color: white; /* Warna teks saat hover */
+        }
+
+        .btn-outline-success {
+            border-color: #22c55e; /* Green for success */
+            color: #22c55e;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-outline-success:hover {
+            background-color: #22c55e;
+            color: white;
+        }
+
 
         /* Search and filter container */
         .search-filter-container {
@@ -178,10 +217,39 @@
             font-size: 0.875rem;
             box-shadow: 0 2px 8px rgb(0 0 0 / 0.05);
             transition: border-color 0.3s ease;
+            color: #4c1d95; /* Warna ungu gelap untuk teks input/select */
         }
+
+        .search-filter-container input::placeholder {
+            color: #7c3aed; /* Warna ungu yang lebih terang untuk placeholder */
+            opacity: 1;
+        }
+
+        .search-filter-container select option {
+            color: #4c1d95;
+        }
+
 
         .search-filter-container input:focus,
         .search-filter-container select:focus {
+            outline: none;
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 3px rgb(124 58 237 / 0.2);
+        }
+
+        /* Small form-select styling */
+        .form-select-sm {
+            padding: 0.25rem 0.75rem; /* Reduced padding */
+            font-size: 0.875rem; /* Smaller font size */
+            height: auto; /* Adjust height automatically */
+            border-radius: 0.5rem; /* Consistent border radius */
+            border: 1px solid #d1d5db;
+            color: #4c1d95; /* Dark purple text */
+            background-color: #ffffff; /* White background */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-select-sm:focus {
             outline: none;
             border-color: #7c3aed;
             box-shadow: 0 0 0 3px rgb(124 58 237 / 0.2);
@@ -192,13 +260,12 @@
     @include('dashboard.admin.sidebar')
 
     <main>
-        <h1 class="text-4xl font-bold mb-6 text-purple-700">TOEIC Test Applicants</h1>
+        <h1 class="main-title-purple">TOEIC Test Applicants</h1>
 
         @if(session('success'))
             <div class="alert-success">{{ session('success') }}</div>
         @endif
 
-        <!-- Search and Filter Controls -->
         <div class="search-filter-container">
             <input type="text" id="searchInput" class="form-control" placeholder="Search by student name..." />
             <select id="statusFilter" class="form-select">
@@ -208,75 +275,77 @@
             </select>
         </div>
 
-        <table class="table table-bordered table-striped" id="pendaftaranTable">
-            <thead class="table-primary">
-                <tr>
-                    <th>No.</th>
-                    <th>Registration Code</th>
-                    <th>Student Name</th>
-                    <th>Phone Number</th>
-                    <th>Registration Date</th>
-                    <th>ID Card Scan</th>
-                    <th>Student Card Scan</th>
-                    <th>Passport Photo</th>
-                    <th>Certificate Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($pendaftarans as $index => $pendaftaran)
+        <section class="card">
+            <table id="pendaftaranTable">
+                <thead>
                     <tr>
-                        <td class="row-number">{{ $index + 1 }}</td>
-                        <td>{{ $pendaftaran->pendaftaran_kode }}</td>
-                        <td>{{ $pendaftaran->mahasiswa->nama ?? '-' }}</td>
-                        <td>
-                            @if($pendaftaran->mahasiswa->no_telp)
-                                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $pendaftaran->mahasiswa->no_telp) }}"
-                                   target="_blank" class="btn btn-sm btn-outline-success">
-                                    {{ $pendaftaran->mahasiswa->no_telp }}
-                                </a>
-                            @else
-                                -
-                            @endif
-                        </td>
-                        <td>{{ $pendaftaran->tanggal_pendaftaran->format('d-m-Y') }}</td>
-                        <td>
-                            @if($pendaftaran->scan_ktp)
-                                <a href="{{ asset('storage/'.$pendaftaran->scan_ktp) }}" target="_blank" class="btn btn-sm btn-outline-primary">KTP</a>
-                            @else
-                                -
-                            @endif
-                        </td>
-                        <td>
-                            @if($pendaftaran->scan_ktm)
-                                <a href="{{ asset('storage/'.$pendaftaran->scan_ktm) }}" target="_blank" class="btn btn-sm btn-outline-primary">KTM</a>
-                            @else
-                                -
-                            @endif
-                        </td>
-                        <td>
-                            @if($pendaftaran->pas_foto)
-                                <a href="{{ asset('storage/'.$pendaftaran->pas_foto) }}" target="_blank" class="btn btn-sm btn-outline-primary">Photo</a>
-                            @else
-                                -
-                            @endif
-                        </td>
-                        <td>
-                            <form action="{{ route('itc.updateStatusSertifikat', $pendaftaran->pendaftaran_id) }}" method="POST" class="d-inline-block">
-                                @csrf
-                                <select name="status" onchange="this.form.submit()" class="form-select form-select-sm">
-                                    <option value="belum" {{ optional($pendaftaran->sertifikatStatus)->status === 'belum' ? 'selected' : '' }}>Belum</option>
-                                    <option value="sudah" {{ optional($pendaftaran->sertifikatStatus)->status === 'sudah' ? 'selected' : '' }}>Sudah</option>
-                                </select>
-                            </form>
-                        </td>
+                        <th>No.</th>
+                        <th>Registration Code</th>
+                        <th>Student Name</th>
+                        <th>Phone Number</th>
+                        <th>Registration Date</th>
+                        <th>ID Card Scan</th>
+                        <th>Student Card Scan</th>
+                        <th>Photo</th>
+                        <th>Certificate Status</th>
                     </tr>
-                @empty
-                    <tr>
-                        <td colspan="9" class="text-center">There are no applicants yet.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @forelse ($pendaftarans as $index => $pendaftaran)
+                        <tr>
+                            <td class="row-number">{{ $index + 1 }}</td>
+                            <td>{{ $pendaftaran->pendaftaran_kode }}</td>
+                            <td>{{ $pendaftaran->mahasiswa->nama ?? '-' }}</td>
+                            <td>
+                                @if($pendaftaran->mahasiswa->no_telp)
+                                    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $pendaftaran->mahasiswa->no_telp) }}"
+                                        target="_blank" class="btn btn-sm btn-outline-success">
+                                        {{ $pendaftaran->mahasiswa->no_telp }}
+                                    </a>
+                                @else
+                                    -
+                                @endif
+                            </td>
+                            <td>{{ $pendaftaran->tanggal_pendaftaran->format('d-m-Y') }}</td>
+                            <td>
+                                @if($pendaftaran->scan_ktp)
+                                    <a href="{{ asset('storage/'.$pendaftaran->scan_ktp) }}" target="_blank" class="btn btn-sm btn-outline-primary">KTP</a>
+                                @else
+                                    -
+                                @endif
+                            </td>
+                            <td>
+                                @if($pendaftaran->scan_ktm)
+                                    <a href="{{ asset('storage/'.$pendaftaran->scan_ktm) }}" target="_blank" class="btn btn-sm btn-outline-primary">KTM</a>
+                                @else
+                                    -
+                                @endif
+                            </td>
+                            <td>
+                                @if($pendaftaran->pas_foto)
+                                    <a href="{{ asset('storage/'.$pendaftaran->pas_foto) }}" target="_blank" class="btn btn-sm btn-outline-primary">Photo</a>
+                                @else
+                                    -
+                                @endif
+                            </td>
+                            <td>
+                                <form action="{{ route('itc.updateStatusSertifikat', $pendaftaran->pendaftaran_id) }}" method="POST" class="d-inline-block">
+                                    @csrf
+                                    <select name="status" onchange="this.form.submit()" class="form-select form-select-sm">
+                                        <option value="belum" {{ optional($pendaftaran->sertifikatStatus)->status === 'belum' ? 'selected' : '' }}>Belum</option>
+                                        <option value="sudah" {{ optional($pendaftaran->sertifikatStatus)->status === 'sudah' ? 'selected' : '' }}>Sudah</option>
+                                    </select>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="9" class="no-data">There are no applicants yet.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </section>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
