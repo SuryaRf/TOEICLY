@@ -14,6 +14,7 @@ use App\Models\PendaftaranModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class MahasiswaController extends Controller
 {
@@ -53,12 +54,40 @@ class MahasiswaController extends Controller
 
     public function daftarTes()
     {
-        $kampus = KampusModel::all();
-        $jurusan = JurusanModel::all();
-        $prodi = ProdiModel::all();
-        $mahasiswa = Auth::user()->mahasiswa;
+        try {
+            $user = Auth::user();
+            $mahasiswa = $user->mahasiswa;
 
-        return view('pendaftaran.create', compact('kampus', 'jurusan', 'prodi', 'mahasiswa'));
+            Log::info('Attempting to load daftarTes for user ID: ' . $user->id, [
+                'has_mahasiswa' => !is_null($mahasiswa),
+                'mahasiswa_id' => $mahasiswa?->mahasiswa_id,
+                'user_role' => $user->role,
+            ]);
+
+            if (!$mahasiswa) {
+                Log::warning('No mahasiswa record found for user ID: ' . $user->id);
+                return redirect()->route('mahasiswa.dashboard')->with('error', 'Student profile not found. Please contact the administrator.');
+            }
+
+            $existingRegistration = PendaftaranModel::where('mahasiswa_id', $mahasiswa->mahasiswa_id)->exists();
+
+            Log::info('Registration check for mahasiswa_id: ' . $mahasiswa->mahasiswa_id, [
+                'registration_exists' => $existingRegistration,
+            ]);
+
+            if ($existingRegistration) {
+                return redirect()->route('mahasiswa.already-registered')->with('info', 'You have already registered for a TOEIC test.');
+            }
+
+            $kampus = KampusModel::all();
+            $jurusan = JurusanModel::all();
+            $prodi = ProdiModel::all();
+
+            return view('pendaftaran.create', compact('kampus', 'jurusan', 'prodi', 'mahasiswa'));
+        } catch (\Exception $e) {
+            Log::error('Failed to load daftarTes: ' . $e->getMessage(), ['exception' => $e]);
+            return redirect()->route('mahasiswa.dashboard')->with('error', 'Failed to load test registration page. Please try again.');
+        }
     }
 
     public function riwayatUjian()
