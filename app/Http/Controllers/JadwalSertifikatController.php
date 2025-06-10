@@ -11,6 +11,7 @@ class JadwalSertifikatController extends Controller
 {
     public function index()
     {
+        // Ambil semua jadwal, pastikan id, judul, tanggal, file_pdf ada
         $jadwals = JadwalSertifikatModel::orderBy('tanggal', 'desc')->get();
         return view('jadwal_sertifikat.index', compact('jadwals'));
     }
@@ -22,26 +23,22 @@ class JadwalSertifikatController extends Controller
 
     public function store(Request $request)
     {
-        // Validate the request
         $request->validate([
             'judul' => 'required|string|max:255',
             'tanggal' => 'required|date',
-            'file_pdf' => 'required|file|mimes:pdf|max:2048', // Max 2MB
+            'file_pdf' => 'required|file|mimes:pdf|max:2048',
         ]);
 
         try {
-            // Handle the file upload
             if ($request->hasFile('file_pdf')) {
-                // Store the file in storage/app/public/jadwal_pdf/
                 $file = $request->file('file_pdf');
-                $filename = $file->hashName(); // Generates a random filename like cn9ZUXHawGyS5KJmyWDkcx7OO2gEdPoIxqUBdPsY.pdf
+                $filename = $file->hashName();
                 $path = $file->storeAs('jadwal_pdf', $filename, 'public');
 
-                // Create a new JadwalSertifikat record
                 JadwalSertifikatModel::create([
                     'judul' => $request->judul,
                     'tanggal' => $request->tanggal,
-                    'file_pdf' => $path, // Store the relative path (e.g., jadwal_pdf/cn9ZUXHawGyS5KJmyWDkcx7OO2gEdPoIxqUBdPsY.pdf)
+                    'file_pdf' => $path,
                 ]);
 
                 return redirect()->route('jadwal_sertifikat.index')->with('success', 'Jadwal uploaded successfully.');
@@ -56,7 +53,20 @@ class JadwalSertifikatController extends Controller
 
     public function peserta($jadwal_id)
     {
-        // Logic for showing participants (if needed)
         return view('jadwal_sertifikat.peserta', compact('jadwal_id'));
+    }
+
+    public function destroy($jadwal_id)
+    {
+        $jadwal = JadwalSertifikatModel::findOrFail($jadwal_id);
+
+        // Hapus file PDF dari storage jika ada
+        if ($jadwal->file_pdf && Storage::disk('public')->exists($jadwal->file_pdf)) {
+            Storage::disk('public')->delete($jadwal->file_pdf);
+        }
+
+        $jadwal->delete();
+
+        return redirect()->route('jadwal_sertifikat.index')->with('success', 'Jadwal berhasil dihapus.');
     }
 }

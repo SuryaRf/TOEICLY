@@ -155,6 +155,44 @@
             font-weight: 600;
             box-shadow: 0 2px 8px rgb(34 197 94 / 0.3);
         }
+
+        /* Add these new styles for the modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            position: relative;
+            margin: 2% auto;
+            width: 90%;
+            height: 90%;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            z-index: 1001;
+        }
+
+        .pdf-container {
+            width: 100%;
+            height: calc(100% - 40px);
+        }
     </style>
 </head>
 <body>
@@ -179,6 +217,7 @@
                     <th>Schedule Name</th>
                     <th>File PDF</th>
                     <th>Creation Date</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -188,23 +227,70 @@
                         <td>{{ $jadwal->judul }}</td>
                         <td>
                             @if($jadwal->file_pdf)
-                                <a href="{{ asset('storage/' . $jadwal->file_pdf) }}" target="_blank" class="text-blue-600 underline">Lihat PDF</a>
+                                <button 
+                                    onclick="openPdfModal('{{ asset('storage/' . $jadwal->file_pdf) }}')" 
+                                    class="text-blue-600 underline cursor-pointer">
+                                    Lihat PDF
+                                </button>
                             @else
                                 Tidak ada file
                             @endif
                         </td>
                         <td>{{ \Carbon\Carbon::parse($jadwal->tanggal)->format('d-m-Y') }}</td>
-
+                        <td>
+                            <form action="{{ route('jadwal-sertifikat.destroy', $jadwal->jadwal_id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus jadwal ini?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i> Hapus
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="no-data">Tidak ada jadwal tersedia.</td>
+                        <td colspan="5" class="no-data">Tidak ada jadwal tersedia.</td>
                     </tr>
                 @endforelse
             </tbody>
         </table>
+
+        <!-- Add Modal -->
+        <div id="pdfModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closePdfModal()">&times;</span>
+                <div class="pdf-container">
+                    <embed id="pdfViewer" src="" type="application/pdf" width="100%" height="100%">
+                </div>
+            </div>
+        </div>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function openPdfModal(pdfUrl) {
+            const modal = document.getElementById('pdfModal');
+            const pdfViewer = document.getElementById('pdfViewer');
+            
+            pdfViewer.src = pdfUrl;
+            modal.style.display = 'block';
+        }
+
+        function closePdfModal() {
+            const modal = document.getElementById('pdfModal');
+            const pdfViewer = document.getElementById('pdfViewer');
+            
+            pdfViewer.src = '';
+            modal.style.display = 'none';
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('pdfModal');
+            if (event.target == modal) {
+                closePdfModal();
+            }
+        }
+    </script>
 </body>
 </html>

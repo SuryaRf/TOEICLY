@@ -85,6 +85,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/create', [JadwalSertifikatController::class, 'create'])->name('jadwal_sertifikat.create');
         Route::post('/', [JadwalSertifikatController::class, 'store'])->name('jadwal_sertifikat.store');
         Route::get('/{jadwal_id}/peserta', [JadwalSertifikatController::class, 'peserta'])->name('jadwal_sertifikat.peserta');
+        Route::delete('/{jadwal_id}', [JadwalSertifikatController::class, 'destroy'])->name('jadwal-sertifikat.destroy'); // Tambahkan ini
     });
 
     // Pendaftaran
