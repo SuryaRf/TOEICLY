@@ -1,3 +1,4 @@
+<!-- filepath: d:\laragon\www\TOEICLY\resources\views\emails\user_message.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,43 +6,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Message from TOEICLY</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap');
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
-            background: #f4f4f9;
-            color: #333;
+            background: linear-gradient(135deg, #eef2ff 0%, #dbeafe 100%);
+            color: #22223b;
             line-height: 1.6;
         }
         .container {
             max-width: 600px;
             margin: auto;
-            background: #ffffff;
+            background: #fff;
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 1rem;
+            box-shadow: 0 6px 15px rgb(0 0 0 / 0.08);
         }
         h1 {
-            color: #5b21b6;
-            font-size: 24px;
+            color: #4c1d95;
+            font-size: 2rem;
+            font-weight: 800;
             margin-bottom: 20px;
+            font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         p {
-            font-size: 16px;
+            font-size: 1rem;
             margin-bottom: 15px;
         }
         .footer {
             margin-top: 30px;
-            font-size: 14px;
-            color: #777;
+            font-size: 0.95rem;
+            color: #7c3aed;
             text-align: center;
         }
         .message-box {
-            background: #f9fafb;
+            background: #f3e8ff;
             padding: 20px;
             border-left: 4px solid #7c3aed;
-            border-radius: 5px;
+            border-radius: 0.5rem;
             margin-bottom: 20px;
+            color: #4c1d95;
+            font-weight: 600;
         }
     </style>
 </head>
