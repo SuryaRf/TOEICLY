@@ -15,6 +15,7 @@
   use Illuminate\Support\Facades\Auth;
   use Illuminate\Support\Facades\Storage;
   use Illuminate\Support\Facades\Log;
+    use App\Models\CertificateRequest;
 
   class MahasiswaController extends Controller
   {
@@ -171,22 +172,34 @@
           return view('dashboard.mahasiswa.request_certificate', compact('registrations'));
       }
 
-      public function requestCertificate(Request $request, $pendaftaran_id)
-      {
-          $pendaftaran = PendaftaranModel::findOrFail($pendaftaran_id);
+       public function requestCertificate(Request $request, $pendaftaran_id)
+    {
+        $pendaftaran = PendaftaranModel::findOrFail($pendaftaran_id);
 
-          if ($pendaftaran->mahasiswa_id !== Auth::user()->mahasiswa->mahasiswa_id) {
-              return redirect()->back()->with('error', 'Unauthorized request.');
-          }
+        if ($pendaftaran->mahasiswa_id !== Auth::user()->mahasiswa->mahasiswa_id) {
+            return redirect()->back()->with('error', 'Unauthorized request.');
+        }
 
-          Log::info('Certificate request submitted', [
-              'mahasiswa_id' => Auth::user()->mahasiswa->mahasiswa_id,
-              'pendaftaran_id' => $pendaftaran_id,
-              'timestamp' => now(),
-          ]);
+        // Cek apakah sudah ada permintaan sebelumnya
+        $existingRequest = CertificateRequest::where('pendaftaran_id', $pendaftaran_id)->first();
+        if ($existingRequest) {
+            return redirect()->back()->with('error', 'A request for this registration already exists.');
+        }
 
-          return redirect()->route('mahasiswa.request_certificate')->with('success', 'Your certificate request has been submitted. An admin will process it via email.');
-      }
+        // Simpan permintaan baru
+        CertificateRequest::create([
+            'pendaftaran_id' => $pendaftaran_id,
+            'status' => 'pending',
+        ]);
+
+        Log::info('Certificate request submitted', [
+            'mahasiswa_id' => Auth::user()->mahasiswa->mahasiswa_id,
+            'pendaftaran_id' => $pendaftaran_id,
+            'timestamp' => now(),
+        ]);
+
+        return redirect()->route('mahasiswa.request_certificate')->with('success', 'Your certificate request has been submitted. An admin will process it via email.');
+    }
 
       public function showSampleCertificate()
       {

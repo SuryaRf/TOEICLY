@@ -114,6 +114,10 @@
                 class="sidebar-link {{ request()->routeIs('admin.send_email') ? 'active' : '' }}">
                 <i class="fas fa-envelope"></i> Send Email
             </a>
+            <a href="{{ route('admin.certificate_requests') }}"
+                class="sidebar-link {{ request()->routeIs('admin.certificate_requests') ? 'active' : '' }}">
+                <i class="fas fa-file"></i> Certificate Requests
+            </a>
             <a href="{{ route('kampus.index') }}"
                 class="sidebar-link {{ request()->routeIs('kampus.*') ? 'active' : '' }}">
                 <i class="fas fa-building"></i> Campus Data

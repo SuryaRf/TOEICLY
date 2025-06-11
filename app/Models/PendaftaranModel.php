@@ -61,7 +61,10 @@ class PendaftaranModel extends Model
     {
         return $this->hasOne(SertifikatStatus::class, 'pendaftaran_id', 'pendaftaran_id');
     }
-    
+     public function certificateRequest()
+      {
+          return $this->hasOne(CertificateRequest::class, 'pendaftaran_id', 'pendaftaran_id');
+      }
     // Hapus method detail() jika tidak diperlukan
     // public function detail()
     // {
