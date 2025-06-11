@@ -112,7 +112,6 @@
             box-shadow: 0 8px 20px rgb(124 58 237 / 0.7);
             color: white;
         }
-
         table {
             border-collapse: collapse;
             width: 100%;

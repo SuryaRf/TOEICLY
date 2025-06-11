@@ -161,11 +161,11 @@
 
             <a href="{{ route('itc.pendaftar') }}"
                 class="sidebar-link {{ request()->routeIs('itc.pendaftar') ? 'active' : '' }}">
-                <i class="fas fa-calendar-alt"></i> Data Pendaftar Tes
+                <i class="fas fa-calendar-alt"></i> Test Applicants Data
             </a>
             <a href="{{ route('itc.upload_nilai') }}"
                 class="sidebar-link {{ request()->routeIs('itc.upload_nilai') ? 'active' : '' }}">
-                <i class="fas fa-file-pdf"></i> Upload Nilai TOEIC
+                <i class="fas fa-file-pdf"></i> Upload TOEIC Score
             </a>
             <a href="{{ route('itc.profile') }}"
                 class="sidebar-link {{ request()->routeIs('itc.profile') ? 'active' : '' }}">
@@ -183,7 +183,7 @@
     </aside>
 
     <main>
-        <h1>Profile Saya</h1>
+        <h1>My Profile</h1>
 
         <section class="card">
             <form action="{{ route('profile.update') }}" method="POST">
@@ -197,11 +197,11 @@
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" value="{{ old('email', auth()->user()->email) }}" required>
 
-                <label for="name">Nama Lengkap</label>
+                <label for="name">Full Name</label>
                 <input type="text" id="name" name="name" value="{{ old('name', auth()->user()->itc->nama ?? '') }}"
                     required>
 
-                <label for="name">Nomer Telepon</label>
+                <label for="name">Phone Number</label>
                 <input type="text" id="notelp" name="notelp"
                     value="{{ old('notelp', auth()->user()->itc->no_telp ?? '') }}" required>
 

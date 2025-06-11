@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Upload PDF Nilai TOEIC - TOEICLY ITC</title>
+    <title>Upload TOEIC Score PDF - TOEICLY ITC</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
@@ -185,10 +185,10 @@
                 <i class="fas fa-home"></i> Dashboard
             </a>
             <a href="{{ route('itc.pendaftar') }}" class="sidebar-link {{ request()->routeIs('itc.pendaftar') ? 'active' : '' }}">
-                <i class="fas fa-calendar-alt"></i> Data Pendaftar Tes
+                <i class="fas fa-calendar-alt"></i> Test Applicants Data
             </a>
             <a href="{{ route('itc.upload_nilai') }}" class="sidebar-link {{ request()->routeIs('itc.upload_nilai') ? 'active' : '' }}">
-                <i class="fas fa-file-pdf"></i> Upload Nilai TOEIC
+                <i class="fas fa-file-pdf"></i> Upload Score TOEIC
             </a>
             <a href="{{ route('itc.profile') }}" class="sidebar-link {{ request()->routeIs('itc.profile') ? 'active' : '' }}">
                 <i class="fas fa-user"></i> Profile
@@ -203,7 +203,7 @@
     </aside>
 
     <main>
-        <h1>Upload PDF Nilai TOEIC</h1>
+        <h1>Upload TOEIC Score PDF</h1>
 
         @if(session('success'))
             <div class="alert-success">{{ session('success') }}</div>
@@ -211,13 +211,13 @@
 
         <form action="{{ route('itc.upload_nilai.store') }}" method="POST" enctype="multipart/form-data" class="card">
             @csrf
-            <label for="judul">Judul Dokumen</label>
+            <label for="judul">Document Title</label>
             <input type="text" name="judul" id="judul" value="{{ old('judul') }}" placeholder="e.g., TOEIC Score Report">
             @error('judul')
                 <div class="error-message">{{ $message }}</div>
             @enderror
 
-            <label for="nilai_pdf">Pilih File PDF Nilai TOEIC</label>
+            <label for="nilai_pdf">Select TOEIC Score PDF File</label>
             <input type="file" name="nilai_pdf" id="nilai_pdf" accept="application/pdf" required>
             @error('nilai_pdf')
                 <div class="error-message">{{ $message }}</div>

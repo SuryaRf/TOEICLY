@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Data Pendaftar Tes - TOEICLY ITC</title>
+    <title>Test Applicants Data - TOEICLY ITC</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
@@ -86,6 +86,14 @@
             overflow-y: auto;
         }
 
+        /* Styles for the main heading */
+        h1 {
+            color: #4c1d95; /* This sets the text color to a deep purple. */
+            font-weight: 800; /* This makes the text extra bold. */
+            font-size: 2.5rem; /* This sets the text size to 2.5 times the root font size. */
+            margin-bottom: 1.5rem; /* This adds space below the heading. */
+        }
+
         /* Button styles */
         .btn-modern {
             background: linear-gradient(90deg, #7c3aed, #a78bfa);
@@ -127,13 +135,13 @@
         }
 
         thead th {
-            background-color: #f3e8ff;
-            color: #7c3aed;
+            background-color: #a78bfa;
+            color:rgb(181, 175, 192);
             font-weight: 700;
         }
 
         tbody tr:hover {
-            background-color: #ede9fe;
+            background-color: #ddd6fe;
         }
 
         .no-data {
@@ -175,11 +183,11 @@
             </a>
             <a href="{{ route('itc.pendaftar') }}"
                 class="sidebar-link {{ request()->routeIs('itc.pendaftar') ? 'active' : '' }}">
-                <i class="fas fa-calendar-alt"></i> Data Pendaftar Tes
+                <i class="fas fa-calendar-alt"></i> Test Applicants Data
             </a>
             <a href="{{ route('itc.upload_nilai') }}"
                 class="sidebar-link {{ request()->routeIs('itc.upload_nilai') ? 'active' : '' }}">
-                <i class="fas fa-file-pdf"></i> Upload Nilai TOEIC
+                <i class="fas fa-file-pdf"></i> Upload Score TOEIC
             </a>
             <a href="{{ route('itc.profile') }}"
                 class="sidebar-link {{ request()->routeIs('itc.profile') ? 'active' : '' }}">
@@ -196,7 +204,7 @@
     </aside>
 
     <main>
-        <h1 class="text-4xl font-bold mb-6 text-purple-700">Daftar Pendaftar Tes TOEIC</h1>
+        <h1>TOEIC Test Applicants List</h1>
 
         @if(session('success'))
         <div class="alert-success">{{ session('success') }}</div>
@@ -206,15 +214,12 @@
             <thead class="table-primary">
                 <tr>
                     <th>No.</th>
-                    <th>Kode Pendaftaran</th>
-                    <th>Nama Mahasiswa</th>
-                    <th>Nomor Telepon</th>
-                    <th>Status Pendaftaran</th>
-                    <th>Tanggal Daftar</th>
-                    <th>Scan KTP</th>
-                    <th>Scan KTM</th>
-                    <th>Pas Foto</th>
-                </tr>
+                    <th>Registration Code</th>
+                    <th>Student Name</th>
+                    <th>Phone Number</th>
+                    <th>Registration Status</th>
+                    <th>Registration Date</th>
+                    </tr>
             </thead>
             <tbody>
                 @forelse ($pendaftarans as $index => $pendaftaran)
@@ -234,34 +239,10 @@
                     </td>
                     <td>{{ ucfirst($pendaftaran->detail->status ?? 'belum ada') }}</td>
                     <td>{{ $pendaftaran->tanggal_pendaftaran->format('d-m-Y') }}</td>
-                    <td>
-                        @if($pendaftaran->scan_ktp)
-                        <a href="{{ asset('storage/'.$pendaftaran->scan_ktp) }}" target="_blank"
-                            class="btn btn-sm btn-outline-primary">KTP</a>
-                        @else
-                        -
-                        @endif
-                    </td>
-                    <td>
-                        @if($pendaftaran->scan_ktm)
-                        <a href="{{ asset('storage/'.$pendaftaran->scan_ktm) }}" target="_blank"
-                            class="btn btn-sm btn-outline-primary">KTM</a>
-                        @else
-                        -
-                        @endif
-                    </td>
-                    <td>
-                        @if($pendaftaran->pas_foto)
-                        <a href="{{ asset('storage/'.$pendaftaran->pas_foto) }}" target="_blank"
-                            class="btn btn-sm btn-outline-primary">Foto</a>
-                        @else
-                        -
-                        @endif
-                    </td>
-                </tr>
+                    </tr>
                 @empty
                 <tr>
-                    <td colspan="9" class="text-center">Belum ada pendaftar.</td>
+                    <td colspan="6" class="text-center">Belum ada pendaftar.</td>
                 </tr>
                 @endforelse
             </tbody>

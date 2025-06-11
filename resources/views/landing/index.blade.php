@@ -193,7 +193,7 @@
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="service-item item-orange position-relative">
               <i class="bi bi-calendar-event icon"></i>
-              <h3>Exam Schedule Management</h3>
+              <h3>TOEIC Schedule Management</h3>
               <p>Manages and schedules TOEIC exams with an organized and integrated system.</p>
             </div>
           </div><!-- End Service Item -->
@@ -217,7 +217,7 @@
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
             <div class="service-item item-indigo position-relative">
               <i class="bi bi-bar-chart-line icon"></i>
-              <h3>Exam Results Management</h3>
+              <h3>TOEIC Results Management</h3>
               <p>Records, manages, and displays TOEIC exam results accurately and transparently.</p>
             </div>
           </div><!-- End Service Item -->
@@ -225,7 +225,7 @@
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
             <div class="service-item item-pink position-relative">
               <i class="bi bi-journal-text icon"></i>
-              <h3>Exam History Review</h3>
+              <h3>TOEIC History Review</h3>
               <p>Enables participants and admins to view complete and easily accessible TOEIC exam history.</p>
             </div>
           </div><!-- End Service Item -->
