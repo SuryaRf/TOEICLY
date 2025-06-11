@@ -1,4 +1,3 @@
-
 # 🧑‍🎓 TOEICLY
 
 **TOEICLY** adalah aplikasi berbasis Laravel untuk manajemen pendaftaran dan hasil ujian TOEIC bagi mahasiswa. Fitur utamanya mencakup:
@@ -25,6 +24,35 @@
    - Hasil nilai terbaru dan link PDF sertifikat
    - Jadwal pengambilan sertifikat PDF
 5. **Dashboard Admin / ITC** untuk upload PDF secara terpusat
+
+---
+
+## 📋 Fitur Lengkap
+
+- **Mahasiswa**
+  - Register & login akun mahasiswa
+  - Mendaftar ujian TOEIC (upload KTP/KTM/foto)
+  - Melihat & mengelola riwayat pendaftaran TOEIC
+  - Melihat hasil nilai TOEIC & mengunduh sertifikat PDF
+  - Melihat jadwal pengambilan sertifikat PDF
+  - Edit profil & data pribadi
+
+- **Admin / ITC**
+  - Manajemen data mahasiswa (tambah, edit, hapus)
+  - Manajemen pendaftaran TOEIC (verifikasi, edit, hapus)
+  - Upload & kelola hasil nilai TOEIC (PDF)
+  - Upload & kelola jadwal pengambilan sertifikat (PDF)
+  - Melihat daftar peserta & status pendaftaran
+  - Export data pendaftar & hasil TOEIC (Excel/PDF)
+  - Reset password mahasiswa
+  - Role & akses pengguna (admin, ITC, mahasiswa)
+
+- **Fitur Umum**
+  - Notifikasi status pendaftaran & hasil TOEIC
+  - Dashboard statistik pendaftaran & hasil TOEIC
+  - Pencarian & filter data pendaftar
+  - Log aktivitas pengguna (opsional)
+  - Responsive design (akses via mobile/desktop)
 
 ---
 
@@ -119,4 +147,4 @@ MIT License © 2025 [SuryaRf](https://github.com/SuryaRf)
 
 - Pembuat: **Group 1**
 - Email: 
-- Twitter / LinkedIn: 
+- Twitter / LinkedIn:
