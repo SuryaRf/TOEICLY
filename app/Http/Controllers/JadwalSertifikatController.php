@@ -12,6 +12,7 @@ class JadwalSertifikatController extends Controller
 {
     public function index()
     {
+        // Ambil semua jadwal, pastikan id, judul, tanggal, file_pdf ada
         $jadwals = JadwalSertifikatModel::orderBy('tanggal', 'desc')->get();
         return view('jadwal_sertifikat.index', compact('jadwals'));
     }
@@ -112,5 +113,19 @@ class JadwalSertifikatController extends Controller
     public function peserta($jadwal_id)
     {
         return view('jadwal_sertifikat.peserta', compact('jadwal_id'));
+    }
+
+    public function destroy($jadwal_id)
+    {
+        $jadwal = JadwalSertifikatModel::findOrFail($jadwal_id);
+
+        // Hapus file PDF dari storage jika ada
+        if ($jadwal->file_pdf && Storage::disk('public')->exists($jadwal->file_pdf)) {
+            Storage::disk('public')->delete($jadwal->file_pdf);
+        }
+
+        $jadwal->delete();
+
+        return redirect()->route('jadwal_sertifikat.index')->with('success', 'Jadwal berhasil dihapus.');
     }
 }
