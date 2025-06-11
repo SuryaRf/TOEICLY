@@ -99,21 +99,25 @@ Route::middleware('auth')->group(function () {
     Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
 
     // Mahasiswa routes
-    Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
-        Route::get('/', [MahasiswaController::class, 'index'])->name('dashboard');
-        Route::get('/certificate/view/{filename}', [MahasiswaController::class, 'viewPdf'])->name('certificate.view');
+// Mahasiswa routes
+Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
+    Route::get('/', [MahasiswaController::class, 'index'])->name('dashboard');
+    Route::get('/certificate/view/{filename}', [MahasiswaController::class, 'viewPdf'])->name('certificate.view');
 
-        Route::get('/profile', [MahasiswaController::class, 'profile'])->name('profile');
-        Route::get('/certificate/view/{filename}', [CertificateController::class, 'viewPdf'])->name('certificate.view');
+    Route::get('/profile', [MahasiswaController::class, 'profile'])->name('profile');
+    Route::get('/certificate/view/{filename}', [CertificateController::class, 'viewPdf'])->name('certificate.view');
 
-        Route::get('/daftar-tes', [MahasiswaController::class, 'daftarTes'])->name('daftar-tes');
-        Route::get('/riwayat-ujian', [MahasiswaController::class, 'riwayatUjian'])->name('riwayat-ujian');
-        Route::get('/nilai-toeic', [MahasiswaController::class, 'lihatNilai'])->name('nilai-toeic');
-        Route::get('/jadwal-sertifikat', [MahasiswaController::class, 'lihatJadwal'])->name('jadwal-sertifikat');
-        Route::get('/already-registered', [MahasiswaController::class, 'alreadyRegistered'])->name('already-registered');
-        Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-        Route::post('/profile/avatar', [MahasiswaController::class, 'updateAvatar'])->name('update-avatar');
-    });
+    Route::get('/daftar-tes', [MahasiswaController::class, 'daftarTes'])->name('daftar-tes');
+    Route::get('/riwayat-ujian', [MahasiswaController::class, 'riwayatUjian'])->name('riwayat-ujian');
+    Route::get('/nilai-toeic', [MahasiswaController::class, 'lihatNilai'])->name('nilai-toeic');
+    Route::get('/jadwal-sertifikat', [MahasiswaController::class, 'lihatJadwal'])->name('jadwal-sertifikat');
+    Route::get('/already-registered', [MahasiswaController::class, 'alreadyRegistered'])->name('already-registered');
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    Route::post('/profile/avatar', [MahasiswaController::class, 'updateAvatar'])->name('update-avatar');
+    Route::get('/request-certificate', [MahasiswaController::class, 'showRequestCertificate'])->name('request_certificate');
+    Route::post('/request-certificate/{pendaftaran_id}', [MahasiswaController::class, 'requestCertificate'])->name('requestCertificate');
+    Route::get('/request-certificate/sample', [MahasiswaController::class, 'showSampleCertificate'])->name('request_certificate.sample');
+});
 
     // ITC routes
     Route::prefix('itc')->group(function () {
