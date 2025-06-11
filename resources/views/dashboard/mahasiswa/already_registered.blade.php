@@ -18,5 +18,9 @@
            class="inline-block px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg shadow-md transition duration-300">
             Back to Dashboard
         </a>
+        <a href="https://itc-indonesia.com/?gad_campaignid=22363183331" target="_blank"
+           class="inline-block px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg shadow-md transition duration-300">
+            GO TO ITC
+        </a>
     </div>
 @endsection

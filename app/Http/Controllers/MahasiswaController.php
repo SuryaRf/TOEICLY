@@ -62,7 +62,7 @@ class MahasiswaController extends Controller
     }
 
     public function riwayatUjian()
-    {
+    {   
         $user = auth()->user();
         $mahasiswa = $user->mahasiswa;
 
@@ -93,6 +93,15 @@ class MahasiswaController extends Controller
     {
         return view('dashboard.mahasiswa.already_registered');
     }
+    
+   public function createMahasiswa()
+    {
+        $user = Auth::user();
+        $registered = MahasiswaModel::where('pengguna_id', $user->pengguna_id)->first();
+
+        return view('peserta.daftar', ['registered' => $registered]);
+    }
+    
 
     public function lihatNilai()
     {
