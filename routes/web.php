@@ -59,9 +59,8 @@ Route::middleware('auth')->group(function () {
         Route::delete('/informasi/{id}', [InformasiController::class, 'destroy'])->name('informasi.destroy');
 
         // Email Sending Routes
-       Route::get('/admin/send-email', [AdminEmailController::class, 'create'])->name('admin.send_email');
-Route::post('/admin/send-email/status/{id}', [AdminEmailController::class, 'updateStatus'])->name('admin.send_email.update_status');
-Route::post('/admin/send-email', [AdminEmailController::class, 'send'])->name('admin.send_email.submit');
+        Route::get('/admin/send-email', [AdminEmailController::class, 'create'])->name('admin.send_email');
+        Route::post('/admin/send-email', [AdminEmailController::class, 'send'])->name('admin.send_email.submit');
 
         // Route::get('/admin/certificate-requests', [AdminController::class, 'certificateRequests'])->name('admin.certificate_requests');
         // Route::get('/admin/certificate-requests/{id}/approve', [AdminController::class, 'approveCertificate'])->name('admin.approve_certificate');

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\CertificateRequest;
 use App\Mail\CertificateEmail;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
@@ -13,7 +13,7 @@ class AdminEmailController extends Controller
 {
     public function create()
     {
-        $pendingRequests = CertificateRequest::with(['pendaftaran', 'pendaftaran.mahasiswa', 'pendaftaran.mahasiswa.user'])
+        $requests = CertificateRequest::with(['pendaftaran', 'pendaftaran.mahasiswa', 'pendaftaran.mahasiswa.user'])
             ->get()
             ->filter(function ($request) {
                 return !is_null($request->pendaftaran)
@@ -22,35 +22,18 @@ class AdminEmailController extends Controller
                     && !is_null($request->pendaftaran->mahasiswa->user->email);
             });
 
-        Log::info('Pending Requests Count: ' . $pendingRequests->count());
-
-        return view('dashboard.admin.email.send-email', compact('pendingRequests'));
-    }
-
-    public function updateStatus(Request $request, $id)
-    {
-        $request->validate([
-            'status' => 'required|in:approved,rejected',
-        ]);
-
-        $certificateRequest = CertificateRequest::findOrFail($id);
-        $certificateRequest->update([
-            'status' => $request->status,
-            'notes' => $request->input('notes', $certificateRequest->notes),
-        ]);
-
-        Log::info('Status updated', ['id' => $id, 'status' => $request->status]);
-
-        return redirect()->back()->with('success', 'Status updated to ' . $request->status);
+        Log::info('Requests fetched for email', ['count' => $requests->count()]);
+        return view('dashboard.admin.email.send-email', compact('requests'));
     }
 
     public function send(Request $request)
     {
+        Log::info('Send email process started', ['request' => $request->all()]);
         $request->validate([
             'certificate_request_id' => 'required|exists:certificate_requests,id',
             'subject' => 'required|string|max:255',
             'message' => 'required|string',
-            'attachment' => 'required|file|mimes:pdf|max:2048',
+            'attachment' => 'nullable|file|mimes:pdf|max:2048',
         ]);
 
         try {
@@ -63,11 +46,6 @@ class AdminEmailController extends Controller
                 return redirect()->back()->with('error', 'Email address not found for this student.');
             }
 
-            if ($certificateRequest->status !== 'approved') {
-                Log::warning('Invalid status for sending', ['status' => $certificateRequest->status, 'id' => $certificateRequest->id]);
-                return redirect()->back()->with('error', 'Email can only be sent for approved requests.');
-            }
-
             $filePath = null;
             $fileName = null;
 
@@ -75,13 +53,14 @@ class AdminEmailController extends Controller
                 $file = $request->file('attachment');
                 $fileName = time() . '_' . $file->getClientOriginalName();
                 $filePath = $file->storeAs('certificates', $fileName, 'public');
+                Log::info('File stored', ['path' => $filePath, 'name' => $fileName]);
                 if (!Storage::disk('public')->exists($filePath)) {
-                    Log::error('File not found after upload: ' . $filePath);
+                    Log::error('File not found after upload', ['path' => $filePath]);
                     throw new \Exception('Failed to save attachment.');
                 }
-                $certificateRequest->update(['file_path' => $filePath]);
             }
 
+            Log::info('Sending email', ['to' => $user->email, 'subject' => $request->subject]);
             Mail::to($user->email)->send(new CertificateEmail(
                 $mahasiswa->nama,
                 $request->subject,
@@ -90,11 +69,10 @@ class AdminEmailController extends Controller
                 $fileName
             ));
 
-            Log::info('Certificate email sent', ['mahasiswa_id' => $mahasiswa->mahasiswa_id, 'request_id' => $certificateRequest->id, 'email' => $user->email]);
-
-            return redirect()->back()->with('success', 'Email sent successfully to ' . $user->username);
+            Log::info('Email sent successfully', ['request_id' => $certificateRequest->id, 'email' => $user->email]);
+            return redirect()->back()->with('success', 'Email sent successfully to ' . $mahasiswa->nama);
         } catch (\Exception $e) {
-            Log::error('Email sending failed: ' . $e->getMessage());
+            Log::error('Email sending failed', ['message' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
             return redirect()->back()->with('error', 'Failed to send email. Please check the logs or try again.');
         }
     }

@@ -5,7 +5,7 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Storage;
 
 class CertificateEmail extends Mailable
 {
@@ -29,10 +29,14 @@ class CertificateEmail extends Mailable
     public function build()
     {
         $email = $this->subject($this->subject)
-                      ->view('emails.certificate');
+                      ->view('emails.user_message') // Gunakan view yang ada
+                      ->with([
+                          'username' => $this->mahasiswaName, // Sesuaikan dengan nama mahasiswa
+                          'messageContent' => $this->message,
+                      ]);
 
-        if ($this->filePath && $this->fileName) {
-            $email->attach($this->filePath, ['as' => $this->fileName]);
+        if ($this->filePath && $this->fileName && Storage::disk('public')->exists($this->filePath)) {
+            $email->attach(Storage::disk('public')->path($this->filePath), ['as' => $this->fileName]);
         }
 
         return $email;

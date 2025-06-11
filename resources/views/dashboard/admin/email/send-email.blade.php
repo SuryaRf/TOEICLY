@@ -97,23 +97,6 @@
             background: #fee2e2;
             color: #991b1b;
         }
-        .status-buttons button {
-            margin-right: 0.5rem;
-            padding: 0.5rem 1rem;
-            border-radius: 0.375rem;
-        }
-        .status-buttons .approved {
-            background-color: #10b981;
-            color: white;
-        }
-        .status-buttons .rejected {
-            background-color: #ef4444;
-            color: white;
-        }
-        .status-buttons .pending {
-            background-color: #f59e0b;
-            color: white;
-        }
     </style>
 </head>
 <body>
@@ -140,80 +123,56 @@
                     </div>
                 @endif
 
-                @foreach ($pendingRequests as $request)
+                @foreach ($requests as $request)
                     <div class="mb-6 p-4 border rounded-lg">
                         <h3 class="text-xl font-semibold">{{ $request->pendaftaran->mahasiswa->nama ?? 'Unknown' }}</h3>
                         <p><strong>Email:</strong> {{ $request->pendaftaran->mahasiswa->user->email ?? 'N/A' }}</p>
                         <p><strong>Request ID:</strong> {{ $request->id }}</p>
-                        <p><strong>Status:</strong> 
-                            <span class="px-2 py-1 rounded {{ $request->status === 'approved' ? 'approved' : ($request->status === 'rejected' ? 'rejected' : 'pending') }}">
-                                {{ ucfirst($request->status) }}
-                            </span>
-                        </p>
                         <p><strong>Jadwal:</strong> {{ $request->pendaftaran->jadwal->judul ?? 'No Schedule' }}</p>
 
-                        <div class="status-buttons mt-4">
-                            @if ($request->status === 'pending')
-                                <form action="{{ route('admin.send_email.update_status', $request->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    <input type="hidden" name="status" value="approved">
-                                    <button type="submit" class="approved">Approve</button>
-                                </form>
-                                <form action="{{ route('admin.send_email.update_status', $request->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    <input type="hidden" name="status" value="rejected">
-                                    <button type="submit" class="rejected">Reject</button>
-                                </form>
-                            @endif
-                        </div>
+                        <form action="{{ route('admin.send_email.submit') }}" method="POST" enctype="multipart/form-data" class="space-y-6 mt-4" id="email-form-{{ $request->id }}">
+                            @csrf
+                            <input type="hidden" name="certificate_request_id" value="{{ $request->id }}">
 
-                        @if ($request->status === 'approved')
-                            <form action="{{ route('admin.send_email.submit') }}" method="POST" enctype="multipart/form-data" class="space-y-6 mt-4" id="email-form-{{ $request->id }}">
-                                @csrf
-                                <input type="hidden" name="certificate_request_id" value="{{ $request->id }}">
+                            <div>
+                                <label for="subject-{{ $request->id }}" class="form-label">Subject</label>
+                                <input type="text" id="subject-{{ $request->id }}" name="subject" class="form-input w-full" required>
+                                @error('subject')
+                                    <p class="form-error">{{ $message }}</p>
+                                @enderror
+                            </div>
 
-                                <div>
-                                    <label for="subject-{{ $request->id }}" class="form-label">Subject</label>
-                                    <input type="text" id="subject-{{ $request->id }}" name="subject" class="form-input w-full" required>
-                                    @error('subject')
-                                        <p class="form-error">{{ $message }}</p>
-                                    @enderror
+                            <div>
+                                <label for="message-{{ $request->id }}" class="form-label">Message</label>
+                                <textarea id="message-{{ $request->id }}" name="message" rows="6" class="form-textarea w-full" required placeholder="Enter your message here..."></textarea>
+                                @error('message')
+                                    <p class="form-error">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div>
+                                <label for="attachment-{{ $request->id }}" class="form-label">Attachment (PDF, max 2MB)</label>
+                                <div class="file-input">
+                                    <input type="file" id="attachment-{{ $request->id }}" name="attachment" accept=".pdf" class="hidden">
+                                    <p class="text-gray-500 text-sm">
+                                        <i class="fas fa-upload mr-1"></i> Drag & drop or click to upload
+                                    </p>
+                                    <p id="file-name-{{ $request->id }}" class="text-gray-600 text-sm mt-2 hidden"></p>
                                 </div>
+                                @error('attachment')
+                                    <p class="form-error">{{ $message }}</p>
+                                @enderror
+                            </div>
 
-                                <div>
-                                    <label for="message-{{ $request->id }}" class="form-label">Message</label>
-                                    <textarea id="message-{{ $request->id }}" name="message" rows="6" class="form-textarea w-full" required placeholder="Enter your message here..."></textarea>
-                                    @error('message')
-                                        <p class="form-error">{{$message}}</p>
-                                    @enderror
-                                </div>
-
-                                <div>
-                                    <label for="attachment-{{ $request->id }}" class="form-label">Attachment (PDF, max 2MB)</label>
-                                    <div class="file-input">
-                                        <input type="file" id="attachment-{{ $request->id }}" name="attachment" accept=".pdf" class="hidden" required>
-                                        <p class="text-gray-500 text-sm">
-                                            <i class="fas fa-upload mr-1"></i> Drag & drop or click to upload
-                                        </p>
-                                        <p id="file-name-{{ $request->id }}" class="text-gray-600 text-sm mt-2 hidden"></p>
-                                    </div>
-                                    @error('attachment')
-                                        <p class="form-error">{{$message}}</p>
-                                    @enderror
-                                </div>
-
-                                <div class="flex justify-end">
-                                    <button type="submit" class="submit-button" id="submit-button-{{ $request->id }}">
-                                        <span class="submit-text">Send Email</span>
-                                        <span class="loading-text hidden">
-                                            <i class="fas fa-spinner fa-spin mr-2"></i> Sending...
-                                        </span>
-                                    </button>
-                                </div>
-                            </form>
-                        @else
-                            <p class="mt-4 text-gray-500">Please approve the request before sending an email.</p>
-                        @endif
+                            <div class="flex justify-end">
+                                <button type="submit" class="submit-button" id="submit-button-{{ $request->id }}">
+                                    <span class="submit-text">Send Email</span>
+                                    <span class="loading-text hidden">
+                                        <i class="fas fa-spinner fa-spin mr-2"></i> Sending...
+                                    </span>
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 @endforeach
             </div>
@@ -221,7 +180,7 @@
     </div>
 
     <script>
-        @foreach ($pendingRequests as $request)
+        @foreach ($requests as $request)
             const fileInput{{ $request->id }} = document.getElementById('attachment-{{ $request->id }}');
             const fileNameDisplay{{ $request->id }} = document.getElementById('file-name-{{ $request->id }}');
             const fileInputContainer{{ $request->id }} = fileInput{{ $request->id }}.parentElement;
