@@ -159,7 +159,7 @@
         }
 
         .btn-edit {
-            background: #10b981;
+            background: #7c3aed;
             padding: 0.25rem 0.75rem;
             border-radius: 0.5rem;
             color: white;
@@ -168,13 +168,13 @@
         }
 
         .btn-edit:hover {
-            background: #059669;
+            background: #7c3aed;
             transform: translateY(-2px);
             box-shadow: 0 2px 8px rgb(16 185 129 / 0.5);
         }
 
         .btn-delete {
-            background: #ef4444;
+            background: #7c3aed;
             padding: 0.25rem 0.75rem;
             border-radius: 0.5rem;
             color: white;
@@ -183,7 +183,7 @@
         }
 
         .btn-delete:hover {
-            background: #dc2626;
+            background: #7c3aed;
             transform: translateY(-2px);
             box-shadow: 0 2px 8px rgb(239 68 68 / 0.5);
         }
