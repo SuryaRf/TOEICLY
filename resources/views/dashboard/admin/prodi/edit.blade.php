@@ -130,7 +130,7 @@
        @include('dashboard.admin.sidebar')
 
     <main>
-        <h1 class="text-4xl font-bold mb-6 text-purple-700">Edit Program Studi</h1>
+        <h1 class="text-4xl font-bold mb-6 text-purple-700">Edit Study Program</h1>
 
         @if ($errors->any())
             <div class="alert-danger">
@@ -147,19 +147,19 @@
             @method('PUT')
 
             <div>
-                <label for="prodi_kode">Kode Prodi</label>
+                <label for="prodi_kode">Prodi Code</label>
                 <input type="text" id="prodi_kode" name="prodi_kode" maxlength="20" required
                     value="{{ old('prodi_kode', $prodi->prodi_kode) }}">
             </div>
 
             <div>
-                <label for="prodi_nama">Nama Prodi</label>
+                <label for="prodi_nama">Prodi Name</label>
                 <input type="text" id="prodi_nama" name="prodi_nama" maxlength="50" required
                     value="{{ old('prodi_nama', $prodi->prodi_nama) }}">
             </div>
 
             <div>
-                <label for="jurusan_id">Pilih Jurusan</label>
+                <label for="jurusan_id">Choose Department</label>
                 <select id="jurusan_id" name="jurusan_id" required>
                     <option value="">-- Pilih Jurusan --</option>
                     @foreach($jurusan as $j)
@@ -171,7 +171,7 @@
             </div>
 
             <button type="submit" class="btn-modern">Update</button>
-            <a href="{{ route('prodi.index') }}" class="btn-modern" style="background: gray;">Batal</a>
+            <a href="{{ route('prodi.index') }}" class="btn-modern" style="background: gray;">Cancel</a>
         </form>
     </main>
 </body>
