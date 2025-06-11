@@ -157,162 +157,41 @@ class AdminController extends Controller
         return redirect()->route('admin.pendaftarVerifikasi')->with('success', 'Registration status updated successfully.');
     }
 
-     public function certificateRequests()
-      {
-          $requests = CertificateRequest::with(['pendaftaran.mahasiswa', 'pendaftaran.jadwal'])->get();
-          return view('dashboard.admin.certificate_requests', compact('requests'));
-      }
+      public function certificateRequests()
+    {
+        $requests = CertificateRequest::with(['pendaftaran.mahasiswa', 'pendaftaran.jadwal'])->get();
+        return view('dashboard.admin.certificate_requests', compact('requests'));
+    }
 
-      public function approveCertificate($id)
-      {
-          $request = CertificateRequest::findOrFail($id);
-          if ($request->status !== 'pending') {
-              return redirect()->route('admin.certificate_requests')->with('error', 'Request is not pending.');
-          }
+    public function approveCertificate($id)
+    {
+        $request = CertificateRequest::findOrFail($id);
+        if ($request->status !== 'pending') {
+            return redirect()->route('admin.certificate_requests')->with('error', 'Request is not pending.');
+        }
 
-          // Generate PDF menggunakan template LaTeX
-          $pdfPath = $this->generateCertificatePdf($request);
+        $request->update(['status' => 'approved']);
+        return redirect()->route('admin.certificate_requests')->with('success', 'Certificate request approved. Please upload and send the certificate via email.');
+    }
 
-          $request->update([
-              'status' => 'approved',
-              'file_path' => $pdfPath,
-          ]);
+    public function rejectCertificate($id)
+    {
+        $request = CertificateRequest::findOrFail($id);
+        if ($request->status !== 'pending') {
+            return redirect()->route('admin.certificate_requests')->with('error', 'Request is not pending.');
+        }
 
-          // Kirim email
-          $this->sendCertificateEmail($request);
+        $request->update(['status' => 'rejected', 'notes' => request()->input('notes', 'No reason provided')]);
+        $this->sendRejectionEmail($request);
+        return redirect()->route('admin.certificate_requests')->with('success', 'Certificate request rejected and email sent.');
+    }
 
-          return redirect()->route('admin.certificate_requests')->with('success', 'Certificate approved and email sent.');
-      }
-
-      public function rejectCertificate($id)
-      {
-          $request = CertificateRequest::findOrFail($id);
-          if ($request->status !== 'pending') {
-              return redirect()->route('admin.certificate_requests')->with('error', 'Request is not pending.');
-          }
-
-          $request->update(['status' => 'rejected', 'notes' => request()->input('notes', 'No reason provided')]);
-
-          // Kirim email pemberitahuan penolakan
-          $this->sendRejectionEmail($request);
-
-          return redirect()->route('admin.certificate_requests')->with('success', 'Certificate request rejected and email sent.');
-      }
-
-      public function downloadCertificate($id)
-      {
-          $request = CertificateRequest::findOrFail($id);
-          if (!$request->file_path || !Storage::disk('public')->exists($request->file_path)) {
-              abort(404, 'File not found.');
-          }
-
-          return Storage::disk('public')->download($request->file_path);
-      }
-
-      private function generateCertificatePdf($request)
-      {
-          $mahasiswa = $request->pendaftaran->mahasiswa;
-          $latexContent = $this->generateLatexContent($mahasiswa, $request->pendaftaran);
-
-          $tempFile = tempnam(sys_get_temp_dir(), 'certificate_') . '.tex';
-          file_put_contents($tempFile, $latexContent);
-
-          $pdfPath = 'certificates/' . uniqid() . '_certificate.pdf';
-          exec("latexmk -pdf -output-directory=" . sys_get_temp_dir() . " $tempFile");
-          $pdfTemp = glob(sys_get_temp_dir() . '/*.pdf')[0];
-          Storage::disk('public')->put($pdfPath, file_get_contents($pdfTemp));
-
-          // Bersihkan file sementara
-          unlink($tempFile);
-          array_map('unlink', glob(sys_get_temp_dir() . '/*.aux'));
-          array_map('unlink', glob(sys_get_temp_dir() . '/*.log'));
-          unlink($pdfTemp);
-
-          return $pdfPath;
-      }
-
-      private function generateLatexContent($mahasiswa, $pendaftaran)
-      {
-          return <<<LATEX
-\documentclass[a4paper,12pt]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{geometry}
-\geometry{a4paper, margin=1in}
-\usepackage{times}
-\usepackage{setspace}
-\onehalfspacing
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-\fancyhf{}
-\rhead{KEMENTERIAN PENDIDIKAN TINGGI, SAINS, DAN TEKNOLOGI}
-\lhead{UNIT PENUNJANG AKADEMIK BAHASA POLITEKNIK NEGERI MALANG}
-\rfoot{\thepage}
-
-\begin{document}
-
-\begin{center}
-\textbf{KEMENTERIAN PENDIDIKAN TINGGI, SAINS, DAN TEKNOLOGI} \\
-\textbf{UNIT PENUNJANG AKADEMIK BAHASA POLITEKNIK NEGERI MALANG} \\
-J. Soekarno Hatta No. 9 Malang 65141 \\
-Telp (0341) 404424 - 404425 Fax (0341) 404420 \\
-Laman: http://www.polinema.ac.id \\
-\vspace{1cm}
-\textbf{SURAT KETERANGAN SUDAH MENGIKUTI TOEIC} \\
-Nomor: \underline{\hspace{3cm}}/PL2.UPA BHS/\underline{\hspace{2cm}}2025
-\end{center}
-
-\vspace{0.5cm}
-
-Yang bertanda tangan di bawah ini,
-
-\begin{tabular}{l l}
-1. Nama                & : Atiqah Nurul Asri, S.Pd., M.Pd. \\
-2. NIP                 & : 197606252005012001 \\
-3. Pangkat, Golongan, Ruang & : Penata Tingkat 1/ III D \\
-4. Jabatan             & : Kepala UPA Bahasa \\
-\end{tabular}
-
-dengan ini menyatakan dengan sesungguhnya bahwa:
-
-\begin{tabular}{l l}
-5. Nama                & : $mahasiswa->nama \\
-6. NIM                 & : $mahasiswa->nim \\
-7. Program Studi/Jurusan & : $mahasiswa->prodi->nama_prodi \\
-8. Tempat, Tanggal Lahir & : $mahasiswa->tempat_lahir, $mahasiswa->tanggal_lahir \\
-9. Alamat              & : $mahasiswa->alamat \\
-\end{tabular}
-
-telah mengikuti ujian TOEIC dan mendapat sertifikat yang diterbitkan oleh ETS sebanyak dua kali dengan nilai di bawah 400 untuk Program D-III dan 450 untuk Program D-IV dengan bukti sertifikat terlampir (dua berkas).
-
-Demikian surat keterangan ini dibuat sebagai pengganti syarat pengambilan ijazah dan agar dapat dipergunakan sebagaimana mestinya.
-
-\vspace{2cm}
-
-\begin{flushright}
-Kepala UPA Bahasa, \\
-\vspace{1cm}
-Atiqah Nurul Asri, S.Pd., M.Pd. \\
-NIP. 197606252005012001
-\end{flushright}
-
-Lampiran: \\
-Salinan 2 sertifikat TOEIC yang diterbitkan oleh ETS dan masih berlaku.
-
-\end{document}
-LATEX;
-      }
-
-      private function sendCertificateEmail($request)
-      {
-          $mahasiswa = $request->pendaftaran->mahasiswa;
-          $pdfPath = $request->file_path;
-          Mail::to($mahasiswa->email)->send(new CertificateEmail($mahasiswa->nama, 'Your certificate is ready', 'Your certificate has been generated and is attached.', $pdfPath));
-      }
-
-      private function sendRejectionEmail($request)
-      {
-          $mahasiswa = $request->pendaftaran->mahasiswa;
-          Mail::to($mahasiswa->email)->send(new CertificateEmail($mahasiswa->nama, 'Certificate Request Rejected', 'Your certificate request has been rejected. Reason: ' . ($request->notes ?? 'No reason provided')));
-      }
+    public function downloadCertificate($id)
+    {
+        $request = CertificateRequest::findOrFail($id);
+        if (!$request->file_path || !Storage::disk('public')->exists($request->file_path)) {
+            abort(404, 'File not found.');
+        }
+        return Storage::disk('public')->download($request->file_path);
+    }
 }

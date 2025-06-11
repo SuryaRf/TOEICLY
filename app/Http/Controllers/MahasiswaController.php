@@ -174,19 +174,17 @@
 
        public function requestCertificate(Request $request, $pendaftaran_id)
     {
-        $pendaftaran = PendaftaranModel::findOrFail($pendaftaran_id);
+        $pendaftaran = PendaftaranModel::where('pendaftaran_id', $pendaftaran_id)->firstOrFail();
 
         if ($pendaftaran->mahasiswa_id !== Auth::user()->mahasiswa->mahasiswa_id) {
             return redirect()->back()->with('error', 'Unauthorized request.');
         }
 
-        // Cek apakah sudah ada permintaan sebelumnya
         $existingRequest = CertificateRequest::where('pendaftaran_id', $pendaftaran_id)->first();
         if ($existingRequest) {
             return redirect()->back()->with('error', 'A request for this registration already exists.');
         }
 
-        // Simpan permintaan baru
         CertificateRequest::create([
             'pendaftaran_id' => $pendaftaran_id,
             'status' => 'pending',

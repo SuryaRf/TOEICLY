@@ -39,7 +39,7 @@ class PendaftaranModel extends Model
     {
         return $this->belongsTo(MahasiswaModel::class, 'mahasiswa_id', 'mahasiswa_id');
     }
-        public function detail()
+    public function detail()
     {
         return $this->hasOne(DetailPendaftaranModel::class, 'pendaftaran_id', 'pendaftaran_id');
     }
@@ -61,10 +61,10 @@ class PendaftaranModel extends Model
     {
         return $this->hasOne(SertifikatStatus::class, 'pendaftaran_id', 'pendaftaran_id');
     }
-     public function certificateRequest()
-      {
-          return $this->hasOne(CertificateRequest::class, 'pendaftaran_id', 'pendaftaran_id');
-      }
+    public function certificateRequest()
+    {
+        return $this->hasOne(CertificateRequest::class, 'pendaftaran_id', 'pendaftaran_id');
+    }
     // Hapus method detail() jika tidak diperlukan
     // public function detail()
     // {
