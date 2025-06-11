@@ -1,41 +1,41 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="flex h-screen">
+<div class="bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 min-h-screen flex">
     <!-- Sidebar -->
     @include('dashboard.mahasiswa.sidebar')
 
     <!-- Main Content -->
-    <main class="main-content">
-        <div class="flex items-center justify-center min-h-full">
-            <div>
-                <h1 class="text-4xl font-bold text-gray-800 mb-10 flex items-center animate-in">
-                    <i class="fas fa-info-circle mr-3 text-purple-700 text-3xl icon-animate"></i> Registration Status
+    <main class="flex-1 flex items-center justify-center min-h-screen">
+        <div class="w-full max-w-xl px-4">
+            <div class="glass-card animate-in">
+                <h1 class="text-4xl font-bold text-purple-800 mb-8 text-center">
+                    <i class="fas fa-info-circle mr-3 text-purple-700"></i>
+                    Registration Status
                 </h1>
-                <div class="glass-card animate-in">
-                    @if(session('info'))
-                        <div class="alert mb-8 flex items-center">
-                            <i class="fas fa-check-circle mr-3 text-blue-600 text-lg"></i>
-                            <span class="text-blue-800 text-sm font-medium">{{ session('info') }}</span>
-                        </div>
-                    @endif
 
-                    <p class="text-gray-600 mb-8 text-base leading-relaxed">
-                        You have already registered for the TOEIC test. For further details, please check your registration status on the dashboard or contact the administrator. Visit ITC Indonesia for more information about TOEIC certifications.
-                    </p>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 animate-in">
-                        <a href="{{ route('mahasiswa.dashboard') }}"
-                           class="primary-button flex items-center justify-center">
-                            <i class="fas fa-arrow-left mr-2 icon-animate"></i> Back to Dashboard
-                        </a>
-                        <a href="https://itc-indonesia.com/"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           class="secondary-button flex items-center justify-center">
-                            <i class="fas fa-globe mr-2 icon-animate"></i> Visit ITC Indonesia
-                        </a>
+                @if(session('info'))
+                    <div class="alert mb-8 flex items-center">
+                        <i class="fas fa-check-circle mr-3 text-blue-600 text-lg"></i>
+                        <span class="text-blue-800 text-sm font-medium">{{ session('info') }}</span>
                     </div>
+                @endif
+
+                <p class="text-gray-600 mb-8 text-base leading-relaxed text-center">
+                    You have already registered for the TOEIC test. For further details, please check your registration status on the dashboard or contact the administrator. Visit ITC Indonesia for more information about TOEIC certifications.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <a href="{{ route('mahasiswa.dashboard') }}"
+                       class="primary-button flex items-center justify-center">
+                        <i class="fas fa-arrow-left mr-2 icon-animate"></i> Back to Dashboard
+                    </a>
+                    <a href="https://itc-indonesia.com/"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="secondary-button flex items-center justify-center">
+                        <i class="fas fa-globe mr-2 icon-animate"></i> Visit ITC Indonesia
+                    </a>
                 </div>
             </div>
         </div>
@@ -51,8 +51,8 @@
         font-family: 'Montserrat', sans-serif;
     }
     .main-content {
-        margin-left: 55.5rem;
-        padding: 2rem 3rem;
+        margin-left: 260px; /* Changed from 55.5rem */
+        padding: 2rem;
         min-height: 100vh;
         transition: margin-left 0.3s ease;
         display: flex;
@@ -80,8 +80,9 @@
         border-radius: 1.5rem;
         box-shadow: 0 8px 32px rgba(124, 58, 237, 0.15);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
-        padding: 2rem;
-        max-width: 28rem;
+        padding: 2.5rem;
+        width: 100%;
+        max-width: 36rem;
         margin: 0 auto;
     }
     .glass-card:hover {
