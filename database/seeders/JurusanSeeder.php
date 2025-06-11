@@ -24,6 +24,41 @@ class JurusanSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'jurusan_kode' => 'TM',
+                'jurusan_nama' => 'Teknik Mesin',
+                'kampus_id' => 1, 
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'jurusan_kode' => 'AK',
+                'jurusan_nama' => 'Akuntansi',
+                'kampus_id' => 1, 
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'jurusan_kode' => 'TS',
+                'jurusan_nama' => 'Teknik Sipil',
+                'kampus_id' => 1, 
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'jurusan_kode' => 'TK',
+                'jurusan_nama' => 'Teknik Kimia',
+                'kampus_id' => 1, 
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'jurusan_kode' => 'AN',
+                'jurusan_nama' => 'Administrasi Niaga',
+                'kampus_id' => 1, 
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }
