@@ -82,11 +82,14 @@
             overflow-y: auto;
         }
 
+        /* Gaya untuk judul utama, disamakan dengan "User Management" */
         .main-title-purple {
-            color: #4c1d95;
-            font-weight: 800;
-            font-size: 2.25rem;
-            margin-bottom: 1.5rem;
+            color: #4c1d95; /* Warna ungu gelap */
+            font-weight: 800; /* Ekstra tebal */
+            font-size: 2.25rem; /* Ukuran besar */
+            margin-bottom: 1.5rem; /* Jarak bawah */
+            /* Anda bisa menambahkan text-shadow jika diinginkan, seperti pada 'List of registered users' */
+            /* text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); */
         }
 
         .btn-modern {
@@ -109,6 +112,7 @@
             box-shadow: 0 8px 20px rgb(124 58 237 / 0.7);
             color: white;
         }
+
         table {
             border-collapse: collapse;
             width: 100%;
@@ -152,41 +156,6 @@
             box-shadow: 0 2px 8px rgb(34 197 94 / 0.3);
         }
 
-<<<<<<< HEAD
-        .action-buttons {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .btn-edit {
-            background: #7c3aed;
-            padding: 0.25rem 0.75rem;
-            border-radius: 0.5rem;
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .btn-edit:hover {
-            background: #7c3aed;
-            transform: translateY(-2px);
-            box-shadow: 0 2px 8px rgb(16 185 129 / 0.5);
-        }
-
-        .btn-delete {
-            background: #7c3aed;
-            padding: 0.25rem 0.75rem;
-            border-radius: 0.5rem;
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .btn-delete:hover {
-            background: #7c3aed;
-            transform: translateY(-2px);
-            box-shadow: 0 2px 8px rgb(239 68 68 / 0.5);
-=======
         /* Add these new styles for the modal */
         .modal {
             display: none;
@@ -223,7 +192,6 @@
         .pdf-container {
             width: 100%;
             height: calc(100% - 40px);
->>>>>>> c6d443ac16f7c58d82bf6080009a2b90e9a8ed10
         }
     </style>
 </head>
@@ -249,12 +217,7 @@
                     <th>Schedule Name</th>
                     <th>File PDF</th>
                     <th>Creation Date</th>
-<<<<<<< HEAD
-                    <th>Remaining Time</th>
-                    <th>Actions</th>
-=======
                     <th>Aksi</th>
->>>>>>> c6d443ac16f7c58d82bf6080009a2b90e9a8ed10
                 </tr>
             </thead>
             <tbody>
@@ -275,41 +238,18 @@
                         </td>
                         <td>{{ \Carbon\Carbon::parse($jadwal->tanggal)->format('d-m-Y') }}</td>
                         <td>
-<<<<<<< HEAD
-                            @php
-                                $createdAt = \Carbon\Carbon::parse($jadwal->created_at);
-                                $expiration = $createdAt->copy()->addDays(7);
-                                $remaining = $expiration->diffInHours(now()) <= 0 ? 'Expired' : $expiration->diffForHumans();
-                            @endphp
-                            {{ $remaining }}
-                        </td>
-                        <td class="action-buttons">
-                            <a href="{{ route('jadwal_sertifikat.edit', $jadwal->jadwal_id) }}" class="btn-edit">
-                                <i class="fas fa-edit"></i> Edit
-                            </a>
-                            <form action="{{ route('jadwal_sertifikat.destroy', $jadwal->jadwal_id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn-delete" onclick="return confirm('Are you sure you want to delete this schedule?')">
-                                    <i class="fas fa-trash"></i> Delete
-=======
-                            <form action="{{ route('jadwal-sertifikat.destroy', $jadwal->jadwal_id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus jadwal ini?');">
+                            <form action="{{ route('jadwal_sertifikat.destroy', $jadwal->jadwal_id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus jadwal ini?');">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm">
                                     <i class="fas fa-trash"></i> Hapus
->>>>>>> c6d443ac16f7c58d82bf6080009a2b90e9a8ed10
                                 </button>
                             </form>
                         </td>
                     </tr>
                 @empty
                     <tr>
-<<<<<<< HEAD
-                        <td colspan="6" class="no-data">Tidak ada jadwal tersedia.</td>
-=======
                         <td colspan="5" class="no-data">Tidak ada jadwal tersedia.</td>
->>>>>>> c6d443ac16f7c58d82bf6080009a2b90e9a8ed10
                     </tr>
                 @endforelse
             </tbody>

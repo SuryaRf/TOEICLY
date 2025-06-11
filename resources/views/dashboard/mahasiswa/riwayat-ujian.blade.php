@@ -185,12 +185,12 @@
       color: #d97706;
     }
     .badge-approved {
-      background-color: #ede9fe; /* light purple */
-      color: #6d28d9; /* dark purple */
+      background-color: #d1fae5;
+      color: #059669;
     }
     .badge-rejected {
-      background-color: #e9d5ff; /* slightly different light purple */
-      color: #7e22ce; /* slightly different dark purple */
+      background-color: #fee2e2;
+      color: #dc2626;
     }
     
     .table-container {
@@ -212,8 +212,10 @@
 </head>
 <body class="bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 min-h-screen">
 
+  <!-- Sidebar -->
   @include('dashboard.mahasiswa.sidebar')
 
+  <!-- Main Content -->
   <main id="riwayat-ujian" class="main-content">
     <h1 class="text-4xl font-bold text-purple-800 mb-6">Test Registration History</h1>
 

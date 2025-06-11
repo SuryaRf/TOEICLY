@@ -85,13 +85,13 @@ Route::middleware('auth')->group(function () {
 
     // Jadwal Sertifikat
     Route::prefix('jadwal-sertifikat')->group(function () {
+         Route::delete('/{jadwal_id}', [JadwalSertifikatController::class, 'destroy'])->name('jadwal_sertifikat.destroy');
         Route::get('/', [JadwalSertifikatController::class, 'index'])->name('jadwal_sertifikat.index');
         Route::get('/create', [JadwalSertifikatController::class, 'create'])->name('jadwal_sertifikat.create');
         Route::post('/', [JadwalSertifikatController::class, 'store'])->name('jadwal_sertifikat.store');
         Route::get('/{jadwal_id}/peserta', [JadwalSertifikatController::class, 'peserta'])->name('jadwal_sertifikat.peserta');
         Route::get('/{jadwal_id}/edit', [JadwalSertifikatController::class, 'edit'])->name('jadwal_sertifikat.edit');
         Route::put('/{jadwal_id}', [JadwalSertifikatController::class, 'update'])->name('jadwal_sertifikat.update');
-        Route::delete('/{jadwal_id}', [JadwalSertifikatController::class, 'destroy'])->name('jadwal_sertifikat.destroy');
     });
 
     // Pendaftaran

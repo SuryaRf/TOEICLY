@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Upload TOEIC Score PDF - TOEICLY ITC</title>
+    <title>Upload PDF Nilai TOEIC - TOEICLY ITC</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
@@ -203,10 +203,10 @@
                 <i class="fas fa-home"></i> Dashboard
             </a>
             <a href="{{ route('itc.pendaftar') }}" class="sidebar-link {{ request()->routeIs('itc.pendaftar') ? 'active' : '' }}">
-                <i class="fas fa-calendar-alt"></i> Test Applicants Data
+                <i class="fas fa-calendar-alt"></i> Data Pendaftar Tes
             </a>
             <a href="{{ route('itc.upload_nilai') }}" class="sidebar-link {{ request()->routeIs('itc.upload_nilai') ? 'active' : '' }}">
-                <i class="fas fa-file-pdf"></i> Upload Score TOEIC
+                <i class="fas fa-file-pdf"></i> Upload Nilai TOEIC
             </a>
             <a href="{{ route('itc.profile') }}" class="sidebar-link {{ request()->routeIs('itc.profile') ? 'active' : '' }}">
                 <i class="fas fa-user"></i> Profile
@@ -220,30 +220,90 @@
         </nav>
     </aside>
 
-    <main>
-        <h1>Upload PDF Nilai TOEIC</h1>
+<main>
+    <h1>Upload PDF Nilai TOEIC</h1>
 
     @if(session('success'))
         <div class="alert-success">{{ session('success') }}</div>
     @endif
 
-        <form action="{{ route('itc.upload_nilai.store') }}" method="POST" enctype="multipart/form-data" class="card">
-            @csrf
-            <label for="judul">Judul Dokumen</label>
-            <input type="text" name="judul" id="judul" value="{{ old('judul') }}" placeholder="e.g., TOEIC Score Report">
-            @error('judul')
-                <div class="error-message">{{ $message }}</div>
-            @enderror
+    {{-- Tombol untuk buka modal upload, posisinya di kiri --}}
+    <div style="margin-left: 0; margin-bottom: 1.5rem;">
+        <button type="button" class="btn-modern" data-bs-toggle="modal" data-bs-target="#uploadModal" style="margin-left:0;">
+            <i class="fas fa-plus mr-2"></i> Upload PDF Baru
+        </button>
+    </div>
 
-            <label for="nilai_pdf">Pilih File PDF Nilai TOEIC</label>
-            <input type="file" name="nilai_pdf" id="nilai_pdf" accept="application/pdf" required>
-            @error('nilai_pdf')
-                <div class="error-message">{{ $message }}</div>
-            @enderror
+    <div class="center-container">
+        {{-- Daftar PDF --}}
+        @if(isset($pdfs) && count($pdfs) > 0)
+            <div class="card mb-4 w-full">
+                <h2 class="text-xl font-bold mb-3">Daftar PDF Nilai TOEIC</h2>
+                <ul style="list-style:none; padding:0;">
+                    @foreach($pdfs as $pdf)
+                        <li class="mb-2">
+                            <button class="w-full flex items-center gap-2 font-semibold text-indigo-800 px-3 py-2 rounded-lg pdf-dropdown-btn"
+                                style="background:#f6f3ff; box-shadow:0 2px 8px rgb(124 58 237 / 0.07); border:none; text-align:left;"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#collapsePdf{{ $pdf->nilai_toeic_id }}"
+                                aria-expanded="false"
+                                aria-controls="collapsePdf{{ $pdf->nilai_toeic_id }}">
+                                <i class="fas fa-file-pdf text-purple-600"></i>
+                                <span>{{ $pdf->judul }}</span>
+                                <i class="fas fa-chevron-down ml-auto"></i>
+                            </button>
+                            <div class="collapse" id="collapsePdf{{ $pdf->nilai_toeic_id }}">
+                                <div class="p-3">
+                                    <iframe src="{{ asset('storage/' . $pdf->file_path) }}" class="pdf-preview-frame"></iframe>
+                                    <form action="{{ route('itc.upload_nilai.destroy', $pdf->nilai_toeic_id) }}" method="POST" class="mt-3" onsubmit="return confirm('Yakin ingin menghapus file ini?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm" style="border-radius:0.3rem; font-size:0.95rem; padding:0.3rem 1rem;">
+                                            <i class="fas fa-trash"></i> Hapus
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+    </div>
 
-            <button type="submit" class="btn-modern">Upload</button>
-        </form>
-    </main>
+    {{-- Modal Upload --}}
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form action="{{ route('itc.upload_nilai.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="uploadModalLabel">Upload PDF Nilai TOEIC</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="judul">Judul Dokumen</label>
+                        <input type="text" name="judul" id="judul" value="{{ old('judul') }}" placeholder="e.g., TOEIC Score Report">
+                        @error('judul')
+                            <div class="error-message">{{ $message }}</div>
+                        @enderror
+
+                        <label for="nilai_pdf" class="mt-3">Pilih File PDF Nilai TOEIC</label>
+                        <input type="file" name="nilai_pdf" id="nilai_pdf" accept="application/pdf" required>
+                        @error('nilai_pdf')
+                            <div class="error-message">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn-modern">Upload</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 @if ($errors->any())
