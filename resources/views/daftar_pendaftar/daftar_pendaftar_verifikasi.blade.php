@@ -6,76 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>TOEIC Test Applicants List - TOEICLY ITC</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         /* Background and font */
         body {
             background: linear-gradient(135deg, #eef2ff 0%, #dbeafe 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-        }
-
-        /* Sidebar styles */
-        .sidebar {
-            background: linear-gradient(180deg, #5b21b6 0%, #7c3aed 100%);
-            color: white;
-            min-height: 100vh;
-            position: fixed;
-            width: 16rem;
-            transition: all 0.3s ease;
-            box-shadow: 4px 0 12px rgb(123 97 255 / 0.4);
-            z-index: 50;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .sidebar .title {
-            padding: 1.5rem 1rem;
-            font-size: 1.75rem;
-            font-weight: 800;
-            user-select: none;
-        }
-
-        .sidebar nav {
-            margin-top: 2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            padding: 0 1rem;
-            flex-grow: 1;
-        }
-
-        .sidebar a {
-            display: flex;
-            align-items: center;
-            padding: 0.75rem 1rem;
-            font-weight: 600;
-            border-radius: 0.5rem;
-            color: inherit;
-            text-decoration: none;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            cursor: pointer;
-        }
-
-        .sidebar a:hover,
-        .sidebar a.active {
-            background-color: rgba(255 255 255 / 0.25);
-            transform: translateX(8px);
-            box-shadow: 0 4px 15px rgb(124 58 237 / 0.5);
-            color: white !important;
-        }
-
-        .sidebar i {
-            min-width: 1.25rem;
-            font-size: 1.1rem;
-            margin-right: 0.75rem;
-            transition: transform 0.3s ease;
-        }
-
-        .sidebar a:hover i {
-            transform: rotate(10deg) scale(1.2);
-            color: #ddd;
         }
 
         /* Main content */
@@ -86,95 +24,80 @@
             overflow-y: auto;
         }
 
-        /* Button styles */
-        .btn-modern {
-            background: linear-gradient(90deg, #7c3aed, #a78bfa);
-            border: none;
-            font-weight: 600;
-            padding: 0.5rem 1.5rem;
-            border-radius: 0.75rem;
-            color: white;
-            box-shadow: 0 4px 12px rgb(124 58 237 / 0.4);
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            margin-bottom: 1.5rem;
-        }
-
-        .btn-modern:hover {
-            background: linear-gradient(90deg, #a78bfa, #7c3aed);
-            transform: scale(1.08);
-            box-shadow: 0 8px 20px rgb(124 58 237 / 0.7);
-            color: white;
+        /* Card styling */
+        .card {
+            background-color: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 6px 15px rgb(0 0 0 / 0.08);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         /* Table styling */
-        table {
-            border-collapse: collapse;
+        .table {
             width: 100%;
-            font-size: 1rem;
+            margin-bottom: 0;
             background: white;
-            border-radius: 1rem;
-            box-shadow: 0 6px 15px rgb(0 0 0 / 0.08);
+            border-radius: 0.5rem;
             overflow: hidden;
         }
 
-        th,
-        td {
-            text-align: left;
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        thead th {
+        .table th {
             background-color: #f3e8ff;
             color: #7c3aed;
-            font-weight: 700;
+            font-weight: 600;
+            padding: 1rem;
+            border-bottom: 2px solid #e5e7eb;
         }
 
-        tbody tr:hover {
+        .table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: middle;
+        }
+
+        .table tbody tr:hover {
             background-color: #ede9fe;
         }
 
-        .no-data {
-            text-align: center;
-            padding: 2rem;
-            color: #9ca3af;
-            font-style: italic;
-        }
-
-        .alert-success {
-            background-color: #d1fae5;
-            color: #065f46;
-            padding: 1rem;
+        /* Button styles */
+        .btn-verify {
+            padding: 0.375rem 1rem;
             border-radius: 0.5rem;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-            box-shadow: 0 2px 8px rgb(34 197 94 / 0.3);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
         }
 
-        .alert-danger {
-            background-color: #fee2e2;
-            color: #dc2626;
-            padding: 1rem;
+        .btn-success {
+            background-color: #10b981;
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: #ef4444;
+            color: white;
+        }
+
+        .btn-custom-purple {
+            background: linear-gradient(90deg, #7c3aed, #a78bfa);
+            color: white;
+            border: none;
+            padding: 0.375rem 1rem;
             border-radius: 0.5rem;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-            box-shadow: 0 2px 8px rgb(239 68 68 / 0.3);
+            transition: all 0.3s ease;
         }
 
-        .btn-outline-primary,
-        .btn-verify,
-        .btn-detail {
-            font-weight: 600;
-            padding: 0.25rem 0.75rem;
-            font-size: 0.875rem;
-            margin-right: 0.5rem;
+        .btn-custom-purple:hover {
+            background: linear-gradient(90deg, #6d28d9, #7c3aed);
+            transform: translateY(-1px);
         }
 
+        /* Modal styling */
         .modal-content {
             border-radius: 1rem;
-            box-shadow: 0 6px 15px rgb(0 0 0 / 0.2);
+            border: none;
         }
 
         .modal-header {
@@ -182,95 +105,85 @@
             color: white;
             border-top-left-radius: 1rem;
             border-top-right-radius: 1rem;
+            padding: 1rem 1.5rem;
         }
 
-        /* Custom purple button styles for 'Edit' and 'Detail' in the table */
-        .btn-custom-purple {
-            background-color: #6f42c1;
-            /* Primary purple color */
-            border-color: #6f42c1;
-            color: #ffffff;
-            /* White text for contrast */
-        }
-
-        .btn-custom-purple:hover {
-            background-color: #5a32a3;
-            border-color: #5a32a3;
-            color: #ffffff;
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(111, 66, 193, 0.7);
-        }
-
-        .btn-custom-purple:focus,
-        .btn-custom-purple.focus {
-            box-shadow: 0 0 0 0.25rem rgba(111, 66, 193, 0.5);
-        }
-
-        .btn-custom-purple:active,
-        .btn-custom-purple.active {
-            background-color: #4c2889;
-            border-color: #4c2889;
-        }
-
-        /* Styles for 'Batal' and 'Simpan' buttons in the modal footer */
-        .modal-footer {
-            border-top: none;
-            display: flex;
-            justify-content: flex-end;
-            gap: 0.75rem;
-            /* Space between buttons */
-            padding: 1rem;
-            /* Add padding to footer */
-        }
-
-        /* Unified style for modal action buttons ('Batal' and 'Simpan') */
-        .modal-footer .btn-modal-action {
+        .modal-title {
             font-weight: 600;
-            padding: 0.5rem 1.5rem;
-            border-radius: 0.75rem;
-            color: white;
-            border: none;
-            /* Remove default bootstrap border */
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        /* Form controls */
+        .form-control,
+        .form-select {
+            border-radius: 0.5rem;
+            border: 1px solid #e5e7eb;
+            padding: 0.5rem 1rem;
             transition: all 0.3s ease;
-            background-color: #6f42c1;
-            /* Primary purple color */
-            box-shadow: 0 4px 12px rgba(111, 66, 193, 0.4);
         }
 
-        .modal-footer .btn-modal-action:hover {
-            background-color: #5a32a3;
-            /* Darker purple for hover */
-            color: white;
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(111, 66, 193, 0.7);
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
         }
 
-        .modal-footer .btn-modal-action:focus {
-            box-shadow: 0 0 0 0.25rem rgba(111, 66, 193, 0.5);
-        }
-
+        /* Search and filter */
         .search-filter-container {
             display: flex;
             gap: 1rem;
             margin-bottom: 1.5rem;
-            align-items: center;
         }
 
         .search-filter-container input,
         .search-filter-container select {
-            border: 1px solid #d1d5db;
+            border: 1px solid #e5e7eb;
             border-radius: 0.5rem;
             padding: 0.5rem 1rem;
-            font-size: 0.875rem;
-            box-shadow: 0 2px 8px rgb(0 0 0 / 0.05);
-            transition: border-color 0.3s ease;
+            min-width: 200px;
         }
 
-        .search-filter-container input:focus,
-        .search-filter-container select:focus {
-            outline: none;
+        /* Alert styling */
+        .alert-success,
+        .alert-danger {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .alert-success {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .alert-danger {
+            background-color: #fee2e2;
+            color: #dc2626;
+        }
+
+        /* Main title */
+        .main-title-purple {
+            color: #4c1d95;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Document links */
+        .btn-outline-primary {
+            color: #7c3aed;
             border-color: #7c3aed;
-            box-shadow: 0 0 0 3px rgb(124 58 237 / 0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.375rem;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: #7c3aed;
+            color: white;
         }
     </style>
 </head>
@@ -279,7 +192,7 @@
     @include('dashboard.admin.sidebar')
 
     <main>
-        <h1 class="text-4xl font-bold mb-6 text-purple-700">TOEIC Test Applicants List</h1>
+        <h1 class="main-title-purple">TOEIC Test Applicants List</h1>
 
         @if(session('success'))
         <div class="alert-success">{{ session('success') }}</div>
@@ -289,189 +202,190 @@
         @endif
 
         <div class="search-filter-container">
-            <input type="text" id="searchInput" class="form-control" placeholder="Search by Student Name" />
-            <select id="statusFilter" class="form-select">
+            <input type="text" id="searchInput" placeholder="Search by Student Name" />
+            <select id="statusFilter">
                 <option value="">All Statuses</option>
                 <option value="menunggu">Pending</option>
                 <option value="diterima">Accepted</option>
                 <option value="ditolak">Rejected</option>
-                <option value="belum ada">Not Available</option>
             </select>
         </div>
 
-        <table class="table table-bordered table-striped" id="pendaftaranTable">
-            <thead class="table-primary">
-                <tr>
-                    <th>No.</th>
-                    <th>Registration Code</th>
-                    <th>Full Name</th>
-                    <th>Phone Number</th>
-                    <th>Registration Status</th>
-                    <th>Registration Date</th>
-                    <th>Scan KTP</th>
-                    <th>Scan KTM</th>
-                    <th>Photo</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($pendaftarans as $index => $pendaftaran)
-                <tr>
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{ $pendaftaran->pendaftaran_kode }}</td>
-                    <td>{{ $pendaftaran->mahasiswa->nama ?? '-' }}</td>
-                    <td>
-                        @if($pendaftaran->mahasiswa->no_telp)
-                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $pendaftaran->mahasiswa->no_telp) }}"
-                            target="_blank" class="btn btn-sm btn-outline-success">
-                            {{ $pendaftaran->mahasiswa->no_telp }}
-                        </a>
-                        @else
-                        -
-                        @endif
-                    </td>
-                    <td>{{ ucfirst($pendaftaran->detail->status ?? 'belum ada') }}</td>
-                    <td>{{ $pendaftaran->tanggal_pendaftaran->format('d-m-Y') }}</td>
-                    <td>
-                        @if($pendaftaran->scan_ktp)
-                        <a href="{{ asset('storage/' . $pendaftaran->scan_ktp) }}" target="_blank"
-                            class="btn btn-sm btn-outline-primary">KTP</a>
-                        @else
-                        -
-                        @endif
-                    </td>
-                    <td>
-                        @if($pendaftaran->scan_ktm)
-                        <a href="{{ asset('storage/' . $pendaftaran->scan_ktm) }}" target="_blank"
-                            class="btn btn-sm btn-outline-primary">KTM</a>
-                        @else
-                        -
-                        @endif
-                    </td>
-                    <td>
-                        @if($pendaftaran->pas_foto)
-                        <a href="{{ asset('storage/' . $pendaftaran->pas_foto) }}" target="_blank"
-                            class="btn btn-sm btn-outline-primary">Photo</a>
-                        @else
-                        -
-                        @endif
-                    </td>
-                    <td>
-                        @if($pendaftaran->detail && $pendaftaran->detail->status === 'menunggu')
-                        <form
-                            action="{{ route('admin.verify', ['id' => $pendaftaran->pendaftaran_id, 'status' => 'diterima']) }}"
-                            method="POST" style="display:inline;">
-                            @csrf
-                            <button type="submit" class="btn btn-sm btn-verify btn-success">Accept</button>
-                        </form>
-                        <form
-                            action="{{ route('admin.verify', ['id' => $pendaftaran->pendaftaran_id, 'status' => 'ditolak']) }}"
-                            method="POST" style="display:inline;">
-                            @csrf
-                            <button type="submit" class="btn btn-sm btn-verify btn-danger">Reject</button>
-                        </form>
-                        @endif
-                        <button class="btn btn-sm btn-custom-purple" data-bs-toggle="modal"
-                            data-bs-target="#editModal{{ $pendaftaran->pendaftaran_id }}">Edit</button>
-                        <button class="btn btn-sm btn-custom-purple" data-bs-toggle="modal"
-                            data-bs-target="#detailModal{{ $pendaftaran->pendaftaran_id }}">Detail</button>
-                    </td>
-                </tr>
-
-                <div class="modal fade" id="editModal{{ $pendaftaran->pendaftaran_id }}" tabindex="-1"
-                    aria-labelledby="editModalLabel{{ $pendaftaran->pendaftaran_id }}" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="editModalLabel{{ $pendaftaran->pendaftaran_id }}">Edit
-                                    Registration Status</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <form action="{{ route('admin.editStatus', $pendaftaran->pendaftaran_id) }}" method="POST">
+        <section class="card">
+            <table class="table table-bordered table-striped" id="pendaftaranTable">
+                <thead class="table-primary">
+                    <tr>
+                        <th>No.</th>
+                        <th>Registration Code</th>
+                        <th>Full Name</th>
+                        <th>Phone Number</th>
+                        <th>Registration Status</th>
+                        <th>Registration Date</th>
+                        <th>Scan KTP</th>
+                        <th>Scan KTM</th>
+                        <th>Photo</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($pendaftarans as $index => $pendaftaran)
+                    <tr>
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ $pendaftaran->pendaftaran_kode }}</td>
+                        <td>{{ $pendaftaran->mahasiswa->nama ?? '-' }}</td>
+                        <td>
+                            @if($pendaftaran->mahasiswa->no_telp)
+                            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $pendaftaran->mahasiswa->no_telp) }}"
+                                target="_blank" class="btn btn-sm btn-outline-success">
+                                {{ $pendaftaran->mahasiswa->no_telp }}
+                            </a>
+                            @else
+                            -
+                            @endif
+                        </td>
+                        <td>{{ ucfirst($pendaftaran->detail->status ?? 'belum ada') }}</td>
+                        <td>{{ $pendaftaran->tanggal_pendaftaran->format('d-m-Y') }}</td>
+                        <td>
+                            @if($pendaftaran->scan_ktp)
+                            <a href="{{ asset('storage/' . $pendaftaran->scan_ktp) }}" target="_blank"
+                                class="btn btn-sm btn-outline-primary">KTP</a>
+                            @else
+                            -
+                            @endif
+                        </td>
+                        <td>
+                            @if($pendaftaran->scan_ktm)
+                            <a href="{{ asset('storage/' . $pendaftaran->scan_ktm) }}" target="_blank"
+                                class="btn btn-sm btn-outline-primary">KTM</a>
+                            @else
+                            -
+                            @endif
+                        </td>
+                        <td>
+                            @if($pendaftaran->pas_foto)
+                            <a href="{{ asset('storage/' . $pendaftaran->pas_foto) }}" target="_blank"
+                                class="btn btn-sm btn-outline-primary">Photo</a>
+                            @else
+                            -
+                            @endif
+                        </td>
+                        <td>
+                            @if($pendaftaran->detail && $pendaftaran->detail->status === 'menunggu')
+                            <form
+                                action="{{ route('admin.verify', ['id' => $pendaftaran->pendaftaran_id, 'status' => 'diterima']) }}"
+                                method="POST" style="display:inline;">
                                 @csrf
-                                @method('PATCH')
-                                <div class="modal-body">
-                                    <div class="mb-3">
-                                        <label for="status{{ $pendaftaran->pendaftaran_id }}"
-                                            class="form-label">Status</label>
-                                        <select class="form-select" id="status{{ $pendaftaran->pendaftaran_id }}"
-                                            name="status" required>
-                                            <option value="menunggu"
-                                                {{ optional($pendaftaran->detail)->status === 'Pending' ? 'selected' : '' }}>
-                                                Pending</option>
-                                            <option value="diterima"
-                                                {{ optional($pendaftaran->detail)->status === 'Accepted' ? 'selected' : '' }}>
-                                                Accepted</option>
-                                            <option value="ditolak"
-                                                {{ optional($pendaftaran->detail)->status === 'Rejected' ? 'selected' : '' }}>
-                                                Rejected</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="catatan{{ $pendaftaran->pendaftaran_id }}"
-                                            class="form-label">Info</label>
-                                        <textarea class="form-control" id="catatan{{ $pendaftaran->pendaftaran_id }}"
-                                            name="catatan"
-                                            rows="4">{{ optional($pendaftaran->detail)->Info ?? '' }}</textarea>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-modal-action"
-                                        data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-modal-action">Save</button>
-                                </div>
+                                <button type="submit" class="btn btn-sm btn-verify btn-success">Accept</button>
                             </form>
+                            <form
+                                action="{{ route('admin.verify', ['id' => $pendaftaran->pendaftaran_id, 'status' => 'ditolak']) }}"
+                                method="POST" style="display:inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-verify btn-danger">Reject</button>
+                            </form>
+                            @endif
+                            <button class="btn btn-sm btn-custom-purple" data-bs-toggle="modal"
+                                data-bs-target="#editModal{{ $pendaftaran->pendaftaran_id }}">Edit</button>
+                            <button class="btn btn-sm btn-custom-purple" data-bs-toggle="modal"
+                                data-bs-target="#detailModal{{ $pendaftaran->pendaftaran_id }}">Detail</button>
+                        </td>
+                    </tr>
+
+                    <div class="modal fade" id="editModal{{ $pendaftaran->pendaftaran_id }}" tabindex="-1"
+                        aria-labelledby="editModalLabel{{ $pendaftaran->pendaftaran_id }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editModalLabel{{ $pendaftaran->pendaftaran_id }}">Edit
+                                        Registration Status</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <form action="{{ route('admin.editStatus', $pendaftaran->pendaftaran_id) }}" method="POST">
+                                    @csrf
+                                    @method('PATCH')
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label for="status{{ $pendaftaran->pendaftaran_id }}"
+                                                class="form-label">Status</label>
+                                            <select class="form-select" id="status{{ $pendaftaran->pendaftaran_id }}"
+                                                name="status" required>
+                                                <option value="menunggu"
+                                                    {{ optional($pendaftaran->detail)->status === 'Pending' ? 'selected' : '' }}>
+                                                    Pending</option>
+                                                <option value="diterima"
+                                                    {{ optional($pendaftaran->detail)->status === 'Accepted' ? 'selected' : '' }}>
+                                                    Accepted</option>
+                                                <option value="ditolak"
+                                                    {{ optional($pendaftaran->detail)->status === 'Rejected' ? 'selected' : '' }}>
+                                                    Rejected</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="catatan{{ $pendaftaran->pendaftaran_id }}"
+                                                class="form-label">Info</label>
+                                            <textarea class="form-control" id="catatan{{ $pendaftaran->pendaftaran_id }}"
+                                                name="catatan"
+                                                rows="4">{{ optional($pendaftaran->detail)->Info ?? '' }}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-modal-action"
+                                            data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-modal-action">Save</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="modal fade" id="detailModal{{ $pendaftaran->pendaftaran_id }}" tabindex="-1"
-                    aria-labelledby="detailModalLabel{{ $pendaftaran->pendaftaran_id }}" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="detailModalLabel{{ $pendaftaran->pendaftaran_id }}">Detail
-                                    Registration</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p><strong>Registration Code:</strong> {{ $pendaftaran->pendaftaran_kode }}</p>
-                                <p><strong>Student Name:</strong> {{ $pendaftaran->mahasiswa->nama ?? '-' }}</p>
-                                <p><strong>NIM:</strong> {{ $pendaftaran->mahasiswa->nim ?? '-' }}</p>
-                                <p><strong>NIK:</strong> {{ $pendaftaran->mahasiswa->nik ?? '-' }}</p>
-                                <p><strong>Batch:</strong> {{ $pendaftaran->mahasiswa->angkatan ?? '-' }}</p>
-                                <p><strong>Phone Number:</strong> {{ $pendaftaran->mahasiswa->no_telp ?? '-' }}</p>
-                                <p><strong>Original Address:</strong> {{ $pendaftaran->mahasiswa->alamat_asal ?? '-' }}</p>
-                                <p><strong>Current Address:</strong>
-                                    {{ $pendaftaran->mahasiswa->alamat_sekarang ?? '-' }}</p>
-                                <p><strong>Gender:</strong> {{ $pendaftaran->mahasiswa->jenis_kelamin ?? '-' }}
-                                </p>
-                                <p><strong>Student Status:</strong> {{ $pendaftaran->mahasiswa->status ?? '-' }}</p>
-                                <p><strong>Description:</strong> {{ $pendaftaran->mahasiswa->keterangan ?? '-' }}</p>
-                                <p><strong>Study Program:</strong>
-                                    {{ $pendaftaran->mahasiswa->prodi->nama_prodi ?? 'D-IV Business Information Systems' }}</p>
-                                <p><strong>Registration Status:</strong>
-                                    {{ ucfirst($pendaftaran->detail->status ?? 'Not available') }}</p>
-                                <p><strong>Registration Date:</strong>
-                                    {{ $pendaftaran->tanggal_pendaftaran->format('d-m-Y') }}</p>
-                                <p><strong>Notes:</strong> {{ $pendaftaran->detail->catatan ?? '-' }}</p>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
+                    <div class="modal fade" id="detailModal{{ $pendaftaran->pendaftaran_id }}" tabindex="-1"
+                        aria-labelledby="detailModalLabel{{ $pendaftaran->pendaftaran_id }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="detailModalLabel{{ $pendaftaran->pendaftaran_id }}">Detail
+                                        Registration</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p><strong>Registration Code:</strong> {{ $pendaftaran->pendaftaran_kode }}</p>
+                                    <p><strong>Student Name:</strong> {{ $pendaftaran->mahasiswa->nama ?? '-' }}</p>
+                                    <p><strong>NIM:</strong> {{ $pendaftaran->mahasiswa->nim ?? '-' }}</p>
+                                    <p><strong>NIK:</strong> {{ $pendaftaran->mahasiswa->nik ?? '-' }}</p>
+                                    <p><strong>Batch:</strong> {{ $pendaftaran->mahasiswa->angkatan ?? '-' }}</p>
+                                    <p><strong>Phone Number:</strong> {{ $pendaftaran->mahasiswa->no_telp ?? '-' }}</p>
+                                    <p><strong>Original Address:</strong> {{ $pendaftaran->mahasiswa->alamat_asal ?? '-' }}</p>
+                                    <p><strong>Current Address:</strong>
+                                        {{ $pendaftaran->mahasiswa->alamat_sekarang ?? '-' }}</p>
+                                    <p><strong>Gender:</strong> {{ $pendaftaran->mahasiswa->jenis_kelamin ?? '-' }}
+                                    </p>
+                                    <p><strong>Student Status:</strong> {{ $pendaftaran->mahasiswa->status ?? '-' }}</p>
+                                    <p><strong>Description:</strong> {{ $pendaftaran->mahasiswa->keterangan ?? '-' }}</p>
+                                    <p><strong>Study Program:</strong>
+                                        {{ $pendaftaran->mahasiswa->prodi->nama_prodi ?? 'D-IV Business Information Systems' }}</p>
+                                    <p><strong>Registration Status:</strong>
+                                        {{ ucfirst($pendaftaran->detail->status ?? 'Not available') }}</p>
+                                    <p><strong>Registration Date:</strong>
+                                        {{ $pendaftaran->tanggal_pendaftaran->format('d-m-Y') }}</p>
+                                    <p><strong>Notes:</strong> {{ $pendaftaran->detail->catatan ?? '-' }}</p>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                @empty
-                <tr>
-                    <td colspan="10" class="text-center">No applicants yet.</td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
+                    @empty
+                    <tr>
+                        <td colspan="10" class="text-center">No applicants yet.</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </section>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
