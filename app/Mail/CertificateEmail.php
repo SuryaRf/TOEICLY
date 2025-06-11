@@ -1,41 +1,40 @@
 <?php
 
-  namespace App\Mail;
+namespace App\Mail;
 
-  use Illuminate\Bus\Queueable;
-  use Illuminate\Mail\Mailable;
-  use Illuminate\Queue\SerializesModels;
-  use Illuminate\Support\Facades\Storage;
+use Illuminate\Bus\Queueable;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-  class CertificateEmail extends Mailable
-  {
-      use Queueable, SerializesModels;
+class CertificateEmail extends Mailable
+{
+    use Queueable, SerializesModels;
 
-      public $username;
-      public $subject;
-      public $messageContent;
-      public $attachmentPath;
+    public $mahasiswaName;
+    public $subject;
+    public $message;
+    public $filePath;
+    public $fileName;
 
-      public function __construct($username, $subject, $messageContent, $attachmentPath = null)
-      {
-          $this->username = $username;
-          $this->subject = $subject;
-          $this->messageContent = $messageContent;
-          $this->attachmentPath = $attachmentPath;
-      }
+    public function __construct($mahasiswaName, $subject, $message, $filePath = null, $fileName = null)
+    {
+        $this->mahasiswaName = $mahasiswaName;
+        $this->subject = $subject;
+        $this->message = $message;
+        $this->filePath = $filePath;
+        $this->fileName = $fileName;
+    }
 
-      public function build()
-      {
-          $email = $this->subject($this->subject)
-              ->view('emails.user_message');
+    public function build()
+    {
+        $email = $this->subject($this->subject)
+                      ->view('emails.certificate');
 
-          if ($this->attachmentPath) {
-              $email->attach(Storage::disk('public')->path($this->attachmentPath), [
-                  'as' => 'certificate.pdf',
-                  'mime' => 'application/pdf',
-              ]);
-          }
+        if ($this->filePath && $this->fileName) {
+            $email->attach($this->filePath, ['as' => $this->fileName]);
+        }
 
-          return $email;
-      }
-  }
+        return $email;
+    }
+}

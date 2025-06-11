@@ -59,13 +59,14 @@ Route::middleware('auth')->group(function () {
         Route::delete('/informasi/{id}', [InformasiController::class, 'destroy'])->name('informasi.destroy');
 
         // Email Sending Routes
-        Route::get('/send-email', [AdminEmailController::class, 'create'])->name('admin.send_email');
-        Route::post('/send-email', [AdminEmailController::class, 'send'])->name('admin.send_email.submit');
-        
-        Route::get('/admin/certificate-requests', [AdminController::class, 'certificateRequests'])->name('admin.certificate_requests');
-        Route::get('/admin/certificate-requests/{id}/approve', [AdminController::class, 'approveCertificate'])->name('admin.approve_certificate');
-        Route::get('/admin/certificate-requests/{id}/reject', [AdminController::class, 'rejectCertificate'])->name('admin.reject_certificate');
-        Route::get('/admin/certificate-requests/{id}/download', [AdminController::class, 'downloadCertificate'])->name('admin.download_certificate');
+       Route::get('/admin/send-email', [AdminEmailController::class, 'create'])->name('admin.send_email');
+Route::post('/admin/send-email/status/{id}', [AdminEmailController::class, 'updateStatus'])->name('admin.send_email.update_status');
+Route::post('/admin/send-email', [AdminEmailController::class, 'send'])->name('admin.send_email.submit');
+
+        // Route::get('/admin/certificate-requests', [AdminController::class, 'certificateRequests'])->name('admin.certificate_requests');
+        // Route::get('/admin/certificate-requests/{id}/approve', [AdminController::class, 'approveCertificate'])->name('admin.approve_certificate');
+        // Route::get('/admin/certificate-requests/{id}/reject', [AdminController::class, 'rejectCertificate'])->name('admin.reject_certificate');
+        // Route::get('/admin/certificate-requests/{id}/download', [AdminController::class, 'downloadCertificate'])->name('admin.download_certificate');
         // Profile admin
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
         Route::post('/profile/avatar', [ProfileController::class, 'uploadAvatar'])->name('profile.uploadAvatar');
