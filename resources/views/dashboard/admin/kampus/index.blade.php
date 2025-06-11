@@ -154,20 +154,20 @@
         }
 
         .btn-action.edit {
-             background: linear-gradient(90deg, #7c3aed, #a78bfa);
+            background: linear-gradient(90deg, #7c3aed, #a78bfa);
         }
 
         .btn-action.edit:hover {
-             background: linear-gradient(90deg, #a78bfa, #7c3aed);
+            background: linear-gradient(90deg, #a78bfa, #7c3aed);
         }
 
         .btn-action.delete {
-                       background: linear-gradient(90deg, #7c3aed, #a78bfa);
+            background: linear-gradient(90deg, #7c3aed, #a78bfa);
 
         }
 
         .btn-action.delete:hover {
-                        background: linear-gradient(90deg, #a78bfa, #7c3aed);
+            background: linear-gradient(90deg, #a78bfa, #7c3aed);
 
         }
     </style>
@@ -175,18 +175,18 @@
 
 <body>
     <!-- Sidebar -->
-       @include('dashboard.admin.sidebar')
+    @include('dashboard.admin.sidebar')
 
 
     <main>
-        <h1 class="text-5xl font-extrabold text-gray-900 tracking-tight mb-8">Daftar Kampus</h1>
+        <h1 class="text-5xl font-extrabold text-gray-900 tracking-tight mb-8">Campus List</h1>
 
-        <a href="{{ route('kampus.create') }}" class="btn-modern mb-6">Tambah Kampus</a>
+        <a href="{{ route('kampus.create') }}" class="btn-modern mb-6">Add Campus</a>
 
         @if(session('success'))
-        <div class="mb-4 p-4 bg-green-100 text-green-700 rounded shadow">
-            {{ session('success') }}
-        </div>
+            <div class="mb-4 p-4 bg-green-100 text-green-700 rounded shadow">
+                {{ session('success') }}
+            </div>
         @endif
 
         <div class="card">
@@ -194,31 +194,34 @@
                 <thead>
                     <tr>
                         <th>No.</th>
-                        <th>Kode Kampus</th>
-                        <th>Nama Kampus</th>
-                        <th>Aksi</th>
+                        <th>Campus Code</th>
+                        <th>Campus Name</th>
+                        <th>Action</th>
+
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($kampus as $index => $k)
-                    <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $k->kampus_kode }}</td>
-                        <td>{{ $k->kampus_nama }}</td>
-                        <td>
-                            <a href="{{ route('kampus.edit', $k->kampus_id) }}" class="btn-action edit"><i class="fas fa-edit"></i> Edit</a>
-                            <form action="{{ route('kampus.destroy', $k->kampus_id) }}" method="POST" class="inline-block"
-                                onsubmit="return confirm('Yakin ingin menghapus kampus ini?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn-action delete"><i class="fas fa-trash"></i> Hapus</button>
-                            </form>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $k->kampus_kode }}</td>
+                            <td>{{ $k->kampus_nama }}</td>
+                            <td>
+                                <a href="{{ route('kampus.edit', $k->kampus_id) }}" class="btn-action edit"><i
+                                        class="fas fa-edit"></i> Edit</a>
+                                <form action="{{ route('kampus.destroy', $k->kampus_id) }}" method="POST"
+                                    class="inline-block" onsubmit="return confirm('Yakin ingin menghapus kampus ini?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn-action delete"><i class="fas fa-trash"></i>
+                                        Delete</button>
+                                </form>
+                            </td>
+                        </tr>
                     @empty
-                    <tr>
-                        <td colspan="4" class="text-center p-4 text-gray-500">Tidak ada data kampus tersedia.</td>
-                    </tr>
+                        <tr>
+                            <td colspan="4" class="text-center p-4 text-gray-500">Tidak ada data kampus tersedia.</td>
+                        </tr>
                     @endforelse
                 </tbody>
             </table>

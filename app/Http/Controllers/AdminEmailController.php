@@ -1,57 +1,79 @@
 <?php
 
-  namespace App\Http\Controllers;
+namespace App\Http\Controllers;
 
-  use Illuminate\Http\Request;
-  use App\Models\UserModel;
-  use App\Mail\UserMessage;
-  use Illuminate\Support\Facades\Mail;
-  use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
+use App\Models\CertificateRequest;
+use App\Mail\CertificateEmail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
-  class AdminEmailController extends Controller
-  {
-      public function create()
-      {
-          $users = UserModel::select('user_id', 'username', 'email')->get();
-          return view('dashboard.admin.email.send-email', compact('users'));
-      }
+class AdminEmailController extends Controller
+{
+    public function create()
+    {
+        $requests = CertificateRequest::with(['pendaftaran', 'pendaftaran.mahasiswa', 'pendaftaran.mahasiswa.user'])
+            ->get()
+            ->filter(function ($request) {
+                return !is_null($request->pendaftaran)
+                    && !is_null($request->pendaftaran->mahasiswa)
+                    && !is_null($request->pendaftaran->mahasiswa->user)
+                    && !is_null($request->pendaftaran->mahasiswa->user->email);
+            });
 
-      public function send(Request $request)
-      {
-          $request->validate([
-              'user_id' => 'required|exists:user,user_id',
-              'message' => 'required|string|max:1000',
-              'attachment' => 'nullable|file|mimes:pdf,jpg,png,doc,docx|max:2048',
-          ]);
+        Log::info('Requests fetched for email', ['count' => $requests->count()]);
+        return view('dashboard.admin.email.send-email', compact('requests'));
+    }
 
-          try {
-              $user = UserModel::findOrFail($request->user_id);
-              $filePath = null;
-              $fileName = null;
+    public function send(Request $request)
+    {
+        Log::info('Send email process started', ['request' => $request->all()]);
+        $request->validate([
+            'certificate_request_id' => 'required|exists:certificate_requests,id',
+            'subject' => 'required|string|max:255',
+            'message' => 'required|string',
+            'attachment' => 'nullable|file|mimes:pdf|max:2048',
+        ]);
 
-              if ($request->hasFile('attachment')) {
-                  $file = $request->file('attachment');
-                  $fileName = time() . '_' . $file->getClientOriginalName();
-                  $filePath = $file->storeAs('email_attachments', $fileName, 'public');
-                  $absolutePath = Storage::disk('public')->path($filePath);
-                  if (!file_exists($absolutePath)) {
-                      \Log::error('File not found after upload: ' . $absolutePath);
-                      throw new \Exception('Failed to save attachment.');
-                  }
-                  $filePath = $absolutePath;
-              }
+        try {
+            $certificateRequest = CertificateRequest::with('pendaftaran.mahasiswa.user')->findOrFail($request->certificate_request_id);
+            $mahasiswa = $certificateRequest->pendaftaran->mahasiswa;
+            $user = $mahasiswa->user;
 
-              Mail::to($user->email)->send(new UserMessage(
-                  $user,
-                  $request->message,
-                  $filePath,
-                  $fileName
-              ));
+            if (!$user || !$user->email) {
+                Log::error('Email not found', ['mahasiswa_id' => $mahasiswa->mahasiswa_id, 'user' => $user]);
+                return redirect()->back()->with('error', 'Email address not found for this student.');
+            }
 
-              return redirect()->back()->with('success', 'Email sent successfully to ' . $user->username);
-          } catch (\Exception $e) {
-              \Log::error('Email sending failed: ' . $e->getMessage());
-              return redirect()->back()->with('error', 'Failed to send email. Please try again.');
-          }
-      }
-  }
+            $filePath = null;
+            $fileName = null;
+
+            if ($request->hasFile('attachment')) {
+                $file = $request->file('attachment');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $filePath = $file->storeAs('certificates', $fileName, 'public');
+                Log::info('File stored', ['path' => $filePath, 'name' => $fileName]);
+                if (!Storage::disk('public')->exists($filePath)) {
+                    Log::error('File not found after upload', ['path' => $filePath]);
+                    throw new \Exception('Failed to save attachment.');
+                }
+            }
+
+            Log::info('Sending email', ['to' => $user->email, 'subject' => $request->subject]);
+            Mail::to($user->email)->send(new CertificateEmail(
+                $mahasiswa->nama,
+                $request->subject,
+                $request->message,
+                $filePath,
+                $fileName
+            ));
+
+            Log::info('Email sent successfully', ['request_id' => $certificateRequest->id, 'email' => $user->email]);
+            return redirect()->back()->with('success', 'Email sent successfully to ' . $mahasiswa->nama);
+        } catch (\Exception $e) {
+            Log::error('Email sending failed', ['message' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
+            return redirect()->back()->with('error', 'Failed to send email. Please check the logs or try again.');
+        }
+    }
+}

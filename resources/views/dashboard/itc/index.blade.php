@@ -333,11 +333,11 @@
             </a>
             <a href="{{ route('itc.pendaftar') }}"
                 class="sidebar-link {{ request()->routeIs('itc.pendaftar') ? 'active' : '' }}">
-                <i class="fas fa-calendar-alt"></i> Data Pendaftar Tes
+                <i class="fas fa-calendar-alt"></i> Test Applicants Data
             </a>
             <a href="{{ route('itc.upload_nilai') }}"
                 class="sidebar-link {{ request()->routeIs('itc.upload_nilai') ? 'active' : '' }}">
-                <i class="fas fa-file-pdf"></i> Upload Nilai TOEIC
+                <i class="fas fa-file-pdf"></i> Upload Score TOEIC
             </a>
             <a href="{{ route('itc.profile') }}"
                 class="sidebar-link {{ request()->routeIs('itc.profile') ? 'active' : '' }}">

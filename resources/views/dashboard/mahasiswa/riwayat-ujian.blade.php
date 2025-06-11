@@ -185,12 +185,12 @@
       color: #d97706;
     }
     .badge-approved {
-      background-color: #d1fae5;
-      color: #059669;
+      background-color: #ede9fe; /* light purple */
+      color: #6d28d9; /* dark purple */
     }
     .badge-rejected {
-      background-color: #fee2e2;
-      color: #dc2626;
+      background-color: #e9d5ff; /* slightly different light purple */
+      color: #7e22ce; /* slightly different dark purple */
     }
     
     .table-container {
@@ -212,10 +212,8 @@
 </head>
 <body class="bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 min-h-screen">
 
-  <!-- Sidebar -->
   @include('dashboard.mahasiswa.sidebar')
 
-  <!-- Main Content -->
   <main id="riwayat-ujian" class="main-content">
     <h1 class="text-4xl font-bold text-purple-800 mb-6">Test Registration History</h1>
 
@@ -247,15 +245,15 @@
     </td>
     <td class="py-4 px-6">
       @if($registration->detailPendaftaran)
-        @if($registration->detailPendaftaran->status == 'approved')
+        @if($registration->detailPendaftaran->status == 'diterima')
           <span class="badge badge-approved">Approved</span>
-        @elseif($registration->detailPendaftaran->status == 'pending')
+        @elseif($registration->detailPendaftaran->status == 'menunggu')
           <span class="badge badge-pending">Pending</span>
         @else
           <span class="badge badge-rejected">{{ ucfirst($registration->detailPendaftaran->status) }}</span>
         @endif
       @else
-        <span class="badge badge-rejected">Status Not Available</span>
+        <span class="badge badge-pending">Status Not Available</span>
       @endif
     </td>
   </tr>

@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\DetailPendaftaranModel;
+  use App\Mail\CertificateEmail;
+  use Illuminate\Support\Facades\Mail;
+use App\Models\CertificateRequest;
+  use Illuminate\Support\Facades\Storage;
+  
 
 class AdminController extends Controller
 {
@@ -150,5 +155,43 @@ class AdminController extends Controller
         ]);
 
         return redirect()->route('admin.pendaftarVerifikasi')->with('success', 'Registration status updated successfully.');
+    }
+
+      public function certificateRequests()
+    {
+        $requests = CertificateRequest::with(['pendaftaran.mahasiswa', 'pendaftaran.jadwal'])->get();
+        return view('dashboard.admin.certificate_requests', compact('requests'));
+    }
+
+    public function approveCertificate($id)
+    {
+        $request = CertificateRequest::findOrFail($id);
+        if ($request->status !== 'pending') {
+            return redirect()->route('admin.certificate_requests')->with('error', 'Request is not pending.');
+        }
+
+        $request->update(['status' => 'approved']);
+        return redirect()->route('admin.certificate_requests')->with('success', 'Certificate request approved. Please upload and send the certificate via email.');
+    }
+
+    public function rejectCertificate($id)
+    {
+        $request = CertificateRequest::findOrFail($id);
+        if ($request->status !== 'pending') {
+            return redirect()->route('admin.certificate_requests')->with('error', 'Request is not pending.');
+        }
+
+        $request->update(['status' => 'rejected', 'notes' => request()->input('notes', 'No reason provided')]);
+        $this->sendRejectionEmail($request);
+        return redirect()->route('admin.certificate_requests')->with('success', 'Certificate request rejected and email sent.');
+    }
+
+    public function downloadCertificate($id)
+    {
+        $request = CertificateRequest::findOrFail($id);
+        if (!$request->file_path || !Storage::disk('public')->exists($request->file_path)) {
+            abort(404, 'File not found.');
+        }
+        return Storage::disk('public')->download($request->file_path);
     }
 }

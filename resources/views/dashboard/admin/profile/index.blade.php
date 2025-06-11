@@ -154,7 +154,7 @@
        @include('dashboard.admin.sidebar')
 
     <main>
-        <h1>Profile Saya</h1>
+        <h1>My Profile</h1>
 
         <section class="card">
             <form action="{{ route('profile.update') }}" method="POST">
@@ -168,7 +168,7 @@
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" value="{{ old('email', auth()->user()->email) }}" required>
 
-                <label for="name">Nama Lengkap</label>
+                <label for="name">Full Name</label>
                 <input type="text" id="name" name="name" value="{{ old('name', auth()->user()->admin->nama ?? '') }}"
                     required>
                 <label for="name">Nomor Telepon</label>

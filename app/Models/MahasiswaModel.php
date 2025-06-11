@@ -19,6 +19,14 @@ class MahasiswaModel extends Model
         'jenis_kelamin', 'status', 'keterangan', 'prodi_id'
     ];
 
+
+        public function user()
+    {
+        return $this->belongsTo(UserModel::class, 'mahasiswa_id', 'mahasiswa_id');
+    }
+
+    // Add prodi relationship
+
     public function prodi()
     {
         return $this->belongsTo(ProdiModel::class, 'prodi_id', 'prodi_id');
