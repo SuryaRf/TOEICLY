@@ -58,7 +58,7 @@ Route::middleware('auth')->group(function () {
         Route::put('/informasi/{id}', [InformasiController::class, 'update'])->name('informasi.update');
         Route::delete('/informasi/{id}', [InformasiController::class, 'destroy'])->name('informasi.destroy');
 
-         // Email Sending Routes
+        // Email Sending Routes
         Route::get('/send-email', [AdminEmailController::class, 'create'])->name('admin.send_email');
         Route::post('/send-email', [AdminEmailController::class, 'send'])->name('admin.send_email.submit');
 
@@ -85,6 +85,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/create', [JadwalSertifikatController::class, 'create'])->name('jadwal_sertifikat.create');
         Route::post('/', [JadwalSertifikatController::class, 'store'])->name('jadwal_sertifikat.store');
         Route::get('/{jadwal_id}/peserta', [JadwalSertifikatController::class, 'peserta'])->name('jadwal_sertifikat.peserta');
+        Route::get('/{jadwal_id}/edit', [JadwalSertifikatController::class, 'edit'])->name('jadwal_sertifikat.edit');
+        Route::put('/{jadwal_id}', [JadwalSertifikatController::class, 'update'])->name('jadwal_sertifikat.update');
+        Route::delete('/{jadwal_id}', [JadwalSertifikatController::class, 'destroy'])->name('jadwal_sertifikat.destroy');
     });
 
     // Pendaftaran
@@ -112,21 +115,21 @@ Route::middleware('auth')->group(function () {
         Route::post('/profile/avatar', [MahasiswaController::class, 'updateAvatar'])->name('update-avatar');
     });
 
-   // ITC routes
-Route::prefix('itc')->group(function () {
-    Route::get('/dashboard', [ItcController::class, 'index'])->name('itc.dashboard');
-    Route::get('/profile', [ItcController::class, 'showProfile'])->name('itc.profile');
-    Route::put('/profile', [ItcController::class, 'updateProfile'])->name('itc.profile.update');
+    // ITC routes
+    Route::prefix('itc')->group(function () {
+        Route::get('/dashboard', [ItcController::class, 'index'])->name('itc.dashboard');
+        Route::get('/profile', [ItcController::class, 'showProfile'])->name('itc.profile');
+        Route::put('/profile', [ItcController::class, 'updateProfile'])->name('itc.profile.update');
 
-    Route::get('/pendaftar', [ItcController::class, 'daftarPendaftar'])->name('itc.pendaftar');
-    Route::post('/pendaftar/{pendaftaran}/status-sertifikat', [ItcController::class, 'updateStatusSertifikat'])->name('itc.updateStatusSertifikat');
+        Route::get('/pendaftar', [ItcController::class, 'daftarPendaftar'])->name('itc.pendaftar');
+        Route::post('/pendaftar/{pendaftaran}/status-sertifikat', [ItcController::class, 'updateStatusSertifikat'])->name('itc.updateStatusSertifikat');
 
-    // Upload Nilai TOEIC
-    Route::get('/upload-nilai', [ItcController::class, 'showUploadNilaiForm'])->name('itc.upload_nilai');
-    Route::post('/upload-nilai', [ItcController::class, 'uploadNilai'])->name('itc.upload_nilai.store');
-    Route::delete('/upload-nilai/{id}', [ItcController::class, 'deleteNilai'])->name('itc.upload_nilai.destroy'); // <--- Tambahkan ini
-    Route::get('/nilai/view/{filename}', [ItcController::class, 'viewNilaiPdf'])->name('itc.nilai.view');
-});
+        // Upload Nilai TOEIC
+        Route::get('/upload-nilai', [ItcController::class, 'showUploadNilaiForm'])->name('itc.upload_nilai');
+        Route::post('/upload-nilai', [ItcController::class, 'uploadNilai'])->name('itc.upload_nilai.store');
+        Route::delete('/upload-nilai/{id}', [ItcController::class, 'deleteNilai'])->name('itc.upload_nilai.destroy'); // <--- Tambahkan ini
+        Route::get('/nilai/view/{filename}', [ItcController::class, 'viewNilaiPdf'])->name('itc.nilai.view');
+    });
     // Dosen dashboard
     Route::get('dosen/dashboard', [DosenController::class, 'index'])->name('dosen.dashboard');
 

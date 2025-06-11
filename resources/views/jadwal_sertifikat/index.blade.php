@@ -82,14 +82,11 @@
             overflow-y: auto;
         }
 
-        /* Gaya untuk judul utama, disamakan dengan "User Management" */
         .main-title-purple {
-            color: #4c1d95; /* Warna ungu gelap */
-            font-weight: 800; /* Ekstra tebal */
-            font-size: 2.25rem; /* Ukuran besar */
-            margin-bottom: 1.5rem; /* Jarak bawah */
-            /* Anda bisa menambahkan text-shadow jika diinginkan, seperti pada 'List of registered users' */
-            /* text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); */
+            color: #4c1d95;
+            font-weight: 800;
+            font-size: 2.25rem;
+            margin-bottom: 1.5rem;
         }
 
         .btn-modern {
@@ -155,6 +152,41 @@
             font-weight: 600;
             box-shadow: 0 2px 8px rgb(34 197 94 / 0.3);
         }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-edit {
+            background: #10b981;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.5rem;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-edit:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgb(16 185 129 / 0.5);
+        }
+
+        .btn-delete {
+            background: #ef4444;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.5rem;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-delete:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgb(239 68 68 / 0.5);
+        }
     </style>
 </head>
 <body>
@@ -179,6 +211,8 @@
                     <th>Schedule Name</th>
                     <th>File PDF</th>
                     <th>Creation Date</th>
+                    <th>Remaining Time</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -194,11 +228,30 @@
                             @endif
                         </td>
                         <td>{{ \Carbon\Carbon::parse($jadwal->tanggal)->format('d-m-Y') }}</td>
-
+                        <td>
+                            @php
+                                $createdAt = \Carbon\Carbon::parse($jadwal->created_at);
+                                $expiration = $createdAt->copy()->addDays(7);
+                                $remaining = $expiration->diffInHours(now()) <= 0 ? 'Expired' : $expiration->diffForHumans();
+                            @endphp
+                            {{ $remaining }}
+                        </td>
+                        <td class="action-buttons">
+                            <a href="{{ route('jadwal_sertifikat.edit', $jadwal->jadwal_id) }}" class="btn-edit">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <form action="{{ route('jadwal_sertifikat.destroy', $jadwal->jadwal_id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn-delete" onclick="return confirm('Are you sure you want to delete this schedule?')">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="no-data">Tidak ada jadwal tersedia.</td>
+                        <td colspan="6" class="no-data">Tidak ada jadwal tersedia.</td>
                     </tr>
                 @endforelse
             </tbody>
