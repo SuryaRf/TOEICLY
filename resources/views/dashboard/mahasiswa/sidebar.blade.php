@@ -105,6 +105,10 @@
             class="{{ request()->routeIs('mahasiswa.riwayat-ujian') ? 'active sidebar-link' : 'sidebar-link' }}">
             <i class="fas fa-history"></i> Register History
         </a>
+        <a href="{{ route('mahasiswa.request_certificate') }}"
+            class="{{ request()->routeIs('mahasiswa.request_certificate') ? 'active sidebar-link' : 'sidebar-link' }}">
+            <i class="fas fa-certificate"></i> Statement Letter Request
+        </a>
         <form action="{{ route('mahasiswa.logout') }}" method="POST" style="margin:0;">
             @csrf
             <button type="submit" class="sidebar-link">

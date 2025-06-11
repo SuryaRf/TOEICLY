@@ -22,10 +22,8 @@ class ItcController extends Controller
 
     public function index()
     {
-        // Count total users
         $totalUsers = UserModel::count();
 
-        // Fetch data for monthly test registrations (last 12 months)
         $monthlyData = PendaftaranModel::select(
             DB::raw("DATE_FORMAT(tanggal_pendaftaran, '%Y-%m') as month"),
             DB::raw('COUNT(*) as total')
@@ -35,14 +33,12 @@ class ItcController extends Controller
             ->orderBy('month')
             ->get();
 
-        // Initialize arrays for Chart.js
         $labels = [];
         $data = [];
         $months = collect(range(11, 0))->map(function ($i) {
             return now()->subMonths($i)->format('Y-m');
         });
 
-        // Fill data for the last 12 months
         foreach ($months as $month) {
             $labels[] = Carbon::createFromFormat('Y-m', $month)->format('M Y');
             $record = $monthlyData->firstWhere('month', $month);
@@ -119,11 +115,14 @@ class ItcController extends Controller
         return redirect()->route('itc.profile')->with('success', 'Profile berhasil diperbarui!');
     }
 
+    // Tampilkan form upload + daftar PDF
     public function showUploadNilaiForm()
     {
-        return view('dashboard.itc.nilai.upload_nilai');
+        $pdfs = NilaiToeicModel::latest()->get();
+        return view('dashboard.itc.nilai.upload_nilai', compact('pdfs'));
     }
 
+    // Proses upload PDF
     public function uploadNilai(Request $request)
     {
         $request->validate([
@@ -131,10 +130,12 @@ class ItcController extends Controller
             'judul' => 'nullable|string|max:100',
         ]);
 
-        $path = $request->file('nilai_pdf')->store('nilai_toeic', 'public');
+        $file = $request->file('nilai_pdf');
+        $filename = uniqid() . '_' . time() . '.' . $file->getClientOriginalExtension();
+        $file->storeAs('public/nilai_toeic', $filename);
 
         NilaiToeicModel::create([
-            'file_path' => $path,
+            'file_path' => 'nilai_toeic/' . $filename,
             'itc_id' => Auth::user()->itc->itc_id ?? null,
             'judul' => $request->judul ?: 'TOEIC Score Report',
         ]);
@@ -142,6 +143,23 @@ class ItcController extends Controller
         return redirect()->route('itc.upload_nilai')->with('success', 'File PDF nilai TOEIC berhasil diupload.');
     }
 
+    // Hapus PDF
+    public function deleteNilai($id)
+    {
+        $pdf = NilaiToeicModel::findOrFail($id);
+
+        // Hapus file fisik dari storage
+        if ($pdf->file_path && Storage::disk('public')->exists($pdf->file_path)) {
+            Storage::disk('public')->delete($pdf->file_path);
+        }
+
+        // Hapus data dari database
+        $pdf->delete();
+
+        return redirect()->route('itc.upload_nilai')->with('success', 'PDF berhasil dihapus.');
+    }
+
+    // View PDF (opsional)
     public function viewNilaiPdf($filename, Request $request)
     {
         $path = 'nilai_toeic/' . $filename;

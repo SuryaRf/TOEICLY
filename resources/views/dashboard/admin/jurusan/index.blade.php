@@ -177,12 +177,12 @@
 </head>
 
 <body>
-       @include('dashboard.admin.sidebar')
+    @include('dashboard.admin.sidebar')
 
     <main>
-        <h1 class="text-5xl font-extrabold text-gray-900 tracking-tight mb-8">Daftar Jurusan</h1>
+        <h1 class="text-5xl font-extrabold text-gray-900 tracking-tight mb-8">Department List</h1>
 
-        <a href="{{ route('jurusan.create') }}" class="btn-modern">Tambah Jurusan</a>
+        <a href="{{ route('jurusan.create') }}" class="btn-modern">Add Department</a>
 
         @if(session('success'))
             <div class="mb-4 p-4 bg-green-100 text-green-700 rounded shadow">
@@ -197,10 +197,11 @@
                 <thead>
                     <tr>
                         <th>No.</th>
-                        <th>Kode Jurusan</th>
-                        <th>Nama Jurusan</th>
-                        <th>Kampus</th>
-                        <th>Aksi</th>
+                        <th>Department Code</th>
+                        <th>Department Name</th>
+                        <th>University</th>
+                        <th>Action</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -211,12 +212,14 @@
                             <td>{{ $jurusan->jurusan_nama }}</td>
                             <td>{{ $jurusan->kampus ? $jurusan->kampus->kampus_nama : '-' }}</td>
                             <td>
-                                <a href="{{ route('jurusan.edit', $jurusan->jurusan_id) }}" class="btn-action edit"><i class="fas fa-edit"></i> Edit</a>
+                                <a href="{{ route('jurusan.edit', $jurusan->jurusan_id) }}" class="btn-action edit"><i
+                                        class="fas fa-edit"></i> Edit</a>
                                 <form action="{{ route('jurusan.destroy', $jurusan->jurusan_id) }}" method="POST"
                                     class="inline-block" onsubmit="return confirm('Yakin ingin menghapus jurusan ini?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn-action delete"><i class="fas fa-trash"></i> Hapus</button>
+                                    <button type="submit" class="btn-action delete"><i class="fas fa-trash"></i>
+                                        Delete</button>
                                 </form>
                             </td>
                         </tr>

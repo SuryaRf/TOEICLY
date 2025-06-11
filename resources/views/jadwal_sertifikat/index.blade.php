@@ -82,14 +82,11 @@
             overflow-y: auto;
         }
 
-        /* Gaya untuk judul utama, disamakan dengan "User Management" */
         .main-title-purple {
-            color: #4c1d95; /* Warna ungu gelap */
-            font-weight: 800; /* Ekstra tebal */
-            font-size: 2.25rem; /* Ukuran besar */
-            margin-bottom: 1.5rem; /* Jarak bawah */
-            /* Anda bisa menambahkan text-shadow jika diinginkan, seperti pada 'List of registered users' */
-            /* text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); */
+            color: #4c1d95;
+            font-weight: 800;
+            font-size: 2.25rem;
+            margin-bottom: 1.5rem;
         }
 
         .btn-modern {
@@ -154,6 +151,80 @@
             font-weight: 600;
             box-shadow: 0 2px 8px rgb(34 197 94 / 0.3);
         }
+
+<<<<<<< HEAD
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-edit {
+            background: #7c3aed;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.5rem;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-edit:hover {
+            background: #7c3aed;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgb(16 185 129 / 0.5);
+        }
+
+        .btn-delete {
+            background: #7c3aed;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.5rem;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-delete:hover {
+            background: #7c3aed;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgb(239 68 68 / 0.5);
+=======
+        /* Add these new styles for the modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            position: relative;
+            margin: 2% auto;
+            width: 90%;
+            height: 90%;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            z-index: 1001;
+        }
+
+        .pdf-container {
+            width: 100%;
+            height: calc(100% - 40px);
+>>>>>>> c6d443ac16f7c58d82bf6080009a2b90e9a8ed10
+        }
     </style>
 </head>
 <body>
@@ -178,6 +249,12 @@
                     <th>Schedule Name</th>
                     <th>File PDF</th>
                     <th>Creation Date</th>
+<<<<<<< HEAD
+                    <th>Remaining Time</th>
+                    <th>Actions</th>
+=======
+                    <th>Aksi</th>
+>>>>>>> c6d443ac16f7c58d82bf6080009a2b90e9a8ed10
                 </tr>
             </thead>
             <tbody>
@@ -187,23 +264,93 @@
                         <td>{{ $jadwal->judul }}</td>
                         <td>
                             @if($jadwal->file_pdf)
-                                <a href="{{ asset('storage/' . $jadwal->file_pdf) }}" target="_blank" class="text-blue-600 underline">Lihat PDF</a>
+                                <button 
+                                    onclick="openPdfModal('{{ asset('storage/' . $jadwal->file_pdf) }}')" 
+                                    class="text-blue-600 underline cursor-pointer">
+                                    Lihat PDF
+                                </button>
                             @else
                                 Tidak ada file
                             @endif
                         </td>
                         <td>{{ \Carbon\Carbon::parse($jadwal->tanggal)->format('d-m-Y') }}</td>
-
+                        <td>
+<<<<<<< HEAD
+                            @php
+                                $createdAt = \Carbon\Carbon::parse($jadwal->created_at);
+                                $expiration = $createdAt->copy()->addDays(7);
+                                $remaining = $expiration->diffInHours(now()) <= 0 ? 'Expired' : $expiration->diffForHumans();
+                            @endphp
+                            {{ $remaining }}
+                        </td>
+                        <td class="action-buttons">
+                            <a href="{{ route('jadwal_sertifikat.edit', $jadwal->jadwal_id) }}" class="btn-edit">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <form action="{{ route('jadwal_sertifikat.destroy', $jadwal->jadwal_id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn-delete" onclick="return confirm('Are you sure you want to delete this schedule?')">
+                                    <i class="fas fa-trash"></i> Delete
+=======
+                            <form action="{{ route('jadwal-sertifikat.destroy', $jadwal->jadwal_id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus jadwal ini?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i> Hapus
+>>>>>>> c6d443ac16f7c58d82bf6080009a2b90e9a8ed10
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="no-data">Tidak ada jadwal tersedia.</td>
+<<<<<<< HEAD
+                        <td colspan="6" class="no-data">Tidak ada jadwal tersedia.</td>
+=======
+                        <td colspan="5" class="no-data">Tidak ada jadwal tersedia.</td>
+>>>>>>> c6d443ac16f7c58d82bf6080009a2b90e9a8ed10
                     </tr>
                 @endforelse
             </tbody>
         </table>
+
+        <!-- Add Modal -->
+        <div id="pdfModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closePdfModal()">&times;</span>
+                <div class="pdf-container">
+                    <embed id="pdfViewer" src="" type="application/pdf" width="100%" height="100%">
+                </div>
+            </div>
+        </div>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function openPdfModal(pdfUrl) {
+            const modal = document.getElementById('pdfModal');
+            const pdfViewer = document.getElementById('pdfViewer');
+            
+            pdfViewer.src = pdfUrl;
+            modal.style.display = 'block';
+        }
+
+        function closePdfModal() {
+            const modal = document.getElementById('pdfModal');
+            const pdfViewer = document.getElementById('pdfViewer');
+            
+            pdfViewer.src = '';
+            modal.style.display = 'none';
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('pdfModal');
+            if (event.target == modal) {
+                closePdfModal();
+            }
+        }
+    </script>
 </body>
 </html>

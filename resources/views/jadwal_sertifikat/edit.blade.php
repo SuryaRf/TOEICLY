@@ -1,23 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Edit Prodi - TOEICLY Admin</title>
-    <!-- Tailwind CSS -->
+    <title>Edit Certificate Schedule - TOEICLY Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
     <style>
-        /* Salin style dari halaman tambah/edit lain supaya konsisten */
         body {
             background: linear-gradient(135deg, #eef2ff 0%, #dbeafe 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
         }
+
         .sidebar {
             background: linear-gradient(180deg, #5b21b6 0%, #7c3aed 100%);
             color: white;
@@ -30,12 +26,14 @@
             display: flex;
             flex-direction: column;
         }
+
         .sidebar .title {
             padding: 1.5rem 1rem;
             font-size: 1.75rem;
             font-weight: 800;
             user-select: none;
         }
+
         .sidebar nav {
             margin-top: 2rem;
             display: flex;
@@ -44,6 +42,7 @@
             padding: 0 1rem;
             flex-grow: 1;
         }
+
         .sidebar a {
             display: flex;
             align-items: center;
@@ -55,6 +54,7 @@
             transition: background-color 0.3s ease, transform 0.3s ease;
             cursor: pointer;
         }
+
         .sidebar a:hover,
         .sidebar a.active {
             background-color: rgba(255 255 255 / 0.25);
@@ -62,23 +62,33 @@
             box-shadow: 0 4px 15px rgb(124 58 237 / 0.5);
             color: white !important;
         }
+
         .sidebar i {
             min-width: 1.25rem;
             font-size: 1.1rem;
             margin-right: 0.75rem;
             transition: transform 0.3s ease;
         }
+
         .sidebar a:hover i {
             transform: rotate(10deg) scale(1.2);
             color: #ddd;
         }
+
         main {
             margin-left: 16rem;
             padding: 2.5rem;
             min-height: 100vh;
             overflow-y: auto;
-            max-width: 600px;
         }
+
+        .main-title-purple {
+            color: #4c1d95;
+            font-weight: 800;
+            font-size: 2.25rem;
+            margin-bottom: 1.5rem;
+        }
+
         .btn-modern {
             background: linear-gradient(90deg, #7c3aed, #a78bfa);
             border: none;
@@ -90,90 +100,96 @@
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
-            cursor: pointer;
         }
+
         .btn-modern:hover {
             background: linear-gradient(90deg, #a78bfa, #7c3aed);
             transform: scale(1.08);
             box-shadow: 0 8px 20px rgb(124 58 237 / 0.7);
             color: white;
         }
-        label {
+
+        .form-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 6px 15px rgb(0 0 0 / 0.08);
+            max-width: 28rem;
+            margin: 0 auto;
+        }
+
+        .form-label {
             font-weight: 600;
+            color: #4b5563;
+            margin-bottom: 0.25rem;
         }
-        input[type="text"],
-        select {
-            border: 1px solid #d1d5db;
-            border-radius: 0.375rem;
-            padding: 0.5rem 0.75rem;
-            width: 100%;
-            box-sizing: border-box;
+
+        .form-control {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
-        .error-list {
-            list-style-type: disc;
-            padding-left: 1.5rem;
-            margin: 0 0 1rem 0;
+
+        .form-control:focus {
+            border-color: #7c3aed;
+            box-shadow: 0 0 8px rgb(124 58 237 / 0.2);
+            outline: none;
         }
-        .alert-danger {
-            background-color: #fee2e2;
-            color: #991b1b;
+
+        .alert {
             padding: 1rem;
             border-radius: 0.5rem;
             margin-bottom: 1.5rem;
-            font-weight: 600;
-            box-shadow: 0 2px 8px rgb(220 38 38 / 0.3);
+        }
+
+        .alert-danger {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
         }
     </style>
 </head>
-
 <body>
-       @include('dashboard.admin.sidebar')
+    @include('dashboard.admin.sidebar')
 
     <main>
-        <h1 class="text-4xl font-bold mb-6 text-purple-700">Edit Study Program</h1>
+        <h1 class="main-title-purple">Edit Certificate Schedule</h1>
 
         @if ($errors->any())
-            <div class="alert-danger">
-                <ul class="error-list">
+            <div class="alert alert-danger">
+                <ul>
                     @foreach ($errors->all() as $error)
-                        <li>- {{ $error }}</li>
+                        <li>{{ $error }}</li>
                     @endforeach
                 </ul>
             </div>
         @endif
 
-        <form action="{{ route('prodi.update', $prodi->prodi_id) }}" method="POST" class="space-y-6">
-            @csrf
-            @method('PUT')
-
-            <div>
-                <label for="prodi_kode">Prodi Code</label>
-                <input type="text" id="prodi_kode" name="prodi_kode" maxlength="20" required
-                    value="{{ old('prodi_kode', $prodi->prodi_kode) }}">
-            </div>
-
-            <div>
-                <label for="prodi_nama">Prodi Name</label>
-                <input type="text" id="prodi_nama" name="prodi_nama" maxlength="50" required
-                    value="{{ old('prodi_nama', $prodi->prodi_nama) }}">
-            </div>
-
-            <div>
-                <label for="jurusan_id">Choose Department</label>
-                <select id="jurusan_id" name="jurusan_id" required>
-                    <option value="">-- Pilih Jurusan --</option>
-                    @foreach($jurusan as $j)
-                        <option value="{{ $j->jurusan_id }}" {{ old('jurusan_id', $prodi->jurusan_id) == $j->jurusan_id ? 'selected' : '' }}>
-                            {{ $j->jurusan_nama }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-
-            <button type="submit" class="btn-modern">Update</button>
-            <a href="{{ route('prodi.index') }}" class="btn-modern" style="background: gray;">Cancel</a>
-        </form>
+        <div class="form-container">
+            <form action="{{ route('jadwal_sertifikat.update', $jadwal->jadwal_id) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <div class="mb-4">
+                    <label for="judul" class="form-label">Schedule Name</label>
+                    <input type="text" name="judul" id="judul" class="form-control w-full" value="{{ old('judul', $jadwal->judul) }}" required>
+                </div>
+                <div class="mb-4">
+                    <label for="tanggal" class="form-label">Date</label>
+                    <input type="date" name="tanggal" id="tanggal" class="form-control w-full" value="{{ old('tanggal', $jadwal->tanggal) }}" required>
+                </div>
+                <div class="mb-4">
+                    <label for="file_pdf" class="form-label">PDF File (optional)</label>
+                    <input type="file" name="file_pdf" id="file_pdf" class="form-control w-full">
+                    @if($jadwal->file_pdf)
+                        <p class="text-muted mt-1">Current file: <a href="{{ asset('storage/' . $jadwal->file_pdf) }}" target="_blank" class="text-blue-600">{{ basename($jadwal->file_pdf) }}</a></p>
+                    @endif
+                </div>
+                <button type="submit" class="btn-modern w-full">Update Schedule</button>
+            </form>
+        </div>
     </main>
-</body>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

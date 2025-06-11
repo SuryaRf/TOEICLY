@@ -13,7 +13,6 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
         }
-
         .sidebar {
             background: linear-gradient(180deg, #5b21b6 0%, #7c3aed 100%);
             color: white;
@@ -26,14 +25,12 @@
             display: flex;
             flex-direction: column;
         }
-
         .sidebar .title {
             padding: 1.5rem 1rem;
             font-size: 1.75rem;
             font-weight: 800;
             user-select: none;
         }
-
         .sidebar nav {
             margin-top: 2rem;
             display: flex;
@@ -42,7 +39,6 @@
             padding: 0 1rem;
             flex-grow: 1;
         }
-
         .sidebar a {
             display: flex;
             align-items: center;
@@ -54,7 +50,6 @@
             transition: background-color 0.3s ease, transform 0.3s ease;
             cursor: pointer;
         }
-
         .sidebar a:hover,
         .sidebar a.active {
             background-color: rgba(255 255 255 / 0.25);
@@ -62,33 +57,28 @@
             box-shadow: 0 4px 15px rgb(124 58 237 / 0.5);
             color: white !important;
         }
-
         .sidebar i {
             min-width: 1.25rem;
             font-size: 1.1rem;
             margin-right: 0.75rem;
             transition: transform 0.3s ease;
         }
-
         .sidebar a:hover i {
             transform: rotate(10deg) scale(1.2);
             color: #ddd;
         }
-
         main {
             margin-left: 16rem;
             padding: 2.5rem;
             min-height: 100vh;
             overflow-y: auto;
         }
-
         h1 {
             color: #4c1d95;
             font-weight: 800;
             font-size: 2.5rem;
             margin-bottom: 1.5rem;
         }
-
         .card {
             background-color: #fff;
             border-radius: 1rem;
@@ -98,22 +88,19 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            max-width: 600px;
-            margin: auto;
+            max-width: 900px;
+            margin: 2rem auto 0 auto;
         }
-
         .card:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 30px rgb(124 58 237 / 0.25);
             cursor: pointer;
         }
-
         label {
             font-weight: 600;
             color: #5b21b6;
             margin-top: 1rem;
         }
-
         input[type="file"], input[type="text"] {
             width: 100%;
             margin-top: 0.25rem;
@@ -123,13 +110,11 @@
             font-size: 1rem;
             color: #333;
         }
-
         input[type="file"]:focus, input[type="text"]:focus {
             outline: none;
             border-color: #7c3aed;
             box-shadow: 0 0 5px #7c3aed;
         }
-
         .btn-modern {
             margin-top: 1.5rem;
             background: linear-gradient(90deg, #7c3aed, #a78bfa);
@@ -142,10 +127,9 @@
             transition: all 0.3s ease;
             cursor: pointer;
             max-width: 200px;
-            margin-left: auto;
+            margin-left: 0;
             display: block;
         }
-
         .btn-modern:hover {
             background: linear-gradient(90deg, #a78bfa, #7c3aed);
             transform: scale(1.08);
@@ -153,7 +137,6 @@
             text-decoration: none;
             color: white;
         }
-
         .alert-success {
             background-color: #d1fae5;
             color: #065f46;
@@ -162,16 +145,51 @@
             margin-bottom: 1.5rem;
             font-weight: 600;
             box-shadow: 0 2px 8px rgb(34 197 94 / 0.3);
-            max-width: 600px;
+            max-width: 900px;
             margin-left: auto;
         }
-
         .error-message {
             color: #dc2626;
             font-weight: 600;
             margin-top: 0.5rem;
-            max-width: 600px;
+            max-width: 900px;
             margin-left: auto;
+        }
+        /* Modal custom */
+        .modal-header {
+            border-bottom: none;
+        }
+        .modal-content {
+            border-radius: 1rem;
+        }
+        .modal-footer {
+            border-top: none;
+        }
+        .center-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+        }
+        .pdf-dropdown-btn[aria-expanded="true"] .fa-chevron-down {
+            transform: rotate(180deg);
+            transition: transform 0.2s;
+        }
+        .pdf-dropdown-btn .fa-chevron-down {
+            transition: transform 0.2s;
+        }
+        /* Responsive iframe */
+        .pdf-preview-frame {
+            width: 100%;
+            min-width: 350px;
+            height: 650px;
+            border-radius: 0.5rem;
+            border: 1px solid #a78bfa;
+            background: #fff;
+        }
+        @media (max-width: 1000px) {
+            .card, .alert-success, .error-message { max-width: 100%; }
+            .pdf-preview-frame { height: 400px; }
         }
     </style>
 </head>
@@ -203,21 +221,21 @@
     </aside>
 
     <main>
-        <h1>Upload TOEIC Score PDF</h1>
+        <h1>Upload PDF Nilai TOEIC</h1>
 
-        @if(session('success'))
-            <div class="alert-success">{{ session('success') }}</div>
-        @endif
+    @if(session('success'))
+        <div class="alert-success">{{ session('success') }}</div>
+    @endif
 
         <form action="{{ route('itc.upload_nilai.store') }}" method="POST" enctype="multipart/form-data" class="card">
             @csrf
-            <label for="judul">Document Title</label>
+            <label for="judul">Judul Dokumen</label>
             <input type="text" name="judul" id="judul" value="{{ old('judul') }}" placeholder="e.g., TOEIC Score Report">
             @error('judul')
                 <div class="error-message">{{ $message }}</div>
             @enderror
 
-            <label for="nilai_pdf">Select TOEIC Score PDF File</label>
+            <label for="nilai_pdf">Pilih File PDF Nilai TOEIC</label>
             <input type="file" name="nilai_pdf" id="nilai_pdf" accept="application/pdf" required>
             @error('nilai_pdf')
                 <div class="error-message">{{ $message }}</div>
@@ -227,6 +245,12 @@
         </form>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+@if ($errors->any())
+<script>
+    var uploadModal = new bootstrap.Modal(document.getElementById('uploadModal'));
+    uploadModal.show();
+</script>
+@endif
 </body>
 </html>

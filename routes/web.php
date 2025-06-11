@@ -58,10 +58,14 @@ Route::middleware('auth')->group(function () {
         Route::put('/informasi/{id}', [InformasiController::class, 'update'])->name('informasi.update');
         Route::delete('/informasi/{id}', [InformasiController::class, 'destroy'])->name('informasi.destroy');
 
-         // Email Sending Routes
-        Route::get('/send-email', [AdminEmailController::class, 'create'])->name('admin.send_email');
-        Route::post('/send-email', [AdminEmailController::class, 'send'])->name('admin.send_email.submit');
+        // Email Sending Routes
+        Route::get('/admin/send-email', [AdminEmailController::class, 'create'])->name('admin.send_email');
+        Route::post('/admin/send-email', [AdminEmailController::class, 'send'])->name('admin.send_email.submit');
 
+        // Route::get('/admin/certificate-requests', [AdminController::class, 'certificateRequests'])->name('admin.certificate_requests');
+        // Route::get('/admin/certificate-requests/{id}/approve', [AdminController::class, 'approveCertificate'])->name('admin.approve_certificate');
+        // Route::get('/admin/certificate-requests/{id}/reject', [AdminController::class, 'rejectCertificate'])->name('admin.reject_certificate');
+        // Route::get('/admin/certificate-requests/{id}/download', [AdminController::class, 'downloadCertificate'])->name('admin.download_certificate');
         // Profile admin
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
         Route::post('/profile/avatar', [ProfileController::class, 'uploadAvatar'])->name('profile.uploadAvatar');
@@ -85,6 +89,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/create', [JadwalSertifikatController::class, 'create'])->name('jadwal_sertifikat.create');
         Route::post('/', [JadwalSertifikatController::class, 'store'])->name('jadwal_sertifikat.store');
         Route::get('/{jadwal_id}/peserta', [JadwalSertifikatController::class, 'peserta'])->name('jadwal_sertifikat.peserta');
+        Route::get('/{jadwal_id}/edit', [JadwalSertifikatController::class, 'edit'])->name('jadwal_sertifikat.edit');
+        Route::put('/{jadwal_id}', [JadwalSertifikatController::class, 'update'])->name('jadwal_sertifikat.update');
+        Route::delete('/{jadwal_id}', [JadwalSertifikatController::class, 'destroy'])->name('jadwal_sertifikat.destroy');
     });
 
     // Pendaftaran
@@ -95,6 +102,7 @@ Route::middleware('auth')->group(function () {
     Route::get('profile', [ProfileController::class, 'showProfile'])->name('profile.show');
     Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
 
+    // Mahasiswa routes
     // Mahasiswa routes
     Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
         Route::get('/', [MahasiswaController::class, 'index'])->name('dashboard');
@@ -110,6 +118,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/already-registered', [MahasiswaController::class, 'alreadyRegistered'])->name('already-registered');
         Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
         Route::post('/profile/avatar', [MahasiswaController::class, 'updateAvatar'])->name('update-avatar');
+        Route::get('/request-certificate', [MahasiswaController::class, 'showRequestCertificate'])->name('request_certificate');
+        Route::post('/request-certificate/{pendaftaran_id}', [MahasiswaController::class, 'requestCertificate'])->name('requestCertificate');
+        Route::get('/request-certificate/sample', [MahasiswaController::class, 'showSampleCertificate'])->name('request_certificate.sample');
     });
 
     // ITC routes
@@ -121,11 +132,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/pendaftar', [ItcController::class, 'daftarPendaftar'])->name('itc.pendaftar');
         Route::post('/pendaftar/{pendaftaran}/status-sertifikat', [ItcController::class, 'updateStatusSertifikat'])->name('itc.updateStatusSertifikat');
 
+        // Upload Nilai TOEIC
         Route::get('/upload-nilai', [ItcController::class, 'showUploadNilaiForm'])->name('itc.upload_nilai');
         Route::post('/upload-nilai', [ItcController::class, 'uploadNilai'])->name('itc.upload_nilai.store');
+        Route::delete('/upload-nilai/{id}', [ItcController::class, 'deleteNilai'])->name('itc.upload_nilai.destroy'); // <--- Tambahkan ini
         Route::get('/nilai/view/{filename}', [ItcController::class, 'viewNilaiPdf'])->name('itc.nilai.view');
     });
-
     // Dosen dashboard
     Route::get('dosen/dashboard', [DosenController::class, 'index'])->name('dosen.dashboard');
 

@@ -245,15 +245,15 @@
     </td>
     <td class="py-4 px-6">
       @if($registration->detailPendaftaran)
-        @if($registration->detailPendaftaran->status == 'approved')
+        @if($registration->detailPendaftaran->status == 'diterima')
           <span class="badge badge-approved">Approved</span>
-        @elseif($registration->detailPendaftaran->status == 'pending')
+        @elseif($registration->detailPendaftaran->status == 'menunggu')
           <span class="badge badge-pending">Pending</span>
         @else
           <span class="badge badge-rejected">{{ ucfirst($registration->detailPendaftaran->status) }}</span>
         @endif
       @else
-        <span class="badge badge-rejected">Status Not Available</span>
+        <span class="badge badge-pending">Status Not Available</span>
       @endif
     </td>
   </tr>
