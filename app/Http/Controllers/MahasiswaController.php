@@ -42,7 +42,7 @@
           if (!Storage::disk('public')->exists($path)) {
               abort(404, "File not found.");
           }
-
+//cipski//
           $fileContent = Storage::disk('public')->get($path);
           $mimeType = Storage::disk('public')->mimeType($path);
 

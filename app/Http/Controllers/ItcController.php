@@ -128,6 +128,12 @@ class ItcController extends Controller
         $request->validate([
             'nilai_pdf' => 'required|file|mimes:pdf|max:5120', // max 5MB
             'judul' => 'nullable|string|max:100',
+        ], [
+            'nilai_pdf.required' => 'Please select a PDF file.',
+            'nilai_pdf.file' => 'The uploaded file must be a valid file.',
+            'nilai_pdf.mimes' => 'The file must be a PDF.',
+            'nilai_pdf.max' => 'The PDF file size must not exceed 5MB.',
+            'judul.max' => 'The title must not exceed 100 characters.'
         ]);
 
         $file = $request->file('nilai_pdf');
@@ -140,7 +146,8 @@ class ItcController extends Controller
             'judul' => $request->judul ?: 'TOEIC Score Report',
         ]);
 
-        return redirect()->route('itc.upload_nilai')->with('success', 'File PDF nilai TOEIC berhasil diupload.');
+        return redirect()->route('itc.upload_nilai')
+            ->with('success', 'TOEIC Score PDF has been uploaded successfully.');
     }
 
     // Hapus PDF
@@ -148,15 +155,16 @@ class ItcController extends Controller
     {
         $pdf = NilaiToeicModel::findOrFail($id);
 
-        // Hapus file fisik dari storage
+        // Delete physical file from storage
         if ($pdf->file_path && Storage::disk('public')->exists($pdf->file_path)) {
             Storage::disk('public')->delete($pdf->file_path);
         }
 
-        // Hapus data dari database
+        // Delete database record 
         $pdf->delete();
 
-        return redirect()->route('itc.upload_nilai')->with('success', 'PDF berhasil dihapus.');
+        return redirect()->route('itc.upload_nilai')
+            ->with('success', 'TOEIC Score PDF has been deleted successfully.');
     }
 
     // View PDF (opsional)
